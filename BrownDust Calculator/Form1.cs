@@ -21,5 +21,10 @@ namespace BrownDust_Calculator
         {
             Calculate();
         }
+
+        private void button_Save_Click(object sender, EventArgs e)
+        {
+            Savefile.SaveSavefile();
+        }
     }
 }

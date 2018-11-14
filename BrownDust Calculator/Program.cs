@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BrownDust_Calculator
@@ -21,6 +22,57 @@ namespace BrownDust_Calculator
 
     partial class Form1
     {
+        private class TpyeSavefile
+        {
+            public void LoadSavefile()
+            {
+                if (File.Exists("Save.save"))
+                {
+                    string line;
+
+                    using (StreamReader file = new StreamReader("save.save"))
+                    {
+                        line = file.ReadLine();  //"A#"
+                        line = file.ReadLine();  //AttackerChartHight
+                        for (int i = 0; i < AttackerChartHight; i++)
+                        {
+                            line = file.ReadLine();
+                            if (line != "-")
+                            {
+
+                            }
+                        }
+                    }
+                }
+                else { File.Create("save.save"); }  //创建一个存档文件
+            }
+
+            public void SaveSavefile()
+            {
+                using (StreamWriter file = new StreamWriter("save.save"))
+                {
+                    //存储攻击角色面板
+                    file.Write("#A\n{0:d}\n", AttackerChartHight);
+                    for (int i = 0; i < AttackerChartHight; i++)
+                    {
+                        if (comboBox_AttackerName[i].SelectedIndex >= 0)
+                        {
+                            string line = comboBox_AttackerName[i].SelectedIndex.ToString("d") + "|";
+                            for (int j = 0; j < 5; j++) line += textBox_AttackerStats[i, j].Text + "|";
+                            file.Write(line + "\n");
+                        }
+                        else { file.Write("-\n"); }
+                    }
+                }
+            }
+        }
+        private TpyeSavefile Savefile = new TpyeSavefile();
+
+        private static class Work
+        {
+
+        }
+
         private class SupportCharacter
         {
             public string Name;
@@ -104,16 +156,22 @@ namespace BrownDust_Calculator
                 }
             }
 
-            public void SetStatus(double atk, double crr, double crd, double agi, double atkbuff, double crrbuff, double crdbuff)
+            private void CheckStats()
             {
-                BaseStats.ATK = atk; BaseStats.CRR = crr; BaseStats.CRD = crd; BaseStats.AGI = agi;
+                NowSatas.ATK = BaseStats.ATK * (1 + StatsUp.ATK);
+                NowSatas.CRR = Math.Max(0, Math.Min(1, BaseStats.CRR + StatsUp.CRR));
+                NowSatas.CRD = Math.Max(0, BaseStats.CRD + StatsUp.CRD);
+                NowSatas.AGI = Math.Max(0, Math.Min(1, BaseStats.AGI + StatsUp.AGI));
+                NowSatas.DEF = Math.Max(0, Math.Min(1, BaseStats.DEF + StatsUp.DEF));
+            }
+
+            public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)
+            {
+                BaseStats.ATK = atk; BaseStats.CRR = crr; BaseStats.CRD = crd; BaseStats.AGI = agi; BaseStats.DEF = def;
                 DoStatsUp();
                 StatsUp.ATK = atkbuff; StatsUp.CRR = crrbuff; StatsUp.CRD = crrbuff;
 
-                NowSatas.ATK = BaseStats.ATK * (1 + StatsUp.ATK);
-                NowSatas.CRR = Math.Min(1, BaseStats.CRR + StatsUp.CRR);
-                NowSatas.CRD = BaseStats.CRD + StatsUp.CRD;
-                NowSatas.AGI = BaseStats.AGI;
+                CheckStats();
             }
 
             private void CheckBaseDamage()
@@ -137,7 +195,7 @@ namespace BrownDust_Calculator
 
         static int SupporterNumber = 4;
         static int AttackerNumber = 1;
-        static int AttackerChartHight = 7;
+        static int AttackerChartHight = 8;
 
         private SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
         private AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
@@ -192,8 +250,8 @@ namespace BrownDust_Calculator
         }
 
         private ComboBox[] comboBox_AttackerName = new ComboBox[AttackerChartHight];
-        private TextBox[,] textBox_AttackerStatus = new TextBox[AttackerChartHight, 4];
-        private Label[,] label_AttackDamage = new Label[AttackerChartHight, 3];
+        private TextBox[,] textBox_AttackerStats = new TextBox[AttackerChartHight, 5];  //ATK, CRR, CRD, AGI, DEF
+        private Label[,] label_AttackDamage = new Label[AttackerChartHight, 3];  //Normal, Add, Sum
         private void DrawAttackerPanel()  //绘制攻击角色数据板块
         {
             object[] list = new object[AttackerNumber];
@@ -208,17 +266,17 @@ namespace BrownDust_Calculator
                 tableLayoutPanel_Attacker.Controls.Add(comboBox_AttackerName[i], 0, i + 1);
                 comboBox_AttackerName[i].Anchor = AnchorStyles.None;
                 comboBox_AttackerName[i].Items.AddRange(list);
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 5; j++)
                 {
-                    textBox_AttackerStatus[i, j] = new TextBox();
-                    tableLayoutPanel_Attacker.Controls.Add(textBox_AttackerStatus[i, j], j + 1, i + 1);
-                    textBox_AttackerStatus[i, j].Anchor = AnchorStyles.None;
-                    textBox_AttackerStatus[i, j].TextAlign = HorizontalAlignment.Right;
+                    textBox_AttackerStats[i, j] = new TextBox();
+                    tableLayoutPanel_Attacker.Controls.Add(textBox_AttackerStats[i, j], j + 1, i + 1);
+                    textBox_AttackerStats[i, j].Anchor = AnchorStyles.None;
+                    textBox_AttackerStats[i, j].TextAlign = HorizontalAlignment.Right;
                 }
                 for (int j = 0; j < 3; j++)
                 {
                     label_AttackDamage[i, j] = new Label();
-                    tableLayoutPanel_Attacker.Controls.Add(label_AttackDamage[i, j], j + 5, i + 1);
+                    tableLayoutPanel_Attacker.Controls.Add(label_AttackDamage[i, j], j + 6, i + 1);
                     label_AttackDamage[i, j].Anchor = AnchorStyles.None;
                     label_AttackDamage[i, j].AutoSize = true;
                     label_AttackDamage[i, j].TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -228,6 +286,7 @@ namespace BrownDust_Calculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Savefile.LoadSavefile();  //读取（不存在则创建）存档，并以此进行第一次计算
             SetCharacters();  //设定角色基本数据
             DrawSupporterData();  //绘制支援角色数据
             DrawAttackerPanel();  //绘制攻击角色数据板块
@@ -236,7 +295,6 @@ namespace BrownDust_Calculator
         private AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
         private void CalculateStatus()
         {
-
             //计算选中的支援角色提供的buff量
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
             for (int i = 0; i < SupporterNumber; i++)
@@ -249,20 +307,20 @@ namespace BrownDust_Calculator
                 }
             }
 
-
+            //计算攻击角色入场状态 + 为攻击角色套用支援buff
             for (int i = 0; i < AttackerChartHight; i++)
             {
                 int order = comboBox_AttackerName[i].SelectedIndex;
                 if (order >= 0)
                 {
-                    //计算攻击角色入场状态 + 为攻击角色套用支援buff
                     ComparedAttacker[i] = new AttackCharacter(Attacker[order].Name);
                     ComparedAttacker[i].Skills = Attacker[order].Skills;
-                    ComparedAttacker[i].SetStatus(
-                        textBox_AttackerStatus[i, 0].Text == "" ? 0 : double.Parse(textBox_AttackerStatus[i, 0].Text),
-                        textBox_AttackerStatus[i, 1].Text == "" ? 0 : double.Parse(textBox_AttackerStatus[i, 1].Text) / 100,
-                        textBox_AttackerStatus[i, 2].Text == "" ? 0 : double.Parse(textBox_AttackerStatus[i, 2].Text) / 100,
-                        textBox_AttackerStatus[i, 3].Text == "" ? 0 : double.Parse(textBox_AttackerStatus[i, 3].Text) / 100,
+                    ComparedAttacker[i].SetStats(
+                        textBox_AttackerStats[i, 0].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 0].Text),
+                        textBox_AttackerStats[i, 1].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 1].Text) / 100,
+                        textBox_AttackerStats[i, 2].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 2].Text) / 100,
+                        textBox_AttackerStats[i, 3].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 3].Text) / 100,
+                        textBox_AttackerStats[i, 4].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 4].Text) / 100,
                         ATKbuff, CRRbuff, CRDbuff);
                 }
             }
@@ -271,6 +329,8 @@ namespace BrownDust_Calculator
         void Calculate()
         {
             CalculateStatus();
+
+            //输出普伤
             for (int i = 0; i < AttackerChartHight; i++)
             {
                 if (comboBox_AttackerName[i].SelectedIndex >= 0)
