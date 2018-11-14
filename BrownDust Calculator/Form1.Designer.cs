@@ -124,11 +124,11 @@
             this.tableLayoutPanel_Defender.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel_Defender.Controls.Add(this.label3, 1, 0);
             this.tableLayoutPanel_Defender.Controls.Add(this.label2, 2, 0);
-            this.tableLayoutPanel_Defender.Controls.Add(this.label4, 3, 0);
             this.tableLayoutPanel_Defender.Controls.Add(this.label6, 7, 0);
             this.tableLayoutPanel_Defender.Controls.Add(this.label5, 6, 0);
-            this.tableLayoutPanel_Defender.Controls.Add(this.label8, 4, 0);
             this.tableLayoutPanel_Defender.Controls.Add(this.label7, 5, 0);
+            this.tableLayoutPanel_Defender.Controls.Add(this.label8, 3, 0);
+            this.tableLayoutPanel_Defender.Controls.Add(this.label4, 4, 0);
             this.tableLayoutPanel_Defender.Location = new System.Drawing.Point(6, 20);
             this.tableLayoutPanel_Defender.Name = "tableLayoutPanel_Defender";
             this.tableLayoutPanel_Defender.RowCount = 5;
@@ -175,7 +175,7 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(197, 11);
+            this.label4.Location = new System.Drawing.Point(254, 11);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 12);
             this.label4.TabIndex = 5;
@@ -208,7 +208,7 @@
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(254, 11);
+            this.label8.Location = new System.Drawing.Point(197, 11);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 12);
             this.label8.TabIndex = 9;
@@ -232,7 +232,7 @@
             this.groupBox_Attacker.Controls.Add(this.tableLayoutPanel_Attacker);
             this.groupBox_Attacker.Location = new System.Drawing.Point(12, 200);
             this.groupBox_Attacker.Name = "groupBox_Attacker";
-            this.groupBox_Attacker.Size = new System.Drawing.Size(869, 367);
+            this.groupBox_Attacker.Size = new System.Drawing.Size(874, 367);
             this.groupBox_Attacker.TabIndex = 2;
             this.groupBox_Attacker.TabStop = false;
             this.groupBox_Attacker.Text = "攻击角色";
@@ -273,7 +273,7 @@
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel_Attacker.Size = new System.Drawing.Size(852, 336);
+            this.tableLayoutPanel_Attacker.Size = new System.Drawing.Size(862, 336);
             this.tableLayoutPanel_Attacker.TabIndex = 2;
             // 
             // label_AttaCRD
@@ -490,7 +490,7 @@
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(816, 13);
+            this.label9.Location = new System.Drawing.Point(821, 13);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 12);
             this.label9.TabIndex = 17;

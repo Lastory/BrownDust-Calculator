@@ -22,7 +22,7 @@ namespace BrownDust_Calculator
 
     partial class Form_Main
     {
-        private static class Savefile
+        private static class Savefile  //存档相关
         {
             public static void LoadSavefile()  //读取（不存在则创建）存档
             {
@@ -63,8 +63,7 @@ namespace BrownDust_Calculator
                 }
                 else { File.Create("save.save"); }  //创建一个存档文件
             }
-
-            public static void SaveSavefile()
+            public static void SaveSavefile()  //存储存档
             {
                 using (StreamWriter file = new StreamWriter("save.save"))
                 {
@@ -126,38 +125,19 @@ namespace BrownDust_Calculator
                 public bool isAddRatio = false, isAddReal = false;  //追伤是否为血量比例伤害、是否为真伤
                 public bool isImmunnity = false;  //是否有免疫技能
 
-                public void SetStatusUp(uint n, TypeSkillDetail[] arr)
-                {
-                    nStatsUp = n;
-                    StatsUp = arr;
-                }
-                public void SetBuffSkill(uint n, TypeSkillDetail[] arr)
-                {
-                    nBuffSkill = n;
-                    BuffSkill = arr;
-                }
-                public void SetAddDamage(uint n, TypeSkillDetail[] arr)
-                {
-                    nAddDamage = n;
-                    AddDamage = arr;
-                }
+                public void SetStatusUp(uint n, TypeSkillDetail[] arr) { nStatsUp = n; StatsUp = arr; }
+                public void SetBuffSkill(uint n, TypeSkillDetail[] arr) { nBuffSkill = n; BuffSkill = arr; }
+                public void SetAddDamage(uint n, TypeSkillDetail[] arr) { nAddDamage = n; AddDamage = arr; }
             }
-            private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI, CUT; }
-            public struct TypeDamage
-            {
-                public double normal, critical, expected;
-                public double crrPer;
-            }
+            private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI; }
+            private struct TypeDamage { public double normal, critical, expected, crrPer; }
 
             public string Name;
-            public TypeSkill Skills = new TypeSkill();
             private TypeStats BaseStats, NowStats, StatsUp;
-            public TypeDamage BaseDamage, AddDamage;
+            public TypeSkill Skills = new TypeSkill();
+            private TypeDamage BaseDamage, AddDamage;
 
-            public AttackCharacter(string name)
-            {
-                Name = name;
-            }
+            public AttackCharacter(string name) { Name = name; }
 
             private void DoStatsUp()
             {
@@ -178,7 +158,6 @@ namespace BrownDust_Calculator
                     }
                 }
             }
-
             public void DoBuffSkill()
             {
                 for (int i = 0; i < Skills.nBuffSkill; i++)
@@ -206,7 +185,7 @@ namespace BrownDust_Calculator
 
             public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)  //计算攻击角色入场属性
             {
-                BaseStats.ATK = atk; BaseStats.CRR = crr; BaseStats.CRD = crd; BaseStats.AGI = agi; BaseStats.DEF = def;
+                BaseStats = new TypeStats { ATK = atk, CRR = crr, CRD = crd, AGI = agi, DEF = def };
                 DoStatsUp();
                 StatsUp.ATK = atkbuff; StatsUp.CRR = crrbuff; StatsUp.CRD = crdbuff;
                 CheckStats();
@@ -219,7 +198,6 @@ namespace BrownDust_Calculator
                 BaseDamage.expected = BaseDamage.normal * (1 + NowStats.CRR * NowStats.CRD);
                 BaseDamage.crrPer = NowStats.CRR * 100;
             }
-
             public string GetBaseDamage()
             {
                 string result = "";
@@ -228,7 +206,6 @@ namespace BrownDust_Calculator
                 result += "\n" + BaseDamage.expected.ToString("f0");
                 return result;
             }
-
             public void CheckAddDamage()
             {
                 if (Skills.nAddDamage > 0)
@@ -258,7 +235,6 @@ namespace BrownDust_Calculator
                     AddDamage.crrPer = NowStats.CRR * 100;
                 }
             }
-
             public string GetAddDamage()
             {
                 string result = "";
@@ -280,7 +256,6 @@ namespace BrownDust_Calculator
                 else result = "/";
                 return result;
             }
-
             public string GetSumDamage()
             {
                 if (Skills.isAddRatio) return "X";
@@ -294,6 +269,21 @@ namespace BrownDust_Calculator
                 result += (BaseDamage.expected + AddDamage.expected).ToString("f0");
 
                 return result;
+            }
+        }
+        private class DefendCharacter
+        {
+            private struct TypeStats { public double HP, DEF, AGI, CUT, Weaking; }
+            private struct TypeDamage { public double normal, critical, expected, crrPer; }
+
+            public string Name;
+            private TypeStats BaseStats;
+
+            public DefendCharacter(string name) { Name = name; }
+
+            public void SetStats(int hp, double def, double agi, double cut, double weaking)
+            {
+                 BaseStats = new TypeStats { HP = hp, DEF = def, AGI = agi, Weaking = weaking };
             }
         }
 
@@ -363,7 +353,8 @@ namespace BrownDust_Calculator
 
         private static ComboBox[] comboBox_AttackerName = new ComboBox[AttackerChartHight];
         private static TextBox[,] textBox_AttackerStats = new TextBox[AttackerChartHight, 5];  //ATK, CRR, CRD, AGI, DEF
-        private static Label[,] label_AttackDamage = new Label[AttackerChartHight, 3];  //Normal, Add, Sum
+        private static Label[,] label_AttackerDamage = new Label[AttackerChartHight, 3];  //Normal, Add, Sum
+        private static RadioButton[] radioButton_AttackerChoose = new RadioButton[AttackerChartHight];
         private void DrawAttackerPanel()  //绘制攻击角色数据板块
         {
             object[] list = new object[AttackerNumber];
@@ -387,16 +378,20 @@ namespace BrownDust_Calculator
                 }
                 for (int j = 0; j < 3; j++)
                 {
-                    label_AttackDamage[i, j] = new Label();
-                    tableLayoutPanel_Attacker.Controls.Add(label_AttackDamage[i, j], j + 6, i + 1);
-                    label_AttackDamage[i, j].Anchor = AnchorStyles.None;
-                    label_AttackDamage[i, j].AutoSize = true;
-                    label_AttackDamage[i, j].TextAlign = System.Drawing.ContentAlignment.TopCenter;
+                    label_AttackerDamage[i, j] = new Label();
+                    tableLayoutPanel_Attacker.Controls.Add(label_AttackerDamage[i, j], j + 6, i + 1);
+                    label_AttackerDamage[i, j].Anchor = AnchorStyles.None;
+                    label_AttackerDamage[i, j].AutoSize = true;
+                    label_AttackerDamage[i, j].TextAlign = System.Drawing.ContentAlignment.TopCenter;
                 }
+                radioButton_AttackerChoose[i] = new RadioButton();
+                tableLayoutPanel_Attacker.Controls.Add(radioButton_AttackerChoose[i], 9, i + 1);
+                radioButton_AttackerChoose[i].Anchor = AnchorStyles.None;
+                radioButton_AttackerChoose[i].AutoSize = true;
             }
         }
 
-        private static TextBox[,] textBox_DefenderStats = new TextBox[DefenderChartHight, 6];  //Name, HP, DEF, CUT, AGI, Debuff
+        private static TextBox[,] textBox_DefenderStats = new TextBox[DefenderChartHight, 6];  //Name, HP, DEF, AGI, DEF, Weaking
         private void DrawDeffenderPanel()  //绘制防御角色数据板块
         {
             for (int i = 0; i < DefenderChartHight; i++)
@@ -421,7 +416,7 @@ namespace BrownDust_Calculator
         }
 
         private static AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
-        private static void CalcutateNormalDamage()  //普攻
+        private static void CalcutateNormalDamage()  //计算支援&攻击角色出手前数据 + 计算普攻
         {
             //计算选中的支援角色提供的buff量
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
@@ -452,13 +447,12 @@ namespace BrownDust_Calculator
 
                     //输出普攻伤害
                     ComparedAttacker[i].CheckBaseDamage();
-                    label_AttackDamage[i, 0].Text = ComparedAttacker[i].GetBaseDamage();
+                    label_AttackerDamage[i, 0].Text = ComparedAttacker[i].GetBaseDamage();
                 }
             }
 
         }
-
-        private static void CalcutateAddDamage()  //追伤
+        private static void CalcutateAddDamage()  //计算攻击角色普攻后数据 + 计算追伤
         {
             for (int i = 0; i < AttackerChartHight; i++)
             {
@@ -467,16 +461,39 @@ namespace BrownDust_Calculator
                     ComparedAttacker[i].DoBuffSkill();
 
                     ComparedAttacker[i].CheckAddDamage();
-                    label_AttackDamage[i, 1].Text = ComparedAttacker[i].GetAddDamage();
+                    label_AttackerDamage[i, 1].Text = ComparedAttacker[i].GetAddDamage();
                 }
             }
         }
-
-        private static void CalcutateSumDamage()  //总和
+        private static void CalcutateSumDamage()  //计算总和
         {
             for (int i = 0; i < AttackerChartHight; i++)
                 if (comboBox_AttackerName[i].SelectedIndex >= 0)
-                    label_AttackDamage[i, 2].Text = ComparedAttacker[i].GetSumDamage();
+                    label_AttackerDamage[i, 2].Text = ComparedAttacker[i].GetSumDamage();
+        }
+        
+        private static DefendCharacter[] ComparedDefender = new DefendCharacter[DefenderChartHight];
+        private static void SetDefenderStats()  //计算防御角色数据
+        {
+            int SelectedAttacker = -1;
+            for (int i = 0; i < AttackerChartHight; i++)
+                if (radioButton_AttackerChoose[i].Checked) { SelectedAttacker = i; break; }
+
+            if (SelectedAttacker != -1)
+            {
+                for (int i = 0; i < DefenderChartHight; i++)
+                {
+                    if (textBox_DefenderStats[i, 0].Text != "")
+                    {
+                        //设定防御角色属性
+                        ComparedDefender[i] = new DefendCharacter(textBox_DefenderStats[i, 0].Text);
+                        double[] stats = new double[6];
+                        for (int j = 1; j <= 5; j++) { stats[j] = double.Parse(textBox_DefenderStats[i, j].Text); }
+                        ComparedDefender[i].SetStats(Convert.ToInt32(stats[1]), stats[2], stats[3], stats[4], stats[5]);
+
+                    }
+                }
+            }
         }
 
         static void CalculateDamage()
@@ -484,6 +501,8 @@ namespace BrownDust_Calculator
             CalcutateNormalDamage();
             CalcutateAddDamage();
             CalcutateSumDamage();
+
+
         }
     }
 }
