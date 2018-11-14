@@ -368,7 +368,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button button_Calculate;
         private System.Windows.Forms.GroupBox groupBox1;
-        public System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Attacker;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Attacker;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
@@ -378,7 +378,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox_Supporter;
-        public System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Supporter;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Supporter;
         private System.Windows.Forms.Label label_S03;
         private System.Windows.Forms.Label label_S02;
         private System.Windows.Forms.Label label_S01;

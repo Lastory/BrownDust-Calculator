@@ -22,9 +22,9 @@ namespace BrownDust_Calculator
 
     partial class Form1
     {
-        private class TpyeSavefile
+        private static class Savefile
         {
-            public void LoadSavefile()
+            public static void LoadSavefile()
             {
                 if (File.Exists("Save.save"))
                 {
@@ -39,7 +39,9 @@ namespace BrownDust_Calculator
                             line = file.ReadLine();
                             if (line != "-")
                             {
-
+                                string[] load = line.Split('|');
+                                comboBox_AttackerName[i].SelectedIndex = int.Parse(load[0]);
+                                for (int j = 0; j < 5; j++) textBox_AttackerStats[i, j].Text = load[j + 1];
                             }
                         }
                     }
@@ -47,7 +49,7 @@ namespace BrownDust_Calculator
                 else { File.Create("save.save"); }  //创建一个存档文件
             }
 
-            public void SaveSavefile()
+            public static void SaveSavefile()
             {
                 using (StreamWriter file = new StreamWriter("save.save"))
                 {
@@ -65,12 +67,6 @@ namespace BrownDust_Calculator
                     }
                 }
             }
-        }
-        private TpyeSavefile Savefile = new TpyeSavefile();
-
-        private static class Work
-        {
-
         }
 
         private class SupportCharacter
@@ -197,9 +193,9 @@ namespace BrownDust_Calculator
         static int AttackerNumber = 1;
         static int AttackerChartHight = 8;
 
-        private SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
-        private AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
-        private void SetCharacters()  //设定角色基本数据
+        private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
+        private static AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
+        private static void SetCharacters()  //设定角色基本数据
         {
             Supporter[0] = new SupportCharacter("眼镜", 1.6496, 0.40, 0.05, 0.00, 0, 0);
             Supporter[1] = new SupportCharacter("弦月", 1.5118, 0.15, 0.15, 0.36, 0, 0);
@@ -219,8 +215,8 @@ namespace BrownDust_Calculator
             }
         }
 
-        private Label[,] label_SupporterData = new Label[SupporterNumber, 4];
-        private CheckBox[] checkBox_SupporterChoose = new CheckBox[SupporterNumber];
+        private static Label[,] label_SupporterData = new Label[SupporterNumber, 4];
+        private static CheckBox[] checkBox_SupporterChoose = new CheckBox[SupporterNumber];
         private void DrawSupporterData()  //绘制支援角色数据板块
         {
             string SupportAmount(double buff)
@@ -249,9 +245,9 @@ namespace BrownDust_Calculator
             }
         }
 
-        private ComboBox[] comboBox_AttackerName = new ComboBox[AttackerChartHight];
-        private TextBox[,] textBox_AttackerStats = new TextBox[AttackerChartHight, 5];  //ATK, CRR, CRD, AGI, DEF
-        private Label[,] label_AttackDamage = new Label[AttackerChartHight, 3];  //Normal, Add, Sum
+        private static ComboBox[] comboBox_AttackerName = new ComboBox[AttackerChartHight];
+        private static TextBox[,] textBox_AttackerStats = new TextBox[AttackerChartHight, 5];  //ATK, CRR, CRD, AGI, DEF
+        private static Label[,] label_AttackDamage = new Label[AttackerChartHight, 3];  //Normal, Add, Sum
         private void DrawAttackerPanel()  //绘制攻击角色数据板块
         {
             object[] list = new object[AttackerNumber];
@@ -286,14 +282,14 @@ namespace BrownDust_Calculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Savefile.LoadSavefile();  //读取（不存在则创建）存档，并以此进行第一次计算
             SetCharacters();  //设定角色基本数据
             DrawSupporterData();  //绘制支援角色数据
             DrawAttackerPanel();  //绘制攻击角色数据板块
+            Savefile.LoadSavefile();  //读取（不存在则创建）存档，并以此进行第一次计算
         }
 
-        private AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
-        private void CalculateStatus()
+        private static AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
+        private static void CalculateStatus()
         {
             //计算选中的支援角色提供的buff量
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
@@ -313,8 +309,10 @@ namespace BrownDust_Calculator
                 int order = comboBox_AttackerName[i].SelectedIndex;
                 if (order >= 0)
                 {
-                    ComparedAttacker[i] = new AttackCharacter(Attacker[order].Name);
-                    ComparedAttacker[i].Skills = Attacker[order].Skills;
+                    ComparedAttacker[i] = new AttackCharacter(Attacker[order].Name)
+                    {
+                        Skills = Attacker[order].Skills
+                    };
                     ComparedAttacker[i].SetStats(
                         textBox_AttackerStats[i, 0].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 0].Text),
                         textBox_AttackerStats[i, 1].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 1].Text) / 100,
@@ -326,7 +324,7 @@ namespace BrownDust_Calculator
             }
         }
 
-        void Calculate()
+        static void Calculate()
         {
             CalculateStatus();
 
