@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace BrownDust_Calculator
 {
-    public partial class Form1 : Form
+    public partial class Form_Main : Form
     {
-        public Form1()
+        public Form_Main()
         {
             InitializeComponent();
         }
 
         private void button_DO_Click(object sender, EventArgs e)
         {
-            Calculate();
+            CalculateDamage();
         }
 
         private void button_Save_Click(object sender, EventArgs e)
