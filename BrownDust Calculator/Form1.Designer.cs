@@ -34,14 +34,15 @@
             this.button_Calculate = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Attacker = new System.Windows.Forms.TableLayoutPanel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox_Supporter = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Supporter = new System.Windows.Forms.TableLayoutPanel();
             this.label_S03 = new System.Windows.Forms.Label();
@@ -50,7 +51,6 @@
             this.label_S00 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -66,7 +66,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(888, 868);
+            this.tabControl1.Size = new System.Drawing.Size(888, 660);
             this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
@@ -79,17 +79,17 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(880, 842);
+            this.tabPage1.Size = new System.Drawing.Size(880, 634);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Main";
             // 
             // button_Save
             // 
-            this.button_Save.Location = new System.Drawing.Point(482, 115);
+            this.button_Save.Location = new System.Drawing.Point(682, 37);
             this.button_Save.Name = "button_Save";
             this.button_Save.Size = new System.Drawing.Size(138, 40);
             this.button_Save.TabIndex = 4;
-            this.button_Save.Text = "保存";
+            this.button_Save.Text = "Save";
             this.button_Save.UseVisualStyleBackColor = true;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
@@ -99,7 +99,7 @@
             this.button_Calculate.Name = "button_Calculate";
             this.button_Calculate.Size = new System.Drawing.Size(138, 40);
             this.button_Calculate.TabIndex = 3;
-            this.button_Calculate.Text = "计算";
+            this.button_Calculate.Text = "Do it!";
             this.button_Calculate.UseVisualStyleBackColor = true;
             this.button_Calculate.Click += new System.EventHandler(this.button_DO_Click);
             // 
@@ -150,36 +150,6 @@
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel_Attacker.Size = new System.Drawing.Size(816, 373);
             this.tableLayoutPanel_Attacker.TabIndex = 2;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(717, 15);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 12);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "合计";
-            // 
-            // label7
-            // 
-            this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(553, 15);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(29, 12);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "追伤";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(392, 15);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 12);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "普伤";
             // 
             // label4
             // 
@@ -233,6 +203,47 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "敏捷(%)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(717, 15);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 12);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "合计";
+            // 
+            // label7
+            // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(553, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(29, 12);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "追伤";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(392, 15);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 12);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "普伤";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(286, 9);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(29, 24);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "防御(%)";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // groupBox_Supporter
             // 
@@ -325,30 +336,19 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(880, 842);
+            this.tabPage2.Size = new System.Drawing.Size(880, 634);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Supporter Setting";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(286, 9);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(29, 24);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "防御(%)";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(912, 822);
+            this.ClientSize = new System.Drawing.Size(912, 687);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
-            this.Text = "BrownDust 计算器";
+            this.Text = "BrownDust Calculator";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

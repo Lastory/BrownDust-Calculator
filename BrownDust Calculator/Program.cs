@@ -85,24 +85,22 @@ namespace BrownDust_Calculator
         {
             public class TypeSkill
             {
-                public uint nStatsUp = 0;
-                public uint nBuffSkill = 0;
-                public uint nAddDamage = 0;
-                //{0-基础，1-攻击，2-防御，3-暴率，4-暴伤，5-敏捷}
+                public uint nStatsUp = 0, nBuffSkill = 0, nAddDamage = 0, nAddRatio = 0;
                 public struct TypeSkillDetail
                 {
                     public string from, to;
                     public double rate;
                 }
 
-                public TypeSkillDetail[] StatusUp = new TypeSkillDetail[5];//依赖属性，增长属性，倍率
-                public TypeSkillDetail[] BuffSkill = new TypeSkillDetail[5];//增长属性，buff量
-                public TypeSkillDetail[] AddDamage = new TypeSkillDetail[5];//依赖属性，倍率
+                public TypeSkillDetail[] StatsUp = new TypeSkillDetail[5];  //依赖属性，增长属性，倍率
+                public TypeSkillDetail[] BuffSkill = new TypeSkillDetail[5];  //增长属性，buff量
+                public TypeSkillDetail[] AddDamage = new TypeSkillDetail[5];  //依赖属性，倍率
+                public bool isAddRatio = false, isAddReal = false;  //追伤是否为血量比例伤害、是否为真伤
 
                 public void SetStatusUp(uint n, TypeSkillDetail[] arr)
                 {
                     nStatsUp = n;
-                    StatusUp = arr;
+                    StatsUp = arr;
                 }
                 public void SetBuffSkill(uint n, TypeSkillDetail[] arr)
                 {
@@ -124,8 +122,8 @@ namespace BrownDust_Calculator
 
             public string Name;
             public TypeSkill Skills = new TypeSkill();
-            private TypeStats BaseStats, NowSatas, StatsUp;
-            private TypeDamage BaseDamage;
+            private TypeStats BaseStats, NowStats, StatsUp;
+            public TypeDamage BaseDamage, AddDamage;
 
             public AttackCharacter(string name)
             {
@@ -136,14 +134,14 @@ namespace BrownDust_Calculator
             {
                 for (int i = 0; i < Skills.nStatsUp; i++)
                 {
-                    double buff = Skills.StatusUp[i].rate;
-                    switch (Skills.StatusUp[i].from)
+                    double buff = Skills.StatsUp[i].rate;
+                    switch (Skills.StatsUp[i].from)
                     {
                         case "DEF": buff *= BaseStats.DEF; break;
                         case "CRR": buff *= BaseStats.CRR; break;
                         case "AGI": buff *= BaseStats.AGI; break;
                     }
-                    switch (Skills.StatusUp[i].to)
+                    switch (Skills.StatsUp[i].to)
                     {
                         case "ATK": BaseStats.ATK *= 1 + buff; break;
                         case "CRR": BaseStats.CRR += buff; break;
@@ -152,45 +150,127 @@ namespace BrownDust_Calculator
                 }
             }
 
-            private void CheckStats()
+            public void DoBuffSkill()
             {
-                NowSatas.ATK = BaseStats.ATK * (1 + StatsUp.ATK);
-                NowSatas.CRR = Math.Max(0, Math.Min(1, BaseStats.CRR + StatsUp.CRR));
-                NowSatas.CRD = Math.Max(0, BaseStats.CRD + StatsUp.CRD);
-                NowSatas.AGI = Math.Max(0, Math.Min(1, BaseStats.AGI + StatsUp.AGI));
-                NowSatas.DEF = Math.Max(0, Math.Min(1, BaseStats.DEF + StatsUp.DEF));
-            }
-
-            public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)
-            {
-                BaseStats.ATK = atk; BaseStats.CRR = crr; BaseStats.CRD = crd; BaseStats.AGI = agi; BaseStats.DEF = def;
-                DoStatsUp();
-                StatsUp.ATK = atkbuff; StatsUp.CRR = crrbuff; StatsUp.CRD = crrbuff;
-
+                for (int i = 0; i < Skills.nBuffSkill; i++)
+                {
+                    double buff = Skills.BuffSkill[i].rate;
+                    switch (Skills.BuffSkill[i].to)
+                    {
+                        case "ATK": StatsUp.ATK += buff; break;
+                        case "CRR": StatsUp.CRR += buff; break;
+                        case "CRD": StatsUp.CRD += buff; break;
+                        case "AGI": StatsUp.AGI += buff; break;
+                    }
+                }
                 CheckStats();
             }
 
-            private void CheckBaseDamage()
+            private void CheckStats()
             {
-                BaseDamage.normal = NowSatas.ATK;
-                BaseDamage.critical = NowSatas.ATK * (1 + NowSatas.CRD);
-                BaseDamage.expected = NowSatas.ATK * (1 + NowSatas.CRR * NowSatas.CRD);
-                BaseDamage.crrPer = NowSatas.CRR * 100;
+                NowStats.ATK = BaseStats.ATK * (1 + StatsUp.ATK);
+                NowStats.CRR = Math.Max(0, Math.Min(1, BaseStats.CRR + StatsUp.CRR));
+                NowStats.CRD = Math.Max(0, BaseStats.CRD + StatsUp.CRD);
+                NowStats.AGI = Math.Max(0, Math.Min(1, BaseStats.AGI + StatsUp.AGI));
+                NowStats.DEF = Math.Max(0, Math.Min(1, BaseStats.DEF + StatsUp.DEF));
+            }
+
+            public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)  //计算攻击角色入场属性
+            {
+                BaseStats.ATK = atk; BaseStats.CRR = crr; BaseStats.CRD = crd; BaseStats.AGI = agi; BaseStats.DEF = def;
+                DoStatsUp();
+                StatsUp.ATK = atkbuff; StatsUp.CRR = crrbuff; StatsUp.CRD = crdbuff;
+                CheckStats();
+            }
+
+            public void CheckBaseDamage()
+            {
+                BaseDamage.normal = NowStats.ATK;
+                BaseDamage.critical = BaseDamage.normal * (1 + NowStats.CRD);
+                BaseDamage.expected = BaseDamage.normal * (1 + NowStats.CRR * NowStats.CRD);
+                BaseDamage.crrPer = NowStats.CRR * 100;
             }
 
             public string GetBaseDamage()
             {
-                CheckBaseDamage();
                 string result = "";
                 result += BaseDamage.normal.ToString("f0") + " " + (100 - BaseDamage.crrPer).ToString("f0") + "% | ";
                 result += BaseDamage.critical.ToString("f0") + " " + BaseDamage.crrPer.ToString("f0") + "%";
                 result += "\n" + BaseDamage.expected.ToString("f0");
                 return result;
             }
+
+            public void CheckAddDamage()
+            {
+                if (Skills.nAddDamage > 0)
+                {
+                    AddDamage.normal = 0;
+                    if (Skills.isAddRatio)
+                        for (int i = 0; i < Skills.nAddDamage; i++) AddDamage.normal += Skills.AddDamage[i].rate;
+                    else
+                    {
+                        for (int i = 0; i < Skills.nAddDamage; i++)
+                        {
+                            double from;
+                            switch (Skills.AddDamage[i].from)
+                            {
+                                case "DEF": from = NowStats.DEF; break;
+                                case "CRR": from = NowStats.CRR; break;
+                                case "CRD": from = NowStats.CRD; break;
+                                case "AGI": from = NowStats.AGI; break;
+                                default: from = 1; break;
+                            }
+                            AddDamage.normal += NowStats.ATK * from * Skills.AddDamage[i].rate;
+                        }
+                    }
+
+                    AddDamage.critical = AddDamage.normal * (1 + NowStats.CRD);
+                    AddDamage.expected = AddDamage.normal * (1 + NowStats.CRR * NowStats.CRD);
+                    AddDamage.crrPer = NowStats.CRR * 100;
+                }
+            }
+
+            public string GetAddDamage()
+            {
+                string result = "";
+                if (Skills.nAddDamage > 0)
+                {
+                    if (Skills.isAddRatio)
+                    {
+                        result += (AddDamage.normal * 100).ToString("f1") + "% " + (100 - AddDamage.crrPer).ToString("f0") + "% | ";
+                        result += (AddDamage.critical * 100).ToString("f1") + "% " + AddDamage.crrPer.ToString("f0") + "%";
+                        result += "\n" + (AddDamage.expected * 100).ToString("f1") + "%";
+                    }
+                    else
+                    {
+                        result += AddDamage.normal.ToString("f0") + " " + (100 - AddDamage.crrPer).ToString("f0") + "% | ";
+                        result += AddDamage.critical.ToString("f0") + " " + AddDamage.crrPer.ToString("f0") + "%";
+                        result += "\n" + AddDamage.expected.ToString("f0");
+                    }
+                }
+                else result = "/";
+                return result;
+            }
+
+            public string GetSumDamage()
+            {
+                if (Skills.isAddRatio) return "X";
+                if (Skills.nAddDamage == 0) return GetBaseDamage();
+
+                string result = "";
+                result += (BaseDamage.normal + AddDamage.normal).ToString("f0") + " ";
+                result += ((100 - BaseDamage.crrPer) * (100 - AddDamage.crrPer) / 100).ToString("f0") + "% | ";
+                result += (BaseDamage.critical + AddDamage.critical).ToString("f0") + " ";
+                result += (BaseDamage.crrPer * AddDamage.crrPer / 100).ToString("f0") + "%\n";
+                result += (BaseDamage.expected + AddDamage.expected).ToString("f0");
+
+                return result;
+            }
         }
 
+        
         static int SupporterNumber = 4;
-        static int AttackerNumber = 1;
+        static int AttackerNumber = 2;
         static int AttackerChartHight = 8;
 
         private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
@@ -206,12 +286,18 @@ namespace BrownDust_Calculator
                 Attacker[0] = new AttackCharacter("女忍");
                 Attacker[0].Skills.SetStatusUp(2, new AttackCharacter.TypeSkill.TypeSkillDetail[] {
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = ""   , to = "CRD", rate = 0.50 } });
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 } });
                 Attacker[0].Skills.SetBuffSkill(2, new AttackCharacter.TypeSkill.TypeSkillDetail[] {
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate =1.50 },
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate =0.35 } });
                 Attacker[0].Skills.SetAddDamage(1, new AttackCharacter.TypeSkill.TypeSkillDetail[] {
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 } });
+            }
+            {
+                Attacker[1] = new AttackCharacter("修女");
+                Attacker[1].Skills.SetAddDamage(1, new AttackCharacter.TypeSkill.TypeSkillDetail[] {
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 0.20 } });
+                Attacker[1].Skills.isAddRatio = true;
             }
         }
 
@@ -289,7 +375,7 @@ namespace BrownDust_Calculator
         }
 
         private static AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
-        private static void CalculateStatus()
+        private static void CalcutateNormalDamage()  //普攻
         {
             //计算选中的支援角色提供的buff量
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
@@ -302,17 +388,14 @@ namespace BrownDust_Calculator
                     CRDbuff += Supporter[i].CRDup;
                 }
             }
-
-            //计算攻击角色入场状态 + 为攻击角色套用支援buff
+            
             for (int i = 0; i < AttackerChartHight; i++)
             {
                 int order = comboBox_AttackerName[i].SelectedIndex;
                 if (order >= 0)
                 {
-                    ComparedAttacker[i] = new AttackCharacter(Attacker[order].Name)
-                    {
-                        Skills = Attacker[order].Skills
-                    };
+                    //计算攻击角色入场状态 + 为攻击角色套用支援buff
+                    ComparedAttacker[i] = new AttackCharacter(Attacker[order].Name) { Skills = Attacker[order].Skills };
                     ComparedAttacker[i].SetStats(
                         textBox_AttackerStats[i, 0].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 0].Text),
                         textBox_AttackerStats[i, 1].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 1].Text) / 100,
@@ -320,22 +403,41 @@ namespace BrownDust_Calculator
                         textBox_AttackerStats[i, 3].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 3].Text) / 100,
                         textBox_AttackerStats[i, 4].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 4].Text) / 100,
                         ATKbuff, CRRbuff, CRDbuff);
+
+                    //输出普攻伤害
+                    ComparedAttacker[i].CheckBaseDamage();
+                    label_AttackDamage[i, 0].Text = ComparedAttacker[i].GetBaseDamage();
                 }
             }
+            
         }
 
-        static void Calculate()
+        private static void CalcutateAddDamage()  //追伤
         {
-            CalculateStatus();
-
-            //输出普伤
             for (int i = 0; i < AttackerChartHight; i++)
             {
                 if (comboBox_AttackerName[i].SelectedIndex >= 0)
                 {
-                    label_AttackDamage[i, 0].Text = ComparedAttacker[i].GetBaseDamage();
+                    ComparedAttacker[i].DoBuffSkill();
+
+                    ComparedAttacker[i].CheckAddDamage();
+                    label_AttackDamage[i, 1].Text = ComparedAttacker[i].GetAddDamage();
                 }
             }
+        }
+
+        private static void CalcutateSumAttack()  //总和
+        {
+            for (int i = 0; i < AttackerChartHight; i++)
+                if (comboBox_AttackerName[i].SelectedIndex >= 0)
+                        label_AttackDamage[i, 2].Text = ComparedAttacker[i].GetSumDamage();
+        }
+
+        static void Calculate()
+        {
+            CalcutateNormalDamage();  //普攻  
+            CalcutateAddDamage();  //追伤
+            CalcutateSumAttack();  //总和
         }
     }
 }
