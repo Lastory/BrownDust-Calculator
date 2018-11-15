@@ -151,18 +151,35 @@ namespace BrownDust_Calculator
                 }
                 Sort();
             }
+            public TypeDamage ShallowCopy() { return (TypeDamage) this.MemberwiseClone(); }
 
-            public static TypeDamage operator +(TypeDamage a, TypeDamage b)
+            public static TypeDamage operator +(TypeDamage a, TypeDamage b)  //伤害整数化后再相加
             {
+                if (a.Count == 0) return b.ShallowCopy();
+                if (b.Count == 0) return a.ShallowCopy();
+
                 int size = a.Count * b.Count;
                 double[] detail = new double[size * 2];
 
                 for (int i = 0; i < a.Count; i++)
                     for (int j = 0; j < b.Count; j++)
                     {
-                        detail[(i * b.Count + j) * 2] = a.Dmg[i] + b.Dmg[j];
+                        detail[(i * b.Count + j) * 2] = (int)a.Dmg[i] + (int)b.Dmg[j];
                         detail[(i * b.Count + j) * 2 + 1] = a.Pr[i] * b.Pr[j];
                     }
+
+                return new TypeDamage(size, detail);
+            }
+            public static TypeDamage operator *(double rate, TypeDamage a)
+            {
+                int size = a.Count;
+                double[] detail = new double[size * 2];
+
+                for (int i = 0; i < size; i++)
+                {
+                    detail[i * 2] = a.Dmg[i] * rate;
+                    detail[i * 2 + 1] = a.Pr[i];
+                }
 
                 return new TypeDamage(size, detail);
             }
@@ -176,6 +193,8 @@ namespace BrownDust_Calculator
 
             public string WriteNumericalDamage()
             {
+                if (Count == 0) return "/";
+
                 string result = "";
                 if (Count == 1)
                 {
@@ -191,6 +210,8 @@ namespace BrownDust_Calculator
             }
             public string WriteRatioDamage()
             {
+                if (Count == 0) return "/";
+
                 string result = "";
                 if (Count == 1)
                 {
@@ -221,33 +242,40 @@ namespace BrownDust_Calculator
         {
             public class TypeSkill
             {
-                public int nStatsUp = 0, nBuffSkill = 0, nAddDamage = 0, nAddRatio = 0;
+                public int nStatsBuff = 0, nAfterBuff = 0, nAddAttackNormal = 0, nAddAttackReal = 0;
                 public struct TypeSkillDetail
                 {
                     public string from, to;
                     public double rate;
                 }
 
-                public TypeSkillDetail[] StatsUp = new TypeSkillDetail[5];  //依赖属性，增长属性，倍率
-                public TypeSkillDetail[] BuffSkill = new TypeSkillDetail[5];  //增长属性，buff量
-                public TypeSkillDetail AddDamage = new TypeSkillDetail();  //依赖属性，倍率
-                public bool isAddRatio = false, isAddReal = false;  //追伤是否为血量比例伤害、是否为真伤
+                public TypeSkillDetail[] StatsBuff = new TypeSkillDetail[5];  //依赖属性，增长属性，倍率
+                public TypeSkillDetail[] AfterBuff = new TypeSkillDetail[5];  //增长属性，buff量
+                public TypeSkillDetail AddAttackNormal , AddAttackReal ;  //依赖属性，倍率
+                public bool isAddRatio = false;  //追伤是否为血量比例伤害
                 public bool isImmunnity = false;  //是否有免疫技能
 
-                public void SetStatusUp(params TypeSkillDetail[] arr)
+                public void SetStatsBuff(params TypeSkillDetail[] detail)
                 {
-                    nStatsUp = arr.Length;
-                    StatsUp = arr;
+                    nStatsBuff = detail.Length;
+                    StatsBuff = detail;
                 }
-                public void SetBuffSkill(params TypeSkillDetail[] arr)
+                public void SetAfterBuff(params TypeSkillDetail[] detail)
                 {
-                    nBuffSkill = arr.Length; ;
-                    BuffSkill = arr;
+                    nAfterBuff = detail.Length; ;
+                    AfterBuff = detail;
                 }
-                public void SetAddDamage(TypeSkillDetail detail)
+                public void SetAddAttackNormal(TypeSkillDetail detail)
                 {
-                    nAddDamage = 1;
-                    AddDamage = detail;
+                    nAddAttackNormal = 1;
+                    AddAttackNormal = detail;
+                    if (detail.from == "EHP") isAddRatio = true;
+                }
+                public void SetAddAttackReal(TypeSkillDetail detail)
+                {
+                    nAddAttackReal = 1;
+                    AddAttackReal = detail;
+                    if (detail.from == "EHP") isAddRatio = true;
                 }
             }
             private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI; }
@@ -255,23 +283,23 @@ namespace BrownDust_Calculator
             public string Name;
             private TypeStats BaseStats, NowStats, StatsUp;
             public TypeSkill Skills = new TypeSkill();
-            public TypeDamage BaseDamage, AddDamage;
+            public TypeDamage BaseDamage, AddDamageNormal, AddDamageReal;
 
             public AttackCharacter(string name) { Name = name; }
-            public AttackCharacter ShallowCopy() { return (AttackCharacter) MemberwiseClone(); }
+            public AttackCharacter ShallowCopy() { return (AttackCharacter) this.MemberwiseClone(); }
 
             private void DoStatsUp()
             {
-                for (int i = 0; i < Skills.nStatsUp; i++)
+                for (int i = 0; i < Skills.nStatsBuff; i++)
                 {
-                    double buff = Skills.StatsUp[i].rate;
-                    switch (Skills.StatsUp[i].from)
+                    double buff = Skills.StatsBuff[i].rate;
+                    switch (Skills.StatsBuff[i].from)
                     {
                         case "DEF": buff *= BaseStats.DEF; break;
                         case "CRR": buff *= BaseStats.CRR; break;
                         case "AGI": buff *= BaseStats.AGI; break;
                     }
-                    switch (Skills.StatsUp[i].to)
+                    switch (Skills.StatsBuff[i].to)
                     {
                         case "ATK": BaseStats.ATK *= 1 + buff; break;
                         case "CRR": BaseStats.CRR += buff; break;
@@ -281,10 +309,10 @@ namespace BrownDust_Calculator
             }
             public void DoBuffSkill()
             {
-                for (int i = 0; i < Skills.nBuffSkill; i++)
+                for (int i = 0; i < Skills.nAfterBuff; i++)
                 {
-                    double buff = Skills.BuffSkill[i].rate;
-                    switch (Skills.BuffSkill[i].to)
+                    double buff = Skills.AfterBuff[i].rate;
+                    switch (Skills.AfterBuff[i].to)
                     {
                         case "ATK": StatsUp.ATK += buff; break;
                         case "CRR": StatsUp.CRR += buff; break;
@@ -323,68 +351,66 @@ namespace BrownDust_Calculator
                     NowStats.ATK, 1 - NowStats.CRR,
                     NowStats.ATK * (1 + NowStats.CRD), NowStats.CRR);
             }
+            public TypeDamage GetAddDamage(TypeSkill.TypeSkillDetail data, bool isReal)
+            {
+                TypeDamage result;
+
+                if (data.from == "EHP")
+                {
+                    result = new TypeDamage(2,
+                        data.rate, 1 - NowStats.CRR,
+                        data.rate * (1 + NowStats.CRD), NowStats.CRR);
+                }
+                else
+                {
+                    double from = 0;
+                    switch (data.from)
+                    {
+                        case "DEF": from = NowStats.DEF; break;
+                        case "CRR": from = NowStats.CRR; break;
+                        case "CRD": from = NowStats.CRD; break;
+                        case "AGI": from = NowStats.AGI; break;
+                        case "   ": from = 1; break;
+                    }
+                    result = new TypeDamage(2,
+                        NowStats.ATK * from * data.rate, 1 - NowStats.CRR,
+                        NowStats.ATK * from * data.rate * (1 + NowStats.CRD), NowStats.CRR);
+                }
+
+                if (isReal) result.MakeReal();
+
+                return result;
+            }
             public void CheckAddDamage()
             {
-                if (Skills.nAddDamage > 0)
-                {
-                    if (Skills.AddDamage.from == "EHP")
-                    {
-                        AddDamage = new TypeDamage(2,
-                            Skills.AddDamage.rate, 1 - NowStats.CRR,
-                            Skills.AddDamage.rate * (1 + NowStats.CRD), NowStats.CRR);
-                    }
-                    else
-                    {
-                        double from = 0;
-                        switch (Skills.AddDamage.from)
-                        {
-                            case "DEF": from = NowStats.DEF; break;
-                            case "CRR": from = NowStats.CRR; break;
-                            case "CRD": from = NowStats.CRD; break;
-                            case "AGI": from = NowStats.AGI; break;
-                            case "   ": from = 1; break;
-                        }
-                        AddDamage = new TypeDamage(2,
-                            NowStats.ATK * from * Skills.AddDamage.rate, 1 - NowStats.CRR,
-                            NowStats.ATK * from * Skills.AddDamage.rate * (1 + NowStats.CRD), NowStats.CRR);
-                    }
-                    if (Skills.isAddReal)
-                    {
-                        AddDamage.MakeReal();
-                    }
-                }
+                AddDamageNormal = Skills.nAddAttackNormal == 0 ? new TypeDamage(0) : GetAddDamage(Skills.AddAttackNormal, false);
+                AddDamageReal = Skills.nAddAttackReal == 0 ? new TypeDamage(0) : GetAddDamage(Skills.AddAttackReal, true);
             }
             public string WriteBaseDamage()
             {
                 return BaseDamage.WriteNumericalDamage();
             }
-            public string WriteAddDamage()
+            public string WriteAddDamage()  //【注意】没有考虑比例追伤+数值追伤
             {
-                if (Skills.nAddDamage > 0)
-                {
-                    if (Skills.AddDamage.from == "EHP")
-                        return AddDamage.WriteRatioDamage();
-                    else
-                        return AddDamage.WriteNumericalDamage();
-                }
-                else return "/";
+                if (Skills.isAddRatio)
+                    return (AddDamageNormal + AddDamageReal).WriteRatioDamage();
+                else
+                    return (AddDamageNormal + AddDamageReal).WriteNumericalDamage();
             }
             public string WriteSumDamage()
             {
-                if (Skills.AddDamage.from == "EHP") return "X";
-                if (Skills.nAddDamage == 0) return WriteBaseDamage();
+                if (Skills.isAddRatio) return "X";
 
-                return (BaseDamage + AddDamage).WriteNumericalDamage();
+                return (BaseDamage + AddDamageNormal + AddDamageReal).WriteNumericalDamage();
             }
         }
         private class DefendCharacter
         {
             private struct TypeStats { public double HP, DEF, AGI, CUT, Weaking; }
-            private struct TypeDamage { public int normal, critical; public double expected, crr; }
 
             public string Name;
             private TypeStats BaseStats;
-            private TypeDamage BaseIncoming, AddIncoming;
+            private TypeDamage BaseIncoming, AddIncomingNormal, AddIncomingReal;
 
             public DefendCharacter(string name) { Name = name; }
 
@@ -402,55 +428,40 @@ namespace BrownDust_Calculator
 
             public void CheckBaseIncoming(AttackCharacter attacker)
             {
-                double rate = (1 - BaseStats.DEF) * (1 - BaseStats.CUT);
-                /*
-                BaseIncoming.normal = (int)(attacker.BaseDamage.normal * rate);
-                BaseIncoming.critical = (int)(attacker.BaseDamage.critical * rate);
-                BaseIncoming.crr = attacker.BaseDamage.crr;
-                BaseIncoming.expected = BaseIncoming.normal * (1 - BaseIncoming.crr) + BaseIncoming.critical * BaseIncoming.crr;
-                */
+                BaseIncoming = (1 - BaseStats.DEF) * (1 - BaseStats.CUT) * attacker.BaseDamage;
             }
-            private void AddIncomingPart(AttackCharacter attacker)
+            private void CheckAddIncomingPart(AttackCharacter attacker)
             {
-                double rate = attacker.Skills.isAddReal ? 1 : (1 - BaseStats.DEF) * (1 - BaseStats.CUT);
-                if (attacker.Skills.AddDamage.from == "EHP")
+                double rate = (1 - BaseStats.DEF) * (1 - BaseStats.CUT);
+
+                if (attacker.Skills.isAddRatio)
                 {
-                    //AddIncoming.normal = (int)(BaseStats.HP * attacker.AddDamage.normal * rate);
-                    //AddIncoming.critical = (int)(BaseStats.HP * attacker.AddDamage.critical * rate);
+                    AddIncomingNormal = BaseStats.HP * rate * attacker.AddDamageNormal;
+                    AddIncomingReal = BaseStats.HP * 1 * attacker.AddDamageReal;
                 }
                 else
                 {
-                    //AddIncoming.normal = (int)(attacker.AddDamage.normal * rate);
-                    //AddIncoming.critical = (int)(attacker.AddDamage.critical * rate);
-                }
-                if (attacker.Skills.isAddReal)
-                {
-                    AddIncoming.crr = 0;
-                    AddIncoming.expected = AddIncoming.critical = AddIncoming.normal;
-                }
-                else
-                {
-                    //AddIncoming.crr = attacker.AddDamage.crr;
-                    AddIncoming.expected = AddIncoming.normal * (1 - AddIncoming.crr) + AddIncoming.critical * AddIncoming.crr;
+                    AddIncomingNormal = rate * attacker.AddDamageNormal;
+                    AddIncomingReal = rate * attacker.AddDamageReal;
                 }
             }
             public void CheckAddIncoming(AttackCharacter attacker)
             {
                 if (BaseStats.Weaking == 0)
                 {
-                    AddIncomingPart(attacker);
+                    CheckAddIncomingPart(attacker);
                 }
                 else
                 {
                     AttackCharacter weak = attacker.ShallowCopy();
                     weak.Weakened(BaseStats.Weaking);
                     weak.CheckAddDamage();
-                    AddIncomingPart(weak);
+                    CheckAddIncomingPart(weak);
                 }
             }
         }
 
-        static int SupporterNumber = 4, AttackerNumber = 2;
+        static int SupporterNumber = 4, AttackerNumber = 3;
         static int AttackerChartHight = 8, DefenderChartHight = 4;
 
         private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
@@ -462,22 +473,29 @@ namespace BrownDust_Calculator
             Supporter[2] = new SupportCharacter("屁股", 1.7481, 0.30, 0.00, 0.30, 0, 0);
             Supporter[3] = new SupportCharacter("琴女", 1.7481, 0.00, 0.20, 0.00, 0, 0);
 
-            Attacker[0] = new AttackCharacter("女忍");
+            Attacker[0] = new AttackCharacter("女忍 +9");
             {
-                Attacker[0].Skills.SetStatusUp(
+                Attacker[0].Skills.SetStatsBuff(
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
-                Attacker[0].Skills.SetBuffSkill(
+                Attacker[0].Skills.SetAfterBuff(
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate =1.50 },
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate =0.35 });
-                Attacker[0].Skills.SetAddDamage(
+                Attacker[0].Skills.SetAddAttackNormal(
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
             }
-            Attacker[1] = new AttackCharacter("修女");
+            Attacker[1] = new AttackCharacter("修女 +3");
             {
-                Attacker[1].Skills.SetAddDamage(
+                Attacker[1].Skills.SetAddAttackNormal(
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
                 Attacker[1].Skills.isImmunnity = true;
+            }
+            Attacker[2] = new AttackCharacter("海盗 +3");
+            {
+                Attacker[2].Skills.SetStatsBuff(
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
+                Attacker[2].Skills.SetAddAttackReal(
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.30 });
             }
         }
 
