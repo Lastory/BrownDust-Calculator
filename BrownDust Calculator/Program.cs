@@ -98,34 +98,37 @@ namespace BrownDust_Calculator
 
         private struct TypeDamage
         {
-            int Count;
-            double[] Dmg , Pr;
-            double EXP;
+            private struct TypePossbility : IComparable
+            {
+                public double Dmg, Rate;
+
+                public int CompareTo(object obj)
+                {
+                    return this.Dmg.CompareTo(((TypePossbility)obj).Dmg);
+                }
+            }
+
+            private int Count;
+            private TypePossbility[] Poss;
+            private double EXP;
 
             private void Exchange(int a, int b)
             {
-                double t;
-                t = Dmg[a]; Dmg[a] = Dmg[b]; Dmg[b] = t;
-                t = Pr[a]; Pr[a] = Pr[b]; Pr[b] = t;
+                TypePossbility t = Poss[a];
+                Poss[a] = Poss[b];
+                Poss[b] = t;
             }
             private void Sort()
             {
+                Array.Sort(Poss, 0, Count);
+
                 for (int i = 1; i < Count; i++)
                 {
-                    for (int j = i; j < Count; j++)
+                    if (Poss[i - 1].Dmg == Poss[i].Dmg)
                     {
-                        if (Dmg[j - 1] == Dmg[j])
-                        {
-                            Pr[j - 1] += Pr[j];
-                            Count--;
-                            for (int k = j; k < Count; k++) { Dmg[k] = Dmg[k + 1]; Pr[k] = Pr[k + 1]; }
-                        }
-                        if (Dmg[j - 1] > Dmg[j])
-                        {
-                            double t;
-                            t = Dmg[j]; Dmg[j] = Dmg[j - 1]; Dmg[j - 1] = t;
-                            t = Pr[j]; Pr[j] = Pr[j - 1]; Pr[j - 1] = t;
-                        }
+                        Poss[i - 1].Rate += Poss[i].Rate;
+                        for (int j = i + 1; j < Count; j++) Poss[j - 1] = Poss[j];
+                        Count--;
                     }
                 }
             }
@@ -133,7 +136,7 @@ namespace BrownDust_Calculator
             public TypeDamage(int size, params double[] detail)
             {
                 Count = 0;
-                Dmg = new double[size]; Pr = new double[size];
+                Poss = new TypePossbility[size];
                 EXP = 0;
 
                 if (detail.Length > 0)
@@ -142,9 +145,9 @@ namespace BrownDust_Calculator
                     {
                         if (detail[i * 2 + 1] > 0)
                         {
-                            Dmg[Count] = detail[i * 2];
-                            Pr[Count] = detail[i * 2 + 1];
-                            EXP += Dmg[Count] * Pr[Count];
+                            Poss[Count].Dmg= detail[i * 2];
+                            Poss[Count].Rate = detail[i * 2 + 1];
+                            EXP += Poss[Count].Dmg * Poss[Count].Rate;
                             Count++;
                         }
                     }
@@ -152,6 +155,13 @@ namespace BrownDust_Calculator
                 Sort();
             }
             public TypeDamage ShallowCopy() { return (TypeDamage) this.MemberwiseClone(); }
+
+            public void Push(double damage, double probability)  //注意数组设定的上界，Push之后需要Sort
+            {
+                Poss[Count].Dmg = damage;
+                Poss[Count].Rate = probability;
+                Count++;
+            }
 
             public static TypeDamage operator +(TypeDamage a, TypeDamage b)  //伤害整数化后再相加
             {
@@ -164,8 +174,8 @@ namespace BrownDust_Calculator
                 for (int i = 0; i < a.Count; i++)
                     for (int j = 0; j < b.Count; j++)
                     {
-                        detail[(i * b.Count + j) * 2] = (int)a.Dmg[i] + (int)b.Dmg[j];
-                        detail[(i * b.Count + j) * 2 + 1] = a.Pr[i] * b.Pr[j];
+                        detail[(i * b.Count + j) * 2] = (int)a.Poss[i].Dmg + (int)b.Poss[j].Dmg;
+                        detail[(i * b.Count + j) * 2 + 1] = a.Poss[i].Rate * b.Poss[j].Rate;
                     }
 
                 return new TypeDamage(size, detail);
@@ -177,18 +187,37 @@ namespace BrownDust_Calculator
 
                 for (int i = 0; i < size; i++)
                 {
-                    detail[i * 2] = a.Dmg[i] * rate;
-                    detail[i * 2 + 1] = a.Pr[i];
+                    detail[i * 2] = a.Poss[i].Dmg * rate;
+                    detail[i * 2 + 1] = a.Poss[i].Rate;
                 }
 
                 return new TypeDamage(size, detail);
             }
 
-            public void MakeReal()
+            public void BecomeReal()
             {
                 Count = 1;
-                Pr[0] = 1;
-                EXP = Dmg[0];
+                Poss[0].Rate = 1;
+                EXP = Poss[0].Dmg;
+            }
+            public void CountAGI(double agi)
+            {
+                if (agi == 0) return;
+                if (agi == 1)
+                {
+                    for (int i = 0; i < Count; i++) Poss[i].Dmg *= 0.65;
+                    return;
+                }
+
+                TypeDamage update = new TypeDamage(0);
+                for (int i = 0; i < Count; i++)
+                {
+                    update.Push(Poss[i].Dmg * 0.65, Poss[i].Rate * agi);
+                    update.Push(Poss[i].Dmg * 0.65, Poss[i].Rate * (1 - agi));
+                }
+                update.Sort();
+
+                this = update;
             }
 
             public string WriteNumericalDamage()
@@ -198,12 +227,12 @@ namespace BrownDust_Calculator
                 string result = "";
                 if (Count == 1)
                 {
-                    result = Dmg[0].ToString("f0");
+                    result = Poss[0].Dmg.ToString("f0");
                 }
                 else
                 {
-                    result += Dmg[0].ToString("f0") + " " + (Pr[0] * 100).ToString("f0") + "% | ";
-                    result += Dmg[Count - 1].ToString("f0") + " " + (Pr[Count - 1] * 100).ToString("f0") + "%";
+                    result += Poss[0].Dmg.ToString("f0") + " " + (Poss[0].Rate * 100).ToString("f0") + "% | ";
+                    result += Poss[Count - 1].Dmg.ToString("f0") + " " + (Poss[Count - 1].Rate * 100).ToString("f0") + "%";
                     result += "\n" + EXP.ToString("f0");
                 }
                 return result;
@@ -215,17 +244,18 @@ namespace BrownDust_Calculator
                 string result = "";
                 if (Count == 1)
                 {
-                    result = (Dmg[0] * 100).ToString("f1") + "%";
+                    result = (Poss[0].Dmg * 100).ToString("f1") + "%";
                 }
                 else
                 {
-                    result += (Dmg[0] * 100).ToString("f1") + "% " + (Pr[0] * 100).ToString("f0") + "% | ";
-                    result += (Dmg[Count - 1] * 100).ToString("f1") + "% " + (Pr[Count - 1] * 100).ToString("f0") + "%";
+                    result += (Poss[0].Dmg * 100).ToString("f1") + "% " + (Poss[0].Rate * 100).ToString("f0") + "% | ";
+                    result += (Poss[Count - 1].Dmg * 100).ToString("f1") + "% " + (Poss[Count - 1].Rate * 100).ToString("f0") + "%";
                     result += "\n" + (EXP * 100).ToString("f1") + "%";
                 }
                 return result;
             }
         }
+
         private class SupportCharacter
         {
             public string Name;
@@ -377,7 +407,7 @@ namespace BrownDust_Calculator
                         NowStats.ATK * from * data.rate * (1 + NowStats.CRD), NowStats.CRR);
                 }
 
-                if (isReal) result.MakeReal();
+                if (isReal) result.BecomeReal();
 
                 return result;
             }
@@ -429,6 +459,7 @@ namespace BrownDust_Calculator
             public void CheckBaseIncoming(AttackCharacter attacker)
             {
                 BaseIncoming = (1 - BaseStats.DEF) * (1 - BaseStats.CUT) * attacker.BaseDamage;
+                BaseIncoming.CountAGI(BaseStats.AGI);
             }
             private void CheckAddIncomingPart(AttackCharacter attacker)
             {
@@ -444,6 +475,8 @@ namespace BrownDust_Calculator
                     AddIncomingNormal = rate * attacker.AddDamageNormal;
                     AddIncomingReal = rate * attacker.AddDamageReal;
                 }
+                AddIncomingNormal.CountAGI(BaseStats.AGI);
+                AddIncomingReal.CountAGI(BaseStats.AGI);
             }
             public void CheckAddIncoming(AttackCharacter attacker)
             {

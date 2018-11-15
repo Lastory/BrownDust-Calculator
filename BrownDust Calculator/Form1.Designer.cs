@@ -35,11 +35,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox_Attacker = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Attacker = new System.Windows.Forms.TableLayoutPanel();
             this.label_AttaCRD = new System.Windows.Forms.Label();
@@ -51,6 +51,7 @@
             this.label_AttaAddDmg = new System.Windows.Forms.Label();
             this.label_AttaNormalDmg = new System.Windows.Forms.Label();
             this.label_AttaDEF = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.button_Save = new System.Windows.Forms.Button();
             this.button_Calculate = new System.Windows.Forms.Button();
             this.groupBox_Supporter = new System.Windows.Forms.GroupBox();
@@ -61,7 +62,6 @@
             this.label_SuppName = new System.Windows.Forms.Label();
             this.label_SuppChoose = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defender.SuspendLayout();
@@ -79,7 +79,7 @@
             this.tabControl_Main.Location = new System.Drawing.Point(12, 12);
             this.tabControl_Main.Name = "tabControl_Main";
             this.tabControl_Main.SelectedIndex = 0;
-            this.tabControl_Main.Size = new System.Drawing.Size(1159, 632);
+            this.tabControl_Main.Size = new System.Drawing.Size(1251, 807);
             this.tabControl_Main.TabIndex = 3;
             // 
             // tabPage1
@@ -93,7 +93,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1151, 606);
+            this.tabPage1.Size = new System.Drawing.Size(1243, 781);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
@@ -101,12 +101,12 @@
             // 
             this.groupBox_Defender.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Defender.Controls.Add(this.tableLayoutPanel_Defender);
-            this.groupBox_Defender.Location = new System.Drawing.Point(355, 6);
+            this.groupBox_Defender.Location = new System.Drawing.Point(12, 379);
             this.groupBox_Defender.Name = "groupBox_Defender";
-            this.groupBox_Defender.Size = new System.Drawing.Size(790, 188);
+            this.groupBox_Defender.Size = new System.Drawing.Size(790, 281);
             this.groupBox_Defender.TabIndex = 5;
             this.groupBox_Defender.TabStop = false;
-            this.groupBox_Defender.Text = "防御角色数据";
+            this.groupBox_Defender.Text = "防御角色";
             // 
             // tableLayoutPanel_Defender
             // 
@@ -132,19 +132,19 @@
             this.tableLayoutPanel_Defender.Location = new System.Drawing.Point(6, 20);
             this.tableLayoutPanel_Defender.Name = "tableLayoutPanel_Defender";
             this.tableLayoutPanel_Defender.RowCount = 5;
-            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(659, 162);
+            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(749, 195);
             this.tableLayoutPanel_Defender.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 11);
+            this.label1.Location = new System.Drawing.Point(22, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 2;
@@ -154,7 +154,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(89, 11);
+            this.label3.Location = new System.Drawing.Point(89, 14);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 4;
@@ -164,29 +164,18 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(140, 11);
+            this.label2.Location = new System.Drawing.Point(140, 14);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "防御(%)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(254, 11);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 12);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "护盾(%)";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(539, 11);
+            this.label6.Location = new System.Drawing.Point(539, 14);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 7;
@@ -197,40 +186,51 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(412, 11);
+            this.label5.Location = new System.Drawing.Point(412, 14);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 6;
             this.label5.Text = "剩余血量";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label8
-            // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(197, 11);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 12);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "敏捷(%)";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // label7
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(311, 11);
+            this.label7.Location = new System.Drawing.Point(311, 14);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 12);
             this.label7.TabIndex = 8;
             this.label7.Text = "诅咒(%)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(197, 14);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 12);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "敏捷(%)";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(254, 14);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 12);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "护盾(%)";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // groupBox_Attacker
             // 
             this.groupBox_Attacker.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Attacker.Controls.Add(this.tableLayoutPanel_Attacker);
-            this.groupBox_Attacker.Location = new System.Drawing.Point(12, 200);
+            this.groupBox_Attacker.Location = new System.Drawing.Point(6, 6);
             this.groupBox_Attacker.Name = "groupBox_Attacker";
             this.groupBox_Attacker.Size = new System.Drawing.Size(874, 367);
             this.groupBox_Attacker.TabIndex = 2;
@@ -370,9 +370,19 @@
             this.label_AttaDEF.Text = "防御(%)";
             this.label_AttaDEF.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(821, 13);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "选中";
+            // 
             // button_Save
             // 
-            this.button_Save.Location = new System.Drawing.Point(1007, 560);
+            this.button_Save.Location = new System.Drawing.Point(1088, 200);
             this.button_Save.Name = "button_Save";
             this.button_Save.Size = new System.Drawing.Size(138, 40);
             this.button_Save.TabIndex = 4;
@@ -382,7 +392,7 @@
             // 
             // button_Calculate
             // 
-            this.button_Calculate.Location = new System.Drawing.Point(1007, 456);
+            this.button_Calculate.Location = new System.Drawing.Point(886, 200);
             this.button_Calculate.Name = "button_Calculate";
             this.button_Calculate.Size = new System.Drawing.Size(138, 40);
             this.button_Calculate.TabIndex = 3;
@@ -394,9 +404,9 @@
             // 
             this.groupBox_Supporter.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Supporter.Controls.Add(this.tableLayoutPanel_Supporter);
-            this.groupBox_Supporter.Location = new System.Drawing.Point(6, 6);
+            this.groupBox_Supporter.Location = new System.Drawing.Point(886, 6);
             this.groupBox_Supporter.Name = "groupBox_Supporter";
-            this.groupBox_Supporter.Size = new System.Drawing.Size(342, 188);
+            this.groupBox_Supporter.Size = new System.Drawing.Size(340, 188);
             this.groupBox_Supporter.TabIndex = 1;
             this.groupBox_Supporter.TabStop = false;
             this.groupBox_Supporter.Text = "支援角色";
@@ -481,26 +491,16 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1151, 606);
+            this.tabPage2.Size = new System.Drawing.Size(1151, 781);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Supporter Setting";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(821, 13);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "选中";
             // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1183, 661);
+            this.ClientSize = new System.Drawing.Size(1275, 831);
             this.Controls.Add(this.tabControl_Main);
             this.Name = "Form_Main";
             this.Text = "BrownDust Calculator";
