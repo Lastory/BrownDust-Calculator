@@ -96,6 +96,115 @@ namespace BrownDust_Calculator
             }
         }
 
+        private struct TypeDamage
+        {
+            int Count;
+            double[] Dmg , Pr;
+            double EXP;
+
+            private void Exchange(int a, int b)
+            {
+                double t;
+                t = Dmg[a]; Dmg[a] = Dmg[b]; Dmg[b] = t;
+                t = Pr[a]; Pr[a] = Pr[b]; Pr[b] = t;
+            }
+            private void Sort()
+            {
+                for (int i = 1; i < Count; i++)
+                {
+                    for (int j = i; j < Count; j++)
+                    {
+                        if (Dmg[j - 1] == Dmg[j])
+                        {
+                            Pr[j - 1] += Pr[j];
+                            Count--;
+                            for (int k = j; k < Count; k++) { Dmg[k] = Dmg[k + 1]; Pr[k] = Pr[k + 1]; }
+                        }
+                        if (Dmg[j - 1] > Dmg[j])
+                        {
+                            double t;
+                            t = Dmg[j]; Dmg[j] = Dmg[j - 1]; Dmg[j - 1] = t;
+                            t = Pr[j]; Pr[j] = Pr[j - 1]; Pr[j - 1] = t;
+                        }
+                    }
+                }
+            }
+            
+            public TypeDamage(int size, params double[] detail)
+            {
+                Count = 0;
+                Dmg = new double[size]; Pr = new double[size];
+                EXP = 0;
+
+                if (detail.Length > 0)
+                {
+                    for (int i = 0; i < size; i++)
+                    {
+                        if (detail[i * 2 + 1] > 0)
+                        {
+                            Dmg[Count] = detail[i * 2];
+                            Pr[Count] = detail[i * 2 + 1];
+                            EXP += Dmg[Count] * Pr[Count];
+                            Count++;
+                        }
+                    }
+                }
+                Sort();
+            }
+
+            public static TypeDamage operator +(TypeDamage a, TypeDamage b)
+            {
+                int size = a.Count * b.Count;
+                double[] detail = new double[size * 2];
+
+                for (int i = 0; i < a.Count; i++)
+                    for (int j = 0; j < b.Count; j++)
+                    {
+                        detail[(i * b.Count + j) * 2] = a.Dmg[i] + b.Dmg[j];
+                        detail[(i * b.Count + j) * 2 + 1] = a.Pr[i] * b.Pr[j];
+                    }
+
+                return new TypeDamage(size, detail);
+            }
+
+            public void MakeReal()
+            {
+                Count = 1;
+                Pr[0] = 1;
+                EXP = Dmg[0];
+            }
+
+            public string WriteNumericalDamage()
+            {
+                string result = "";
+                if (Count == 1)
+                {
+                    result = Dmg[0].ToString("f0");
+                }
+                else
+                {
+                    result += Dmg[0].ToString("f0") + " " + (Pr[0] * 100).ToString("f0") + "% | ";
+                    result += Dmg[Count - 1].ToString("f0") + " " + (Pr[Count - 1] * 100).ToString("f0") + "%";
+                    result += "\n" + EXP.ToString("f0");
+                }
+                return result;
+            }
+            public string WriteRatioDamage()
+            {
+                string result = "";
+                if (Count == 1)
+                {
+                    result = (Dmg[0] * 100).ToString("f1") + "%";
+                }
+                else
+                {
+                    result += (Dmg[0] * 100).ToString("f1") + "% " + (Pr[0] * 100).ToString("f0") + "% | ";
+                    result += (Dmg[Count - 1] * 100).ToString("f1") + "% " + (Pr[Count - 1] * 100).ToString("f0") + "%";
+                    result += "\n" + (EXP * 100).ToString("f1") + "%";
+                }
+                return result;
+            }
+        }
         private class SupportCharacter
         {
             public string Name;
@@ -112,7 +221,7 @@ namespace BrownDust_Calculator
         {
             public class TypeSkill
             {
-                public uint nStatsUp = 0, nBuffSkill = 0, nAddDamage = 0, nAddRatio = 0;
+                public int nStatsUp = 0, nBuffSkill = 0, nAddDamage = 0, nAddRatio = 0;
                 public struct TypeSkillDetail
                 {
                     public string from, to;
@@ -125,12 +234,23 @@ namespace BrownDust_Calculator
                 public bool isAddRatio = false, isAddReal = false;  //追伤是否为血量比例伤害、是否为真伤
                 public bool isImmunnity = false;  //是否有免疫技能
 
-                public void SetStatusUp(uint n, TypeSkillDetail[] arr) { nStatsUp = n; StatsUp = arr; }
-                public void SetBuffSkill(uint n, TypeSkillDetail[] arr) { nBuffSkill = n; BuffSkill = arr; }
-                public void SetAddDamage(uint n, TypeSkillDetail detail) { nAddDamage = n; AddDamage = detail; }
+                public void SetStatusUp(params TypeSkillDetail[] arr)
+                {
+                    nStatsUp = arr.Length;
+                    StatsUp = arr;
+                }
+                public void SetBuffSkill(params TypeSkillDetail[] arr)
+                {
+                    nBuffSkill = arr.Length; ;
+                    BuffSkill = arr;
+                }
+                public void SetAddDamage(TypeSkillDetail detail)
+                {
+                    nAddDamage = 1;
+                    AddDamage = detail;
+                }
             }
             private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI; }
-            public struct TypeDamage { public double normal, critical; public double expected, crr; }
 
             public string Name;
             private TypeStats BaseStats, NowStats, StatsUp;
@@ -174,8 +294,7 @@ namespace BrownDust_Calculator
                 }
                 CheckStats();
             }
-
-
+            
             private void CheckStats()
             {
                 NowStats.ATK = Math.Max(0, BaseStats.ATK * (1 + StatsUp.ATK));
@@ -200,88 +319,62 @@ namespace BrownDust_Calculator
             
             public void CheckBaseDamage()
             {
-                BaseDamage.normal = (int) NowStats.ATK;
-                BaseDamage.critical = (int) NowStats.ATK * (1 + NowStats.CRD);
-                BaseDamage.expected = BaseDamage.normal * (1 - NowStats.CRR) + BaseDamage.critical *  NowStats.CRR;
-                BaseDamage.crr = NowStats.CRR;
+                BaseDamage = new TypeDamage(2,
+                    NowStats.ATK, 1 - NowStats.CRR,
+                    NowStats.ATK * (1 + NowStats.CRD), NowStats.CRR);
             }
             public void CheckAddDamage()
             {
                 if (Skills.nAddDamage > 0)
                 {
-                    if (Skills.isAddRatio)
+                    if (Skills.AddDamage.from == "EHP")
                     {
-                        AddDamage.normal = Skills.AddDamage.rate;
-                        AddDamage.critical = Skills.AddDamage.rate * (1 + NowStats.CRD);
+                        AddDamage = new TypeDamage(2,
+                            Skills.AddDamage.rate, 1 - NowStats.CRR,
+                            Skills.AddDamage.rate * (1 + NowStats.CRD), NowStats.CRR);
                     }
                     else
                     {
-                        double from;
+                        double from = 0;
                         switch (Skills.AddDamage.from)
                         {
                             case "DEF": from = NowStats.DEF; break;
                             case "CRR": from = NowStats.CRR; break;
                             case "CRD": from = NowStats.CRD; break;
                             case "AGI": from = NowStats.AGI; break;
-                            default: from = 1; break;
+                            case "   ": from = 1; break;
                         }
-                        AddDamage.normal = (int)NowStats.ATK * from * Skills.AddDamage.rate;
-                        AddDamage.critical = (int)NowStats.ATK * from * Skills.AddDamage.rate * (1 + NowStats.CRD);
+                        AddDamage = new TypeDamage(2,
+                            NowStats.ATK * from * Skills.AddDamage.rate, 1 - NowStats.CRR,
+                            NowStats.ATK * from * Skills.AddDamage.rate * (1 + NowStats.CRD), NowStats.CRR);
                     }
                     if (Skills.isAddReal)
                     {
-                        AddDamage.crr = 0;
-                        AddDamage.expected = AddDamage.critical = AddDamage.normal;
-                    }
-                    else
-                    {
-                        AddDamage.crr = NowStats.CRR;
-                        AddDamage.expected = AddDamage.normal * (1 - AddDamage.crr) + AddDamage.critical * AddDamage.crr;
+                        AddDamage.MakeReal();
                     }
                 }
             }
             public string WriteBaseDamage()
             {
-                string result = "";
-                result += BaseDamage.normal.ToString("f0") + " " + (100 - BaseDamage.crr * 100).ToString("f0") + "% | ";
-                result += BaseDamage.critical.ToString("f0") + " " + (BaseDamage.crr * 100).ToString("f0") + "%";
-                result += "\n" + BaseDamage.expected.ToString("f0");
-                return result;
+                return BaseDamage.WriteNumericalDamage();
             }
             public string WriteAddDamage()
             {
-                string result = "";
                 if (Skills.nAddDamage > 0)
                 {
-                    if (Skills.isAddRatio)
-                    {
-                        result += (AddDamage.normal * 100).ToString("f1") + "% " + (100 - AddDamage.crr * 100).ToString("f0") + "% | ";
-                        result += (AddDamage.critical * 100).ToString("f1") + "% " + (AddDamage.crr * 100).ToString("f0") + "%";
-                        result += "\n" + (AddDamage.expected * 100).ToString("f1") + "%";
-                    }
+                    if (Skills.AddDamage.from == "EHP")
+                        return AddDamage.WriteRatioDamage();
                     else
-                    {
-                        result += AddDamage.normal.ToString("f0") + " " + (100 - AddDamage.crr * 100).ToString("f0") + "% | ";
-                        result += AddDamage.critical.ToString("f0") + " " + (AddDamage.crr * 100).ToString("f0") + "%";
-                        result += "\n" + AddDamage.expected.ToString("f0");
-                    }
+                        return AddDamage.WriteNumericalDamage();
                 }
-                else result = "/";
-                return result;
+                else return "/";
             }
             public string WriteSumDamage()
             {
-                if (Skills.isAddRatio) return "X";
+                if (Skills.AddDamage.from == "EHP") return "X";
                 if (Skills.nAddDamage == 0) return WriteBaseDamage();
 
-                string result = "";
-                result += (BaseDamage.normal + AddDamage.normal).ToString("f0") + " ";
-                result += ((1 - BaseDamage.crr) * (1 - AddDamage.crr)).ToString("f0") + "% | ";
-                result += (BaseDamage.critical + AddDamage.critical).ToString("f0") + " ";
-                result += (BaseDamage.crr * AddDamage.crr * 100).ToString("f0") + "%\n";
-                result += (BaseDamage.expected + AddDamage.expected).ToString("f0");
-
-                return result;
+                return (BaseDamage + AddDamage).WriteNumericalDamage();
             }
         }
         private class DefendCharacter
@@ -310,24 +403,25 @@ namespace BrownDust_Calculator
             public void CheckBaseIncoming(AttackCharacter attacker)
             {
                 double rate = (1 - BaseStats.DEF) * (1 - BaseStats.CUT);
-
+                /*
                 BaseIncoming.normal = (int)(attacker.BaseDamage.normal * rate);
                 BaseIncoming.critical = (int)(attacker.BaseDamage.critical * rate);
                 BaseIncoming.crr = attacker.BaseDamage.crr;
                 BaseIncoming.expected = BaseIncoming.normal * (1 - BaseIncoming.crr) + BaseIncoming.critical * BaseIncoming.crr;
+                */
             }
             private void AddIncomingPart(AttackCharacter attacker)
             {
                 double rate = attacker.Skills.isAddReal ? 1 : (1 - BaseStats.DEF) * (1 - BaseStats.CUT);
-                if (attacker.Skills.isAddRatio)
+                if (attacker.Skills.AddDamage.from == "EHP")
                 {
-                    AddIncoming.normal = (int)(BaseStats.HP * attacker.AddDamage.normal * rate);
-                    AddIncoming.critical = (int)(BaseStats.HP * attacker.AddDamage.critical * rate);
+                    //AddIncoming.normal = (int)(BaseStats.HP * attacker.AddDamage.normal * rate);
+                    //AddIncoming.critical = (int)(BaseStats.HP * attacker.AddDamage.critical * rate);
                 }
                 else
                 {
-                    AddIncoming.normal = (int)(attacker.AddDamage.normal * rate);
-                    AddIncoming.critical = (int)(attacker.AddDamage.critical * rate);
+                    //AddIncoming.normal = (int)(attacker.AddDamage.normal * rate);
+                    //AddIncoming.critical = (int)(attacker.AddDamage.critical * rate);
                 }
                 if (attacker.Skills.isAddReal)
                 {
@@ -336,7 +430,7 @@ namespace BrownDust_Calculator
                 }
                 else
                 {
-                    AddIncoming.crr = attacker.AddDamage.crr;
+                    //AddIncoming.crr = attacker.AddDamage.crr;
                     AddIncoming.expected = AddIncoming.normal * (1 - AddIncoming.crr) + AddIncoming.critical * AddIncoming.crr;
                 }
             }
@@ -355,10 +449,8 @@ namespace BrownDust_Calculator
                 }
             }
         }
-        
 
-        static int SupporterNumber = 4;
-        static int AttackerNumber = 2;
+        static int SupporterNumber = 4, AttackerNumber = 2;
         static int AttackerChartHight = 8, DefenderChartHight = 4;
 
         private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
@@ -372,18 +464,19 @@ namespace BrownDust_Calculator
 
             Attacker[0] = new AttackCharacter("女忍");
             {
-                Attacker[0].Skills.SetStatusUp(2, new AttackCharacter.TypeSkill.TypeSkillDetail[] {
+                Attacker[0].Skills.SetStatusUp(
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 } });
-                Attacker[0].Skills.SetBuffSkill(2, new AttackCharacter.TypeSkill.TypeSkillDetail[] {
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
+                Attacker[0].Skills.SetBuffSkill(
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate =1.50 },
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate =0.35 } });
-                Attacker[0].Skills.SetAddDamage(1, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate =0.35 });
+                Attacker[0].Skills.SetAddDamage(
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
             }
             Attacker[1] = new AttackCharacter("修女");
             {
-                Attacker[1].Skills.SetAddDamage(1, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 0.20 });
-                Attacker[1].Skills.isAddRatio = true;
+                Attacker[1].Skills.SetAddDamage(
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
                 Attacker[1].Skills.isImmunnity = true;
             }
         }
@@ -571,8 +664,6 @@ namespace BrownDust_Calculator
             CalcutateNormalDamage();
             CalcutateAddDamage();
             CalcutateSumDamage();
-
-
         }
     }
 }
