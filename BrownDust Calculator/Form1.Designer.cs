@@ -103,7 +103,7 @@
             this.groupBox_Defender.Controls.Add(this.tableLayoutPanel_Defender);
             this.groupBox_Defender.Location = new System.Drawing.Point(12, 379);
             this.groupBox_Defender.Name = "groupBox_Defender";
-            this.groupBox_Defender.Size = new System.Drawing.Size(790, 281);
+            this.groupBox_Defender.Size = new System.Drawing.Size(967, 281);
             this.groupBox_Defender.TabIndex = 5;
             this.groupBox_Defender.TabStop = false;
             this.groupBox_Defender.Text = "防御角色";
@@ -111,7 +111,7 @@
             // tableLayoutPanel_Defender
             // 
             this.tableLayoutPanel_Defender.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel_Defender.ColumnCount = 9;
+            this.tableLayoutPanel_Defender.ColumnCount = 10;
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
@@ -119,7 +119,8 @@
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel_Defender.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel_Defender.Controls.Add(this.label3, 1, 0);
@@ -137,7 +138,7 @@
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(749, 195);
+            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(856, 195);
             this.tableLayoutPanel_Defender.TabIndex = 2;
             // 
             // label1
@@ -175,22 +176,22 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(539, 14);
+            this.label6.Location = new System.Drawing.Point(546, 14);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.Size = new System.Drawing.Size(89, 12);
             this.label6.TabIndex = 7;
-            this.label6.Text = "击杀概率";
+            this.label6.Text = "追伤后剩余血量";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label5
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(412, 14);
+            this.label5.Location = new System.Drawing.Point(394, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
+            this.label5.Size = new System.Drawing.Size(89, 12);
             this.label5.TabIndex = 6;
-            this.label5.Text = "剩余血量";
+            this.label5.Text = "普伤后剩余血量";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label7
