@@ -24,7 +24,7 @@ namespace BrownDust_Calculator
     {
         private static class Savefile  //存档相关
         {
-            public static void LoadSavefile()  //读取（不存在则创建）存档
+            public static void LoadSavefile()  //读取（不存在则创建一个空的）存档
             {
                 if (File.Exists("Save.save"))
                 {
@@ -42,7 +42,8 @@ namespace BrownDust_Calculator
                             {
                                 string[] load = line.Split('|');
                                 comboBox_AttackerName[i].SelectedIndex = int.Parse(load[0]);
-                                for (int j = 0; j < 5; j++) textBox_AttackerStats[i, j].Text = load[j + 1];
+                                comboBox_AttackerSlv[i].SelectedIndex = int.Parse(load[1]);
+                                for (int j = 0; j < 5; j++) textBox_AttackerStats[i, j].Text = load[j + 2];
                             }
                         }
 
@@ -74,6 +75,7 @@ namespace BrownDust_Calculator
                         if (comboBox_AttackerName[i].SelectedIndex >= 0)
                         {
                             string line = comboBox_AttackerName[i].SelectedIndex.ToString("d") + "|";
+                            line += comboBox_AttackerSlv[i].SelectedIndex.ToString("d") + "|";
                             for (int j = 0; j < 5; j++) line += textBox_AttackerStats[i, j].Text + "|";
                             file.Write(line + "\n");
                         }
@@ -132,7 +134,7 @@ namespace BrownDust_Calculator
                     }
                 }
             }
-            
+
             public TypeDamage(int size, params double[] detail)
             {
                 Count = 0;
@@ -145,7 +147,7 @@ namespace BrownDust_Calculator
                     {
                         if (detail[i * 2 + 1] > 0)
                         {
-                            Poss[Count].Point= detail[i * 2];
+                            Poss[Count].Point = detail[i * 2];
                             Poss[Count].Rate = detail[i * 2 + 1];
                             EXP += Poss[Count].Point * Poss[Count].Rate;
                             Count++;
@@ -171,7 +173,7 @@ namespace BrownDust_Calculator
                 }
                 Sort();
             }
-            public TypeDamage ShallowCopy() { return (TypeDamage) this.MemberwiseClone(); }
+            public TypeDamage ShallowCopy() { return (TypeDamage)this.MemberwiseClone(); }
 
             public void Push(double damage, double probability)  //注意数组设定的上界，Push之后需要Sort
             {
@@ -218,7 +220,7 @@ namespace BrownDust_Calculator
                 TypePossbility[] arr = new TypePossbility[Damage.Count];
                 for (int i = 0; i < Damage.Count; i++)
                 {
-                    arr[i].Point = Math.Max(0, HP - (int) Damage.Poss[i].Point);
+                    arr[i].Point = Math.Max(0, HP - (int)Damage.Poss[i].Point);
                     arr[i].Rate = Damage.Poss[i].Rate;
                 }
 
@@ -257,7 +259,7 @@ namespace BrownDust_Calculator
                     EXP *= 0.65;
                     return;
                 }
-                
+
                 TypePossbility[] arr = new TypePossbility[Count * 2];
 
                 for (int i = 0; i < Count; i++)
@@ -332,9 +334,11 @@ namespace BrownDust_Calculator
 
                 public TypeSkillDetail[] StatsBuff = new TypeSkillDetail[5];  //依赖属性，增长属性，倍率
                 public TypeSkillDetail[] AfterBuff = new TypeSkillDetail[5];  //增长属性，buff量
-                public TypeSkillDetail AddAttackNormal , AddAttackReal ;  //依赖属性，倍率
+                public TypeSkillDetail AddAttackNormal, AddAttackReal;  //依赖属性，倍率
                 public bool isAddRatio = false;  //追伤是否为血量比例伤害
                 public bool isImmunnity = false;  //是否有免疫技能
+
+                public TypeSkill ShallowCopy() { return (TypeSkill)this.MemberwiseClone(); }
 
                 public void SetStatsBuff(params TypeSkillDetail[] detail)
                 {
@@ -362,25 +366,70 @@ namespace BrownDust_Calculator
             private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI; }
 
             public string Name;
+            private int SkillLevel;
             private TypeStats BaseStats, NowStats, StatsUp;
-            public TypeSkill Skills = new TypeSkill();
+            public bool[] isSLvExist = new bool[11];
+            public TypeSkill[] SkillList = new TypeSkill[11];
+            public TypeSkill NowSkill = new TypeSkill();
             public TypeDamage BaseDamage, AddDamageNormal, AddDamageReal;
 
-            public AttackCharacter(string name) { Name = name; }
-            public AttackCharacter ShallowCopy() { return (AttackCharacter) this.MemberwiseClone(); }
+            public AttackCharacter(string name)
+            {
+                Name = name;
+                for (int i = 1; i <= 10; i++) SkillList[i] = new TypeSkill();
+            }
+            public AttackCharacter ShallowCopy() { return (AttackCharacter)this.MemberwiseClone(); }
+
+            public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)  //计算攻击角色入场属性
+            {
+                BaseStats = new TypeStats { ATK = atk, CRR = crr, CRD = crd, AGI = agi, DEF = def };
+                DoStatsUp();
+                StatsUp.ATK = atkbuff; StatsUp.CRR = crrbuff; StatsUp.CRD = crdbuff;
+                CheckStats();
+            }
+            public void SetStatsBuff(int level, params TypeSkill.TypeSkillDetail[] detail)
+            {
+                isSLvExist[level] = true;
+                SkillList[level].SetStatsBuff(detail);
+            }
+            public void SetAfterBuff(int level, params TypeSkill.TypeSkillDetail[] detail)
+            {
+                isSLvExist[level] = true;
+                SkillList[level].SetAfterBuff(detail);
+            }
+            public void SetAddAttackNormal(int level, TypeSkill.TypeSkillDetail detail)
+            {
+                isSLvExist[level] = true;
+                SkillList[level].SetAddAttackNormal(detail);
+            }
+            public void SetAddAttackReal(int level, TypeSkill.TypeSkillDetail detail)
+            {
+                isSLvExist[level] = true;
+                SkillList[level].SetAddAttackReal(detail);
+            }
+            public void CopySkill(int from, int to)
+            {
+                isSLvExist[to] = true;
+                SkillList[to] = SkillList[from].ShallowCopy();
+            }
+            public void SetSkillLevel(int level)
+            {
+                SkillLevel = level;
+                NowSkill = SkillList[level];
+            }
 
             private void DoStatsUp()
             {
-                for (int i = 0; i < Skills.nStatsBuff; i++)
+                for (int i = 0; i < NowSkill.nStatsBuff; i++)
                 {
-                    double buff = Skills.StatsBuff[i].rate;
-                    switch (Skills.StatsBuff[i].from)
+                    double buff = NowSkill.StatsBuff[i].rate;
+                    switch (NowSkill.StatsBuff[i].from)
                     {
                         case "DEF": buff *= BaseStats.DEF; break;
                         case "CRR": buff *= BaseStats.CRR; break;
                         case "AGI": buff *= BaseStats.AGI; break;
                     }
-                    switch (Skills.StatsBuff[i].to)
+                    switch (NowSkill.StatsBuff[i].to)
                     {
                         case "ATK": BaseStats.ATK *= 1 + buff; break;
                         case "CRR": BaseStats.CRR += buff; break;
@@ -390,10 +439,10 @@ namespace BrownDust_Calculator
             }
             public void DoBuffSkill()
             {
-                for (int i = 0; i < Skills.nAfterBuff; i++)
+                for (int i = 0; i < NowSkill.nAfterBuff; i++)
                 {
-                    double buff = Skills.AfterBuff[i].rate;
-                    switch (Skills.AfterBuff[i].to)
+                    double buff = NowSkill.AfterBuff[i].rate;
+                    switch (NowSkill.AfterBuff[i].to)
                     {
                         case "ATK": StatsUp.ATK += buff; break;
                         case "CRR": StatsUp.CRR += buff; break;
@@ -403,7 +452,7 @@ namespace BrownDust_Calculator
                 }
                 CheckStats();
             }
-            
+
             private void CheckStats()
             {
                 NowStats.ATK = Math.Max(0, BaseStats.ATK * (1 + StatsUp.ATK));
@@ -418,14 +467,6 @@ namespace BrownDust_Calculator
                 CheckStats();
             }
 
-            public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)  //计算攻击角色入场属性
-            {
-                BaseStats = new TypeStats { ATK = atk, CRR = crr, CRD = crd, AGI = agi, DEF = def };
-                DoStatsUp();
-                StatsUp.ATK = atkbuff; StatsUp.CRR = crrbuff; StatsUp.CRD = crdbuff;
-                CheckStats();
-            }
-            
             public void CheckBaseDamage()
             {
                 BaseDamage = new TypeDamage(2,
@@ -464,8 +505,8 @@ namespace BrownDust_Calculator
             }
             public void CheckAddDamage()
             {
-                AddDamageNormal = Skills.nAddAttackNormal == 0 ? new TypeDamage(0) : GetAddDamage(Skills.AddAttackNormal, false);
-                AddDamageReal = Skills.nAddAttackReal == 0 ? new TypeDamage(0) : GetAddDamage(Skills.AddAttackReal, true);
+                AddDamageNormal = NowSkill.nAddAttackNormal == 0 ? new TypeDamage(0) : GetAddDamage(NowSkill.AddAttackNormal, false);
+                AddDamageReal = NowSkill.nAddAttackReal == 0 ? new TypeDamage(0) : GetAddDamage(NowSkill.AddAttackReal, true);
             }
             public string WriteBaseDamage()
             {
@@ -473,14 +514,14 @@ namespace BrownDust_Calculator
             }
             public string WriteAddDamage()  //【注意】没有考虑比例追伤+数值追伤
             {
-                if (Skills.isAddRatio)
+                if (NowSkill.isAddRatio)
                     return (AddDamageNormal + AddDamageReal).WriteRatioDamage();
                 else
                     return (AddDamageNormal + AddDamageReal).WriteNumericalDamage();
             }
             public string WriteSumDamage()
             {
-                if (Skills.isAddRatio) return "X";
+                if (NowSkill.isAddRatio) return "X";
 
                 return (BaseDamage + AddDamageNormal + AddDamageReal).WriteNumericalDamage();
             }
@@ -517,7 +558,7 @@ namespace BrownDust_Calculator
             {
                 double rate = (1 - BaseStats.DEF) * (1 - BaseStats.CUT);
 
-                if (attacker.Skills.isAddRatio)
+                if (attacker.NowSkill.isAddRatio)
                 {
                     AddIncomingNormal = BaseStats.HP * rate * attacker.AddDamageNormal;
                     AddIncomingReal = BaseStats.HP * 1 * attacker.AddDamageReal;
@@ -532,7 +573,7 @@ namespace BrownDust_Calculator
             }
             public void CheckAddIncoming(AttackCharacter attacker)
             {
-                if (BaseStats.Weaking == 0 || attacker.Skills.isImmunnity)
+                if (BaseStats.Weaking == 0 || attacker.NowSkill.isImmunnity)
                 {
                     CheckAddIncomingPart(attacker);
                 }
@@ -563,30 +604,57 @@ namespace BrownDust_Calculator
             Supporter[2] = new SupportCharacter("屁股", 1.7481, 0.30, 0.00, 0.30, 0, 0);
             Supporter[3] = new SupportCharacter("琴女", 1.7481, 0.00, 0.20, 0.30, 0, 0);
 
-            Attacker[0] = new AttackCharacter("女忍 +9");
+            Attacker[0] = new AttackCharacter("女忍");
             {
-                Attacker[0].Skills.SetStatsBuff(
+                Attacker[0].SetStatsBuff(9,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
-                Attacker[0].Skills.SetAfterBuff(
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate =1.50 },
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate =0.35 });
-                Attacker[0].Skills.SetAddAttackNormal(
+                Attacker[0].SetAfterBuff(9,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate = 1.50 },
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.35 });
+                Attacker[0].SetAddAttackNormal(9,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
             }
-            Attacker[1] = new AttackCharacter("修女 +3");
+            Attacker[1] = new AttackCharacter("修女");
             {
-                Attacker[1].Skills.SetAddAttackNormal(
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
-                Attacker[1].Skills.isImmunnity = true;
+                Attacker[1].SetAddAttackNormal(3,
+                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
+                Attacker[1].SkillList[3].isImmunnity = true;
             }
-            Attacker[2] = new AttackCharacter("海盗 +3");
+            Attacker[2] = new AttackCharacter("海盗");
             {
-                Attacker[2].Skills.SetStatsBuff(
+                Attacker[2].SetStatsBuff(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
-                Attacker[2].Skills.SetAddAttackReal(
+                Attacker[2].SetAddAttackReal(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.30 });
             }
+        }
+
+        private static class RefreshUI
+        {
+            public class TpyeComboBox_AttackerSlv
+            {
+                int order;
+
+                public TpyeComboBox_AttackerSlv(int order) { this.order = order; }
+
+                public void Refresh(object sender, EventArgs e)
+                {
+                    comboBox_AttackerSlv[order].Items.Clear();
+                    comboBox_AttackerSlv[order].Text = "";
+
+                    int AttackerOrder = comboBox_AttackerName[order].SelectedIndex;
+                    if (AttackerOrder >= 0)
+                    {
+                        for (int j = 0; j <= 10; j++)
+                        {
+                            if (Attacker[AttackerOrder].isSLvExist[j])
+                                comboBox_AttackerSlv[order].Items.Add("+" + j.ToString("d"));
+                        }
+                    }
+                }
+            }
+            public static TpyeComboBox_AttackerSlv[] Refresher_AttackerSlv = new TpyeComboBox_AttackerSlv[AttackerChartHight];
         }
 
         private static Label[,] label_SupporterData = new Label[SupporterNumber, 4];
@@ -620,40 +688,46 @@ namespace BrownDust_Calculator
         }
 
         private static ComboBox[] comboBox_AttackerName = new ComboBox[AttackerChartHight];
+        private static ComboBox[] comboBox_AttackerSlv = new ComboBox[AttackerChartHight];
         private static TextBox[,] textBox_AttackerStats = new TextBox[AttackerChartHight, 5];  //ATK, CRR, CRD, AGI, DEF
         private static Label[,] label_AttackerDamage = new Label[AttackerChartHight, 3];  //Normal, Add, Sum
         private static RadioButton[] radioButton_AttackerChoose = new RadioButton[AttackerChartHight];
         private void DrawAttackerPanel()  //绘制攻击角色数据板块
         {
-            object[] list = new object[AttackerNumber];
-            for (int i = 0; i < AttackerNumber; i++)
-            {
-                list[i] = Attacker[i].Name;
-            }
+            object[] NameList = new object[AttackerNumber];
+            for (int i = 0; i < AttackerNumber; i++) NameList[i] = Attacker[i].Name;
 
             for (int i = 0; i < AttackerChartHight; i++)
             {
                 comboBox_AttackerName[i] = new ComboBox();
                 tableLayoutPanel_Attacker.Controls.Add(comboBox_AttackerName[i], 0, i + 1);
                 comboBox_AttackerName[i].Anchor = AnchorStyles.None;
-                comboBox_AttackerName[i].Items.AddRange(list);
+                comboBox_AttackerName[i].Items.AddRange(NameList);
+
+                RefreshUI.Refresher_AttackerSlv[i] = new RefreshUI.TpyeComboBox_AttackerSlv(i);
+                comboBox_AttackerName[i].SelectedIndexChanged += new EventHandler(RefreshUI.Refresher_AttackerSlv[i].Refresh);
+
+                comboBox_AttackerSlv[i] = new ComboBox();
+                tableLayoutPanel_Attacker.Controls.Add(comboBox_AttackerSlv[i], 1, i + 1);
+                comboBox_AttackerSlv[i].Anchor = AnchorStyles.None;
+
                 for (int j = 0; j < 5; j++)
                 {
                     textBox_AttackerStats[i, j] = new TextBox();
-                    tableLayoutPanel_Attacker.Controls.Add(textBox_AttackerStats[i, j], j + 1, i + 1);
+                    tableLayoutPanel_Attacker.Controls.Add(textBox_AttackerStats[i, j], j + 2, i + 1);
                     textBox_AttackerStats[i, j].Anchor = AnchorStyles.None;
                     textBox_AttackerStats[i, j].TextAlign = HorizontalAlignment.Right;
                 }
                 for (int j = 0; j < 3; j++)
                 {
                     label_AttackerDamage[i, j] = new Label();
-                    tableLayoutPanel_Attacker.Controls.Add(label_AttackerDamage[i, j], j + 6, i + 1);
+                    tableLayoutPanel_Attacker.Controls.Add(label_AttackerDamage[i, j], j + 7, i + 1);
                     label_AttackerDamage[i, j].Anchor = AnchorStyles.None;
                     label_AttackerDamage[i, j].AutoSize = true;
                     label_AttackerDamage[i, j].TextAlign = System.Drawing.ContentAlignment.TopCenter;
                 }
                 radioButton_AttackerChoose[i] = new RadioButton();
-                tableLayoutPanel_Attacker.Controls.Add(radioButton_AttackerChoose[i], 9, i + 1);
+                tableLayoutPanel_Attacker.Controls.Add(radioButton_AttackerChoose[i], 10, i + 1);
                 radioButton_AttackerChoose[i].Anchor = AnchorStyles.None;
                 radioButton_AttackerChoose[i].AutoSize = true;
             }
@@ -693,7 +767,7 @@ namespace BrownDust_Calculator
         }
 
         private static AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
-        private static void CalcutateNormalDamage()  //计算支援&攻击角色出手前数据 + 计算普攻
+        private static void CalcutateDamage()  //计算支援&攻击角色出手前数据 + 计算普攻
         {
             //计算选中的支援角色提供的buff量
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
@@ -709,42 +783,40 @@ namespace BrownDust_Calculator
 
             for (int i = 0; i < AttackerChartHight; i++)
             {
-                int order = comboBox_AttackerName[i].SelectedIndex;
-                if (order >= 0)
+                int order = comboBox_AttackerName[i].SelectedIndex, Slv = comboBox_AttackerSlv[i].SelectedIndex;
+                if (order >= 0 && Slv >= 0)
                 {
                     //计算攻击角色入场状态 + 为攻击角色套用支援buff
-                    ComparedAttacker[i] = new AttackCharacter(Attacker[order].Name) { Skills = Attacker[order].Skills };
+                    Slv = ((string)comboBox_AttackerSlv[i].SelectedItem)[1] - '0';
+                    ComparedAttacker[i] = Attacker[order].ShallowCopy();
+                    ComparedAttacker[i].SetSkillLevel(Slv);
+
                     double[] stats = new double[5];
-                    for (int j = 0; j < 5; j++) { stats[j] = textBox_AttackerStats[i, j].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, j].Text); }
+                    for (int j = 0; j < 5; j++) stats[j] = textBox_AttackerStats[i, j].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, j].Text);
                     ComparedAttacker[i].SetStats(stats[0], stats[1] / 100, stats[2] / 100, stats[3] / 100, stats[4] / 100, ATKbuff, CRRbuff, CRDbuff);
 
                     //输出普攻伤害
                     ComparedAttacker[i].CheckBaseDamage();
                     label_AttackerDamage[i, 0].Text = ComparedAttacker[i].WriteBaseDamage();
-                }
-            }
 
-        }
-        private static void CalcutateAddDamage()  //计算攻击角色普攻后数据 + 计算追伤
-        {
-            for (int i = 0; i < AttackerChartHight; i++)
-            {
-                if (comboBox_AttackerName[i].SelectedIndex >= 0)
-                {
+                    //计算普攻后数据
                     ComparedAttacker[i].DoBuffSkill();
 
+                    //计算追伤
                     ComparedAttacker[i].CheckAddDamage();
                     label_AttackerDamage[i, 1].Text = ComparedAttacker[i].WriteAddDamage();
+
+                    //计算总和
+                    label_AttackerDamage[i, 2].Text = ComparedAttacker[i].WriteSumDamage();
+                }
+                else
+                {
+                    label_AttackerDamage[i, 0].Text = label_AttackerDamage[i, 1].Text = label_AttackerDamage[i, 2].Text = "";
                 }
             }
+
         }
-        private static void CalcutateSumDamage()  //计算总和
-        {
-            for (int i = 0; i < AttackerChartHight; i++)
-                if (comboBox_AttackerName[i].SelectedIndex >= 0)
-                    label_AttackerDamage[i, 2].Text = ComparedAttacker[i].WriteSumDamage();
-        }
-        
+
         private static DefendCharacter[] ComparedDefender = new DefendCharacter[DefenderChartHight];
         private static void CalcutateLeftHP()  //计算防御角色剩余血量
         {
@@ -780,9 +852,7 @@ namespace BrownDust_Calculator
 
         static void CalculateDamage()
         {
-            CalcutateNormalDamage();
-            CalcutateAddDamage();
-            CalcutateSumDamage();
+            CalcutateDamage();
 
             CalcutateLeftHP();
         }
