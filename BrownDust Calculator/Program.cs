@@ -122,7 +122,7 @@ namespace BrownDust_Calculator
             {
                 Array.Sort(Poss, 0, Count);
 
-                for (int i = 1; i < Count; i++)
+                for (int i = Count - 1; i > 0; i--)
                 {
                     if (Poss[i - 1].Point == Poss[i].Point)
                     {
@@ -503,7 +503,7 @@ namespace BrownDust_Calculator
                     HP = Math.Max(0, hp),
                     DEF = Math.Max(0, Math.Min(1, def)),
                     AGI = Math.Max(0, Math.Min(1, agi)),
-                    CUT = Math.Max(0, Math.Min(0.7, agi)),
+                    CUT = Math.Max(0, Math.Min(0.7, cut)),
                     Weaking = Math.Max(0, Math.Min(1, weaking))
                 };
             }
@@ -532,7 +532,7 @@ namespace BrownDust_Calculator
             }
             public void CheckAddIncoming(AttackCharacter attacker)
             {
-                if (BaseStats.Weaking == 0)
+                if (BaseStats.Weaking == 0 || attacker.Skills.isImmunnity)
                 {
                     CheckAddIncomingPart(attacker);
                 }
@@ -561,7 +561,7 @@ namespace BrownDust_Calculator
             Supporter[0] = new SupportCharacter("眼镜", 1.6496, 0.40, 0.05, 0.00, 0, 0);
             Supporter[1] = new SupportCharacter("弦月", 1.5118, 0.15, 0.15, 0.36, 0, 0);
             Supporter[2] = new SupportCharacter("屁股", 1.7481, 0.30, 0.00, 0.30, 0, 0);
-            Supporter[3] = new SupportCharacter("琴女", 1.7481, 0.00, 0.20, 0.00, 0, 0);
+            Supporter[3] = new SupportCharacter("琴女", 1.7481, 0.00, 0.20, 0.30, 0, 0);
 
             Attacker[0] = new AttackCharacter("女忍 +9");
             {
@@ -714,13 +714,9 @@ namespace BrownDust_Calculator
                 {
                     //计算攻击角色入场状态 + 为攻击角色套用支援buff
                     ComparedAttacker[i] = new AttackCharacter(Attacker[order].Name) { Skills = Attacker[order].Skills };
-                    ComparedAttacker[i].SetStats(
-                        textBox_AttackerStats[i, 0].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 0].Text),
-                        textBox_AttackerStats[i, 1].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 1].Text) / 100,
-                        textBox_AttackerStats[i, 2].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 2].Text) / 100,
-                        textBox_AttackerStats[i, 3].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 3].Text) / 100,
-                        textBox_AttackerStats[i, 4].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, 4].Text) / 100,
-                        ATKbuff, CRRbuff, CRDbuff);
+                    double[] stats = new double[5];
+                    for (int j = 0; j < 5; j++) { stats[j] = textBox_AttackerStats[i, j].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, j].Text); }
+                    ComparedAttacker[i].SetStats(stats[0], stats[1] / 100, stats[2] / 100, stats[3] / 100, stats[4] / 100, ATKbuff, CRRbuff, CRDbuff);
 
                     //输出普攻伤害
                     ComparedAttacker[i].CheckBaseDamage();
@@ -750,7 +746,7 @@ namespace BrownDust_Calculator
         }
         
         private static DefendCharacter[] ComparedDefender = new DefendCharacter[DefenderChartHight];
-        private static void SetDefenderStats()  //计算防御角色数据
+        private static void CalcutateLeftHP()  //计算防御角色剩余血量
         {
             int AttackerOrder = -1;
             for (int i = 0; i < AttackerChartHight; i++)
@@ -764,9 +760,9 @@ namespace BrownDust_Calculator
                     {
                         //设定防御角色属性
                         ComparedDefender[i] = new DefendCharacter(textBox_DefenderStats[i, 0].Text);
-                        double[] stats = new double[6];
-                        for (int j = 1; j <= 5; j++) { stats[j] = textBox_DefenderStats[i, j].Text == "" ? 0 : double.Parse(textBox_DefenderStats[i, j].Text); }
-                        ComparedDefender[i].SetStats(Convert.ToInt32(stats[1]), stats[2], stats[3], stats[4], stats[5]);
+                        double[] stats = new double[5];
+                        for (int j = 1; j <= 5; j++) { stats[j - 1] = textBox_DefenderStats[i, j].Text == "" ? 0 : double.Parse(textBox_DefenderStats[i, j].Text); }
+                        ComparedDefender[i].SetStats(Convert.ToInt32(stats[0]), stats[1] / 100, stats[2] / 100, stats[3] / 100, stats[4] / 100);
 
                         //计算防御角色承受伤害
                         ComparedDefender[i].CheckBaseIncoming(ComparedAttacker[AttackerOrder]);
@@ -788,7 +784,7 @@ namespace BrownDust_Calculator
             CalcutateAddDamage();
             CalcutateSumDamage();
 
-            SetDefenderStats();
+            CalcutateLeftHP();
         }
     }
 }

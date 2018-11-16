@@ -79,7 +79,7 @@
             this.tabControl_Main.Location = new System.Drawing.Point(12, 12);
             this.tabControl_Main.Name = "tabControl_Main";
             this.tabControl_Main.SelectedIndex = 0;
-            this.tabControl_Main.Size = new System.Drawing.Size(1251, 807);
+            this.tabControl_Main.Size = new System.Drawing.Size(1050, 636);
             this.tabControl_Main.TabIndex = 3;
             // 
             // tabPage1
@@ -93,7 +93,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1243, 781);
+            this.tabPage1.Size = new System.Drawing.Size(1042, 610);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
@@ -101,9 +101,9 @@
             // 
             this.groupBox_Defender.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Defender.Controls.Add(this.tableLayoutPanel_Defender);
-            this.groupBox_Defender.Location = new System.Drawing.Point(12, 379);
+            this.groupBox_Defender.Location = new System.Drawing.Point(6, 6);
             this.groupBox_Defender.Name = "groupBox_Defender";
-            this.groupBox_Defender.Size = new System.Drawing.Size(967, 281);
+            this.groupBox_Defender.Size = new System.Drawing.Size(685, 223);
             this.groupBox_Defender.TabIndex = 5;
             this.groupBox_Defender.TabStop = false;
             this.groupBox_Defender.Text = "防御角色";
@@ -111,15 +111,13 @@
             // tableLayoutPanel_Defender
             // 
             this.tableLayoutPanel_Defender.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel_Defender.ColumnCount = 10;
+            this.tableLayoutPanel_Defender.ColumnCount = 8;
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel_Defender.Controls.Add(this.label1, 0, 0);
@@ -138,7 +136,7 @@
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(856, 195);
+            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(674, 195);
             this.tableLayoutPanel_Defender.TabIndex = 2;
             // 
             // label1
@@ -176,7 +174,7 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(546, 14);
+            this.label6.Location = new System.Drawing.Point(549, 14);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(89, 12);
             this.label6.TabIndex = 7;
@@ -231,7 +229,7 @@
             // 
             this.groupBox_Attacker.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Attacker.Controls.Add(this.tableLayoutPanel_Attacker);
-            this.groupBox_Attacker.Location = new System.Drawing.Point(6, 6);
+            this.groupBox_Attacker.Location = new System.Drawing.Point(12, 235);
             this.groupBox_Attacker.Name = "groupBox_Attacker";
             this.groupBox_Attacker.Size = new System.Drawing.Size(874, 367);
             this.groupBox_Attacker.TabIndex = 2;
@@ -383,9 +381,9 @@
             // 
             // button_Save
             // 
-            this.button_Save.Location = new System.Drawing.Point(1088, 200);
+            this.button_Save.Location = new System.Drawing.Point(909, 532);
             this.button_Save.Name = "button_Save";
-            this.button_Save.Size = new System.Drawing.Size(138, 40);
+            this.button_Save.Size = new System.Drawing.Size(122, 40);
             this.button_Save.TabIndex = 4;
             this.button_Save.Text = "Save";
             this.button_Save.UseVisualStyleBackColor = true;
@@ -393,9 +391,9 @@
             // 
             // button_Calculate
             // 
-            this.button_Calculate.Location = new System.Drawing.Point(886, 200);
+            this.button_Calculate.Location = new System.Drawing.Point(909, 268);
             this.button_Calculate.Name = "button_Calculate";
-            this.button_Calculate.Size = new System.Drawing.Size(138, 40);
+            this.button_Calculate.Size = new System.Drawing.Size(122, 40);
             this.button_Calculate.TabIndex = 3;
             this.button_Calculate.Text = "Do it!";
             this.button_Calculate.UseVisualStyleBackColor = true;
@@ -405,7 +403,7 @@
             // 
             this.groupBox_Supporter.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Supporter.Controls.Add(this.tableLayoutPanel_Supporter);
-            this.groupBox_Supporter.Location = new System.Drawing.Point(886, 6);
+            this.groupBox_Supporter.Location = new System.Drawing.Point(697, 6);
             this.groupBox_Supporter.Name = "groupBox_Supporter";
             this.groupBox_Supporter.Size = new System.Drawing.Size(340, 188);
             this.groupBox_Supporter.TabIndex = 1;
@@ -426,7 +424,7 @@
             this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppATK, 1, 0);
             this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppName, 0, 0);
             this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppChoose, 4, 0);
-            this.tableLayoutPanel_Supporter.Location = new System.Drawing.Point(6, 20);
+            this.tableLayoutPanel_Supporter.Location = new System.Drawing.Point(7, 20);
             this.tableLayoutPanel_Supporter.Name = "tableLayoutPanel_Supporter";
             this.tableLayoutPanel_Supporter.RowCount = 5;
             this.tableLayoutPanel_Supporter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -492,7 +490,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1151, 781);
+            this.tabPage2.Size = new System.Drawing.Size(1243, 781);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Supporter Setting";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -501,7 +499,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1275, 831);
+            this.ClientSize = new System.Drawing.Size(1066, 652);
             this.Controls.Add(this.tabControl_Main);
             this.Name = "Form_Main";
             this.Text = "BrownDust Calculator";
@@ -552,9 +550,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label6;
     }
 }
