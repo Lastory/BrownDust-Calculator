@@ -30,6 +30,8 @@
         {
             this.tabControl_Main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBox_Language = new System.Windows.Forms.ComboBox();
+            this.label_Author = new System.Windows.Forms.Label();
             this.groupBox_Defender = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Defender = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,16 +44,17 @@
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox_Attacker = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Attacker = new System.Windows.Forms.TableLayoutPanel();
-            this.label_AttaCRD = new System.Windows.Forms.Label();
-            this.label_AttaCRR = new System.Windows.Forms.Label();
-            this.label_AttaATK = new System.Windows.Forms.Label();
             this.label_AttaName = new System.Windows.Forms.Label();
-            this.label_AttaAGI = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label__AttaSumDmg = new System.Windows.Forms.Label();
             this.label_AttaAddDmg = new System.Windows.Forms.Label();
             this.label_AttaNormalDmg = new System.Windows.Forms.Label();
             this.label_AttaDEF = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label_AttaAGI = new System.Windows.Forms.Label();
+            this.label_AttaCRD = new System.Windows.Forms.Label();
+            this.label_AttaCRR = new System.Windows.Forms.Label();
+            this.label_AttaATK = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.button_Save = new System.Windows.Forms.Button();
             this.button_Calculate = new System.Windows.Forms.Button();
             this.groupBox_Supporter = new System.Windows.Forms.GroupBox();
@@ -62,8 +65,6 @@
             this.label_SuppName = new System.Windows.Forms.Label();
             this.label_SuppChoose = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label_Author = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defender.SuspendLayout();
@@ -87,6 +88,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage1.Controls.Add(this.comboBox_Language);
             this.tabPage1.Controls.Add(this.label_Author);
             this.tabPage1.Controls.Add(this.groupBox_Defender);
             this.tabPage1.Controls.Add(this.groupBox_Attacker);
@@ -99,6 +101,27 @@
             this.tabPage1.Size = new System.Drawing.Size(1052, 610);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
+            // 
+            // comboBox_Language
+            // 
+            this.comboBox_Language.FormattingEnabled = true;
+            this.comboBox_Language.Items.AddRange(new object[] {
+            "Chinese 中文",
+            "English English"});
+            this.comboBox_Language.Location = new System.Drawing.Point(886, 209);
+            this.comboBox_Language.Name = "comboBox_Language";
+            this.comboBox_Language.Size = new System.Drawing.Size(154, 20);
+            this.comboBox_Language.TabIndex = 7;
+            this.comboBox_Language.SelectedIndexChanged += new System.EventHandler(this.comboBox_Language_SelectedIndexChanged);
+            // 
+            // label_Author
+            // 
+            this.label_Author.AutoSize = true;
+            this.label_Author.Location = new System.Drawing.Point(981, 590);
+            this.label_Author.Name = "label_Author";
+            this.label_Author.Size = new System.Drawing.Size(65, 12);
+            this.label_Author.TabIndex = 6;
+            this.label_Author.Text = "by Lastory";
             // 
             // groupBox_Defender
             // 
@@ -234,7 +257,7 @@
             this.groupBox_Attacker.Controls.Add(this.tableLayoutPanel_Attacker);
             this.groupBox_Attacker.Location = new System.Drawing.Point(6, 235);
             this.groupBox_Attacker.Name = "groupBox_Attacker";
-            this.groupBox_Attacker.Size = new System.Drawing.Size(926, 367);
+            this.groupBox_Attacker.Size = new System.Drawing.Size(969, 367);
             this.groupBox_Attacker.TabIndex = 2;
             this.groupBox_Attacker.TabStop = false;
             this.groupBox_Attacker.Text = "Attackers";
@@ -243,7 +266,7 @@
             // 
             this.tableLayoutPanel_Attacker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel_Attacker.ColumnCount = 11;
-            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
@@ -277,14 +300,86 @@
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel_Attacker.Size = new System.Drawing.Size(913, 336);
+            this.tableLayoutPanel_Attacker.Size = new System.Drawing.Size(923, 336);
             this.tableLayoutPanel_Attacker.TabIndex = 2;
+            // 
+            // label_AttaName
+            // 
+            this.label_AttaName.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_AttaName.AutoSize = true;
+            this.label_AttaName.Location = new System.Drawing.Point(11, 13);
+            this.label_AttaName.Name = "label_AttaName";
+            this.label_AttaName.Size = new System.Drawing.Size(59, 12);
+            this.label_AttaName.TabIndex = 1;
+            this.label_AttaName.Text = "Character";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(876, 13);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(41, 12);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Select";
+            // 
+            // label__AttaSumDmg
+            // 
+            this.label__AttaSumDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label__AttaSumDmg.AutoSize = true;
+            this.label__AttaSumDmg.Location = new System.Drawing.Point(756, 13);
+            this.label__AttaSumDmg.Name = "label__AttaSumDmg";
+            this.label__AttaSumDmg.Size = new System.Drawing.Size(77, 12);
+            this.label__AttaSumDmg.TabIndex = 15;
+            this.label__AttaSumDmg.Text = "Total Damage";
+            // 
+            // label_AttaAddDmg
+            // 
+            this.label_AttaAddDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_AttaAddDmg.AutoSize = true;
+            this.label_AttaAddDmg.Location = new System.Drawing.Point(590, 13);
+            this.label_AttaAddDmg.Name = "label_AttaAddDmg";
+            this.label_AttaAddDmg.Size = new System.Drawing.Size(107, 12);
+            this.label_AttaAddDmg.TabIndex = 14;
+            this.label_AttaAddDmg.Text = "Additional Damage";
+            // 
+            // label_AttaNormalDmg
+            // 
+            this.label_AttaNormalDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_AttaNormalDmg.AutoSize = true;
+            this.label_AttaNormalDmg.Location = new System.Drawing.Point(451, 13);
+            this.label_AttaNormalDmg.Name = "label_AttaNormalDmg";
+            this.label_AttaNormalDmg.Size = new System.Drawing.Size(83, 12);
+            this.label_AttaNormalDmg.TabIndex = 13;
+            this.label_AttaNormalDmg.Text = "Normal Damage";
+            // 
+            // label_AttaDEF
+            // 
+            this.label_AttaDEF.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_AttaDEF.AutoSize = true;
+            this.label_AttaDEF.Location = new System.Drawing.Point(369, 13);
+            this.label_AttaDEF.Name = "label_AttaDEF";
+            this.label_AttaDEF.Size = new System.Drawing.Size(41, 12);
+            this.label_AttaDEF.TabIndex = 16;
+            this.label_AttaDEF.Text = "DEF(%)";
+            this.label_AttaDEF.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label_AttaAGI
+            // 
+            this.label_AttaAGI.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_AttaAGI.AutoSize = true;
+            this.label_AttaAGI.Location = new System.Drawing.Point(313, 13);
+            this.label_AttaAGI.Name = "label_AttaAGI";
+            this.label_AttaAGI.Size = new System.Drawing.Size(41, 12);
+            this.label_AttaAGI.TabIndex = 8;
+            this.label_AttaAGI.Text = "AGI(%)";
+            this.label_AttaAGI.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_AttaCRD
             // 
             this.label_AttaCRD.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaCRD.AutoSize = true;
-            this.label_AttaCRD.Location = new System.Drawing.Point(244, 13);
+            this.label_AttaCRD.Location = new System.Drawing.Point(254, 13);
             this.label_AttaCRD.Name = "label_AttaCRD";
             this.label_AttaCRD.Size = new System.Drawing.Size(47, 12);
             this.label_AttaCRD.TabIndex = 4;
@@ -295,7 +390,7 @@
             // 
             this.label_AttaCRR.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaCRR.AutoSize = true;
-            this.label_AttaCRR.Location = new System.Drawing.Point(188, 13);
+            this.label_AttaCRR.Location = new System.Drawing.Point(198, 13);
             this.label_AttaCRR.Name = "label_AttaCRR";
             this.label_AttaCRR.Size = new System.Drawing.Size(47, 12);
             this.label_AttaCRR.TabIndex = 3;
@@ -306,83 +401,21 @@
             // 
             this.label_AttaATK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaATK.AutoSize = true;
-            this.label_AttaATK.Location = new System.Drawing.Point(141, 13);
+            this.label_AttaATK.Location = new System.Drawing.Point(151, 13);
             this.label_AttaATK.Name = "label_AttaATK";
             this.label_AttaATK.Size = new System.Drawing.Size(23, 12);
             this.label_AttaATK.TabIndex = 2;
             this.label_AttaATK.Text = "ATK";
             // 
-            // label_AttaName
+            // label10
             // 
-            this.label_AttaName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_AttaName.AutoSize = true;
-            this.label_AttaName.Location = new System.Drawing.Point(6, 13);
-            this.label_AttaName.Name = "label_AttaName";
-            this.label_AttaName.Size = new System.Drawing.Size(59, 12);
-            this.label_AttaName.TabIndex = 1;
-            this.label_AttaName.Text = "Character";
-            // 
-            // label_AttaAGI
-            // 
-            this.label_AttaAGI.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_AttaAGI.AutoSize = true;
-            this.label_AttaAGI.Location = new System.Drawing.Point(303, 13);
-            this.label_AttaAGI.Name = "label_AttaAGI";
-            this.label_AttaAGI.Size = new System.Drawing.Size(41, 12);
-            this.label_AttaAGI.TabIndex = 8;
-            this.label_AttaAGI.Text = "AGI(%)";
-            this.label_AttaAGI.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label__AttaSumDmg
-            // 
-            this.label__AttaSumDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label__AttaSumDmg.AutoSize = true;
-            this.label__AttaSumDmg.Location = new System.Drawing.Point(746, 13);
-            this.label__AttaSumDmg.Name = "label__AttaSumDmg";
-            this.label__AttaSumDmg.Size = new System.Drawing.Size(77, 12);
-            this.label__AttaSumDmg.TabIndex = 15;
-            this.label__AttaSumDmg.Text = "Total Damage";
-            // 
-            // label_AttaAddDmg
-            // 
-            this.label_AttaAddDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_AttaAddDmg.AutoSize = true;
-            this.label_AttaAddDmg.Location = new System.Drawing.Point(580, 13);
-            this.label_AttaAddDmg.Name = "label_AttaAddDmg";
-            this.label_AttaAddDmg.Size = new System.Drawing.Size(107, 12);
-            this.label_AttaAddDmg.TabIndex = 14;
-            this.label_AttaAddDmg.Text = "Additional Damage";
-            // 
-            // label_AttaNormalDmg
-            // 
-            this.label_AttaNormalDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_AttaNormalDmg.AutoSize = true;
-            this.label_AttaNormalDmg.Location = new System.Drawing.Point(441, 13);
-            this.label_AttaNormalDmg.Name = "label_AttaNormalDmg";
-            this.label_AttaNormalDmg.Size = new System.Drawing.Size(83, 12);
-            this.label_AttaNormalDmg.TabIndex = 13;
-            this.label_AttaNormalDmg.Text = "Normal Damage";
-            // 
-            // label_AttaDEF
-            // 
-            this.label_AttaDEF.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_AttaDEF.AutoSize = true;
-            this.label_AttaDEF.Location = new System.Drawing.Point(359, 13);
-            this.label_AttaDEF.Name = "label_AttaDEF";
-            this.label_AttaDEF.Size = new System.Drawing.Size(41, 12);
-            this.label_AttaDEF.TabIndex = 16;
-            this.label_AttaDEF.Text = "DEF(%)";
-            this.label_AttaDEF.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label9
-            // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(866, 13);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 12);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Select";
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(89, 13);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 12);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Skill";
             // 
             // button_Save
             // 
@@ -500,25 +533,6 @@
             this.tabPage2.Text = "Supporter Setting";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label_Author
-            // 
-            this.label_Author.AutoSize = true;
-            this.label_Author.Location = new System.Drawing.Point(981, 590);
-            this.label_Author.Name = "label_Author";
-            this.label_Author.Size = new System.Drawing.Size(65, 12);
-            this.label_Author.TabIndex = 6;
-            this.label_Author.Text = "by Lastory";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(79, 13);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(35, 12);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Skill";
-            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -581,5 +595,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label_Author;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox comboBox_Language;
     }
 }

@@ -27,9 +27,13 @@ namespace BrownDust_Calculator
             Savefile.SaveSavefile();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox_Language_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (Language != comboBox_Language.SelectedIndex)
+            {
+                Language = comboBox_Language.SelectedIndex;
+                ReDrawUI();
+            }
         }
     }
 }

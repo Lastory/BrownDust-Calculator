@@ -22,7 +22,11 @@ namespace BrownDust_Calculator
 
     partial class Form_Main
     {
-        private static int Language = 1;  //0 - 中文，1 - 英文
+        private static int LanguageCount = 2;
+        private static int Language = 0;  //0 - 中文，1 - 英文
+        private static int AttackerNumber = 4;
+        private static int SupporterChartHight = 4, AttackerChartHight = 8, DefenderChartHight = 4;
+
 
         private static class Savefile  //存档相关
         {
@@ -313,14 +317,53 @@ namespace BrownDust_Calculator
 
         private class SupportCharacter
         {
-            public string Name;
-            double Support;
+            public struct TypeSkill
+            {
+                public double ATKup, CRRup, CRDup, AGIup, CUTup;
+                public bool isImmunnity;
+
+                public TypeSkill(double atk, double crr, double crd ,double agi, double cut, params string[] arr)
+                {
+                    ATKup = atk; CRRup = crr; CRDup = crd; AGIup = agi; CUTup = cut;
+
+                    isImmunnity = false;
+
+                    if (arr.Length > 0)
+                    {
+                        for (int i = 0; i < arr.Length; i++)
+                        {
+                            if (arr[i] == "Immunnity") isImmunnity = true;
+                        }
+                    }
+                }
+                public void Set(string to)
+                {
+                    switch (to)
+                    {
+                        case "Immunnity": isImmunnity = true;break;
+                    }
+                }
+                public void Set(string to, double rate)
+                {
+                    switch (to)
+                    {
+                        case "ATK": ATKup = rate; break;
+                        case "CRR": CRRup = rate; break;
+                        case "CRD": CRDup = rate; break;
+                        case "AGI": AGIup = rate; break;
+                        case "CUT": CUTup = rate; break;
+                    }
+                }
+            }
+
+            private string Name;
+            public double Support;
             public double ATKup, CRRup, CRDup, AGIup, CUTup;
 
-            public SupportCharacter(string name, double sup, double atk, double crir, double crid, double agi, double cut)
+            public SupportCharacter(string name, double sup, double atk, double crr, double crd, double agi, double cut, params string[] arr)
             {
                 Name = name; Support = sup;
-                ATKup = atk * sup; CRRup = crir * sup; CRDup = crid * sup; AGIup = agi * sup; CUTup = cut * sup;
+                ATKup = atk * sup; CRRup = crr * sup; CRDup = crd * sup; AGIup = agi * sup; CUTup = cut * sup;
             }
         }
         private class AttackCharacter
@@ -367,7 +410,7 @@ namespace BrownDust_Calculator
             }
             private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI; }
 
-            public string Name;
+            private string[] Name = new string[LanguageCount];
             private int SkillLevel;
             private TypeStats BaseStats, NowStats, StatsUp;
             public bool[] isSLvExist = new bool[11];
@@ -375,9 +418,9 @@ namespace BrownDust_Calculator
             public TypeSkill NowSkill = new TypeSkill();
             public TypeDamage BaseDamage, AddDamageNormal, AddDamageReal;
 
-            public AttackCharacter(string name)
+            public AttackCharacter(params string[] names)
             {
-                Name = name;
+                Name = names;
                 for (int i = 1; i <= 10; i++) SkillList[i] = new TypeSkill();
             }
             public AttackCharacter ShallowCopy() { return (AttackCharacter)this.MemberwiseClone(); }
@@ -420,6 +463,8 @@ namespace BrownDust_Calculator
                 SkillLevel = level;
                 NowSkill = SkillList[level];
             }
+
+            public string GetName() { return Name[Language]; }
 
             private void DoStatsUp()
             {
@@ -595,10 +640,8 @@ namespace BrownDust_Calculator
             public string WriteFinalHP() { return FinalHP.WriteNumericalDamage(); }
         }
 
-        static int SupporterNumber = 4, AttackerNumber = 4;
-        static int AttackerChartHight = 8, DefenderChartHight = 4;
 
-        private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
+        private static SupportCharacter[] Supporter = new SupportCharacter[SupporterChartHight];
         private static AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
         private static void SetCharacters()  //设定角色基本数据
         {
@@ -610,7 +653,7 @@ namespace BrownDust_Calculator
 
             //攻击角色数据
             AttackCharacter Now;
-            Now = Attacker[0] = new AttackCharacter("女忍");
+            Now = Attacker[0] = new AttackCharacter("女忍", "Eunrang");
             {
                 Now.SetStatsBuff(9,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
@@ -621,7 +664,7 @@ namespace BrownDust_Calculator
                 Now.SetAddAttackNormal(9,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
             }
-            Now = Attacker[1] = new AttackCharacter("修女");
+            Now = Attacker[1] = new AttackCharacter("修女", "Angelica");
             {
                 Now.SetAddAttackNormal(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
@@ -635,14 +678,14 @@ namespace BrownDust_Calculator
                 Now.SetAddAttackNormal(5,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.30 });
             }
-            Now = Attacker[2] = new AttackCharacter("海盗");
+            Now = Attacker[2] = new AttackCharacter("海盗", "Alec");
             {
                 Now.SetStatsBuff(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
                 Now.SetAddAttackReal(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.30 });
             }
-            Now = Attacker[3] = new AttackCharacter("白剑");
+            Now = Attacker[3] = new AttackCharacter("白剑", "Siegmund");
             {
                 Now.SetAddAttackNormal(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 });
@@ -700,8 +743,8 @@ namespace BrownDust_Calculator
             public static TpyeComboBox_AttackerSlv[] Refresher_AttackerSlv = new TpyeComboBox_AttackerSlv[AttackerChartHight];
         }
 
-        private static Label[,] label_SupporterData = new Label[SupporterNumber, 4];
-        private static CheckBox[] checkBox_SupporterChoose = new CheckBox[SupporterNumber];
+        private static Label[,] label_SupporterData = new Label[SupporterChartHight, 4];
+        private static CheckBox[] checkBox_SupporterChoose = new CheckBox[SupporterChartHight];
         private void DrawSupporterData()  //绘制支援角色数据板块
         {
             string SupportAmount(double buff)
@@ -709,7 +752,7 @@ namespace BrownDust_Calculator
                 return buff > 0.01 ? (buff * 100).ToString("f2") + "%" : "/";
             }
 
-            for (int i = 0; i < SupporterNumber; i++)
+            for (int i = 0; i < SupporterChartHight; i++)
             {
                 checkBox_SupporterChoose[i] = new CheckBox();
                 tableLayoutPanel_Supporter.Controls.Add(checkBox_SupporterChoose[i], 5, i + 1);
@@ -738,7 +781,7 @@ namespace BrownDust_Calculator
         private void DrawAttackerPanel()  //绘制攻击角色数据板块
         {
             object[] NameList = new object[AttackerNumber];
-            for (int i = 0; i < AttackerNumber; i++) NameList[i] = Attacker[i].Name;
+            for (int i = 0; i < AttackerNumber; i++) NameList[i] = Attacker[i].GetName();
 
             for (int i = 0; i < AttackerChartHight; i++)
             {
@@ -800,8 +843,30 @@ namespace BrownDust_Calculator
             }
         }
 
+        private void ReDrawUI()
+        {
+            //重绘攻击角色面板
+            object[] NameList = new object[AttackerNumber];
+            for (int i = 0; i < AttackerNumber; i++) NameList[i] = Attacker[i].GetName();
+
+            for (int i = 0; i < AttackerChartHight; i++)
+            {
+                int Order = comboBox_AttackerName[i].SelectedIndex, SlvOrder = comboBox_AttackerSlv[i].SelectedIndex;
+                comboBox_AttackerName[i].Items.Clear();
+                comboBox_AttackerName[i].Items.AddRange(NameList);
+                if (Order >= 0)
+                {
+                    comboBox_AttackerName[i].Text = Attacker[Order].GetName();
+                    comboBox_AttackerSlv[i].SelectedIndex = SlvOrder;
+                }
+            }
+
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            comboBox_Language.SelectedIndex = 0;
+
             SetCharacters();
             DrawSupporterData();
             DrawAttackerPanel();
@@ -814,7 +879,7 @@ namespace BrownDust_Calculator
         {
             //计算选中的支援角色提供的buff量
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
-            for (int i = 0; i < SupporterNumber; i++)
+            for (int i = 0; i < SupporterChartHight; i++)
             {
                 if (checkBox_SupporterChoose[i].Checked)
                 {
