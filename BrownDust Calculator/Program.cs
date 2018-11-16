@@ -338,7 +338,7 @@ namespace BrownDust_Calculator
                 public bool isAddRatio = false;  //追伤是否为血量比例伤害
                 public bool isImmunnity = false;  //是否有免疫技能
 
-                public TypeSkill ShallowCopy() { return (TypeSkill)this.MemberwiseClone(); }
+                public TypeSkill ShallowCopy() { return (TypeSkill) this.MemberwiseClone(); }
 
                 public void SetStatsBuff(params TypeSkillDetail[] detail)
                 {
@@ -407,11 +407,12 @@ namespace BrownDust_Calculator
                 isSLvExist[level] = true;
                 SkillList[level].SetAddAttackReal(detail);
             }
-            public void CopySkill(int from, int to)
+            public void SkillCopy(int from, int to)
             {
                 isSLvExist[to] = true;
                 SkillList[to] = SkillList[from].ShallowCopy();
             }
+            public void SkillExtend(int to) { SkillCopy(to - 1, to); }
             public void SetSkillLevel(int level)
             {
                 SkillLevel = level;
@@ -473,7 +474,7 @@ namespace BrownDust_Calculator
                     NowStats.ATK, 1 - NowStats.CRR,
                     NowStats.ATK * (1 + NowStats.CRD), NowStats.CRR);
             }
-            public TypeDamage GetAddDamage(TypeSkill.TypeSkillDetail data, bool isReal)
+            private TypeDamage GetAddDamage(TypeSkill.TypeSkillDetail data, bool isReal)
             {
                 TypeDamage result;
 
@@ -592,41 +593,81 @@ namespace BrownDust_Calculator
             public string WriteFinalHP() { return FinalHP.WriteNumericalDamage(); }
         }
 
-        static int SupporterNumber = 4, AttackerNumber = 3;
+        static int SupporterNumber = 4, AttackerNumber = 4;
         static int AttackerChartHight = 8, DefenderChartHight = 4;
 
         private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
         private static AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
         private static void SetCharacters()  //设定角色基本数据
         {
+            //支援角色数据
             Supporter[0] = new SupportCharacter("眼镜", 1.6496, 0.40, 0.05, 0.00, 0, 0);
             Supporter[1] = new SupportCharacter("弦月", 1.5118, 0.15, 0.15, 0.36, 0, 0);
             Supporter[2] = new SupportCharacter("屁股", 1.7481, 0.30, 0.00, 0.30, 0, 0);
             Supporter[3] = new SupportCharacter("琴女", 1.7481, 0.00, 0.20, 0.30, 0, 0);
 
-            Attacker[0] = new AttackCharacter("女忍");
+            //攻击角色数据
+            AttackCharacter Now;
+            Now = Attacker[0] = new AttackCharacter("女忍");
             {
-                Attacker[0].SetStatsBuff(9,
+                Now.SetStatsBuff(9,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
-                Attacker[0].SetAfterBuff(9,
+                Now.SetAfterBuff(9,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate = 1.50 },
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.35 });
-                Attacker[0].SetAddAttackNormal(9,
+                Now.SetAddAttackNormal(9,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
             }
-            Attacker[1] = new AttackCharacter("修女");
+            Now = Attacker[1] = new AttackCharacter("修女");
             {
-                Attacker[1].SetAddAttackNormal(3,
-                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
-                Attacker[1].SkillList[3].isImmunnity = true;
+                Now.SetAddAttackNormal(3,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
+                Now.SkillList[3].isImmunnity = true;
+
+                Now.SkillExtend(4);
+                Now.SetAddAttackNormal(4,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.25 });
+
+                Now.SkillExtend(5);
+                Now.SetAddAttackNormal(5,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.30 });
             }
-            Attacker[2] = new AttackCharacter("海盗");
+            Now = Attacker[2] = new AttackCharacter("海盗");
             {
-                Attacker[2].SetStatsBuff(3,
+                Now.SetStatsBuff(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
-                Attacker[2].SetAddAttackReal(3,
+                Now.SetAddAttackReal(3,
                     new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.30 });
+            }
+            Now = Attacker[3] = new AttackCharacter("白剑");
+            {
+                Now.SetAddAttackNormal(3,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 });
+
+                Now.SkillExtend(4);
+                Now.SetAddAttackNormal(4,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.00 });
+
+                Now.SkillExtend(5);
+                Now.SetAddAttackNormal(5,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.50 });
+
+                Now.SkillExtend(6);
+                Now.SetStatsBuff(6,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.00 });
+
+                Now.SkillExtend(7);
+                Now.SetStatsBuff(7,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.25 });
+
+                Now.SkillExtend(8);
+                Now.SetStatsBuff(8,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.50 });
+
+                Now.SkillExtend(9);
+                Now.SetStatsBuff(9,
+                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "CRR", rate = 0.50 });
             }
         }
 

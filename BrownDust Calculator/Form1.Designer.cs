@@ -64,7 +64,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label_Author = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defender.SuspendLayout();
@@ -88,7 +87,6 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage1.Controls.Add(this.comboBox1);
             this.tabPage1.Controls.Add(this.label_Author);
             this.tabPage1.Controls.Add(this.groupBox_Defender);
             this.tabPage1.Controls.Add(this.groupBox_Attacker);
@@ -521,14 +519,6 @@
             this.label10.TabIndex = 18;
             this.label10.Text = "Skill";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(945, 305);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(94, 20);
-            this.comboBox1.TabIndex = 7;
-            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -591,6 +581,5 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label_Author;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
