@@ -98,7 +98,7 @@
             this.tabControl_Main.Location = new System.Drawing.Point(12, 12);
             this.tabControl_Main.Name = "tabControl_Main";
             this.tabControl_Main.SelectedIndex = 0;
-            this.tabControl_Main.Size = new System.Drawing.Size(1060, 636);
+            this.tabControl_Main.Size = new System.Drawing.Size(1060, 762);
             this.tabControl_Main.TabIndex = 3;
             // 
             // tabPage1
@@ -114,7 +114,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1052, 610);
+            this.tabPage1.Size = new System.Drawing.Size(1052, 736);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
@@ -126,14 +126,14 @@
             "English English"});
             this.comboBox_Language.Location = new System.Drawing.Point(886, 209);
             this.comboBox_Language.Name = "comboBox_Language";
-            this.comboBox_Language.Size = new System.Drawing.Size(154, 20);
+            this.comboBox_Language.Size = new System.Drawing.Size(143, 20);
             this.comboBox_Language.TabIndex = 7;
             this.comboBox_Language.SelectedIndexChanged += new System.EventHandler(this.comboBox_Language_SelectedIndexChanged);
             // 
             // label_Author
             // 
             this.label_Author.AutoSize = true;
-            this.label_Author.Location = new System.Drawing.Point(981, 590);
+            this.label_Author.Location = new System.Drawing.Point(984, 566);
             this.label_Author.Name = "label_Author";
             this.label_Author.Size = new System.Drawing.Size(65, 12);
             this.label_Author.TabIndex = 6;
@@ -145,7 +145,7 @@
             this.groupBox_Defender.Controls.Add(this.tableLayoutPanel_Defender);
             this.groupBox_Defender.Location = new System.Drawing.Point(6, 6);
             this.groupBox_Defender.Name = "groupBox_Defender";
-            this.groupBox_Defender.Size = new System.Drawing.Size(694, 223);
+            this.groupBox_Defender.Size = new System.Drawing.Size(677, 223);
             this.groupBox_Defender.TabIndex = 5;
             this.groupBox_Defender.TabStop = false;
             this.groupBox_Defender.Text = "Defenders";
@@ -155,9 +155,9 @@
             this.tableLayoutPanel_Defender.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel_Defender.ColumnCount = 8;
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
@@ -178,7 +178,7 @@
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(682, 195);
+            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(666, 195);
             this.tableLayoutPanel_Defender.TabIndex = 2;
             // 
             // label1
@@ -195,7 +195,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(95, 14);
+            this.label3.Location = new System.Drawing.Point(93, 14);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(17, 12);
             this.label3.TabIndex = 4;
@@ -205,18 +205,18 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(143, 14);
+            this.label2.Location = new System.Drawing.Point(144, 8);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.Size = new System.Drawing.Size(23, 24);
             this.label2.TabIndex = 3;
-            this.label2.Text = "DEF(%)";
+            this.label2.Text = "DEF (%)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(520, 14);
+            this.label6.Location = new System.Drawing.Point(505, 14);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(155, 12);
             this.label6.TabIndex = 7;
@@ -227,7 +227,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(370, 14);
+            this.label5.Location = new System.Drawing.Point(355, 14);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(137, 12);
             this.label5.TabIndex = 6;
@@ -238,33 +238,33 @@
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(311, 8);
+            this.label7.Location = new System.Drawing.Point(296, 8);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(47, 24);
             this.label7.TabIndex = 8;
-            this.label7.Text = "Weaking(%)";
+            this.label7.Text = "Weaking (%)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label8
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(200, 14);
+            this.label8.Location = new System.Drawing.Point(196, 8);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
+            this.label8.Size = new System.Drawing.Size(23, 24);
             this.label8.TabIndex = 9;
-            this.label8.Text = "AGI(%)";
+            this.label8.Text = "AGI (%)";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label4
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(254, 8);
+            this.label4.Location = new System.Drawing.Point(239, 8);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 24);
             this.label4.TabIndex = 5;
-            this.label4.Text = "Barrier(%)";
+            this.label4.Text = "Barrier (%)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // groupBox_Attacker
@@ -273,7 +273,7 @@
             this.groupBox_Attacker.Controls.Add(this.tableLayoutPanel_Attacker);
             this.groupBox_Attacker.Location = new System.Drawing.Point(6, 235);
             this.groupBox_Attacker.Name = "groupBox_Attacker";
-            this.groupBox_Attacker.Size = new System.Drawing.Size(969, 367);
+            this.groupBox_Attacker.Size = new System.Drawing.Size(874, 363);
             this.groupBox_Attacker.TabIndex = 2;
             this.groupBox_Attacker.TabStop = false;
             this.groupBox_Attacker.Text = "Attackers";
@@ -283,12 +283,12 @@
             this.tableLayoutPanel_Attacker.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel_Attacker.ColumnCount = 11;
             this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel_Attacker.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
@@ -316,7 +316,7 @@
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Attacker.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel_Attacker.Size = new System.Drawing.Size(923, 336);
+            this.tableLayoutPanel_Attacker.Size = new System.Drawing.Size(862, 336);
             this.tableLayoutPanel_Attacker.TabIndex = 2;
             // 
             // label_AttaName
@@ -333,7 +333,7 @@
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(876, 13);
+            this.label9.Location = new System.Drawing.Point(815, 13);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(41, 12);
             this.label9.TabIndex = 17;
@@ -343,7 +343,7 @@
             // 
             this.label__AttaSumDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label__AttaSumDmg.AutoSize = true;
-            this.label__AttaSumDmg.Location = new System.Drawing.Point(756, 13);
+            this.label__AttaSumDmg.Location = new System.Drawing.Point(696, 13);
             this.label__AttaSumDmg.Name = "label__AttaSumDmg";
             this.label__AttaSumDmg.Size = new System.Drawing.Size(77, 12);
             this.label__AttaSumDmg.TabIndex = 15;
@@ -353,7 +353,7 @@
             // 
             this.label_AttaAddDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaAddDmg.AutoSize = true;
-            this.label_AttaAddDmg.Location = new System.Drawing.Point(590, 13);
+            this.label_AttaAddDmg.Location = new System.Drawing.Point(530, 13);
             this.label_AttaAddDmg.Name = "label_AttaAddDmg";
             this.label_AttaAddDmg.Size = new System.Drawing.Size(107, 12);
             this.label_AttaAddDmg.TabIndex = 14;
@@ -363,7 +363,7 @@
             // 
             this.label_AttaNormalDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaNormalDmg.AutoSize = true;
-            this.label_AttaNormalDmg.Location = new System.Drawing.Point(451, 13);
+            this.label_AttaNormalDmg.Location = new System.Drawing.Point(391, 13);
             this.label_AttaNormalDmg.Name = "label_AttaNormalDmg";
             this.label_AttaNormalDmg.Size = new System.Drawing.Size(83, 12);
             this.label_AttaNormalDmg.TabIndex = 13;
@@ -373,51 +373,51 @@
             // 
             this.label_AttaDEF.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaDEF.AutoSize = true;
-            this.label_AttaDEF.Location = new System.Drawing.Point(369, 13);
+            this.label_AttaDEF.Location = new System.Drawing.Point(323, 7);
             this.label_AttaDEF.Name = "label_AttaDEF";
-            this.label_AttaDEF.Size = new System.Drawing.Size(41, 12);
+            this.label_AttaDEF.Size = new System.Drawing.Size(23, 24);
             this.label_AttaDEF.TabIndex = 16;
-            this.label_AttaDEF.Text = "DEF(%)";
+            this.label_AttaDEF.Text = "DEF (%)";
             this.label_AttaDEF.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_AttaAGI
             // 
             this.label_AttaAGI.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaAGI.AutoSize = true;
-            this.label_AttaAGI.Location = new System.Drawing.Point(313, 13);
+            this.label_AttaAGI.Location = new System.Drawing.Point(277, 7);
             this.label_AttaAGI.Name = "label_AttaAGI";
-            this.label_AttaAGI.Size = new System.Drawing.Size(41, 12);
+            this.label_AttaAGI.Size = new System.Drawing.Size(23, 24);
             this.label_AttaAGI.TabIndex = 8;
-            this.label_AttaAGI.Text = "AGI(%)";
+            this.label_AttaAGI.Text = "AGI (%)";
             this.label_AttaAGI.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_AttaCRD
             // 
             this.label_AttaCRD.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaCRD.AutoSize = true;
-            this.label_AttaCRD.Location = new System.Drawing.Point(254, 13);
+            this.label_AttaCRD.Location = new System.Drawing.Point(228, 7);
             this.label_AttaCRD.Name = "label_AttaCRD";
-            this.label_AttaCRD.Size = new System.Drawing.Size(47, 12);
+            this.label_AttaCRD.Size = new System.Drawing.Size(29, 24);
             this.label_AttaCRD.TabIndex = 4;
-            this.label_AttaCRD.Text = "CRID(%)";
+            this.label_AttaCRD.Text = "CRID (%)";
             this.label_AttaCRD.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_AttaCRR
             // 
             this.label_AttaCRR.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaCRR.AutoSize = true;
-            this.label_AttaCRR.Location = new System.Drawing.Point(198, 13);
+            this.label_AttaCRR.Location = new System.Drawing.Point(182, 7);
             this.label_AttaCRR.Name = "label_AttaCRR";
-            this.label_AttaCRR.Size = new System.Drawing.Size(47, 12);
+            this.label_AttaCRR.Size = new System.Drawing.Size(29, 24);
             this.label_AttaCRR.TabIndex = 3;
-            this.label_AttaCRR.Text = "CRIR(%)";
+            this.label_AttaCRR.Text = "CRIR (%)";
             this.label_AttaCRR.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_AttaATK
             // 
             this.label_AttaATK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaATK.AutoSize = true;
-            this.label_AttaATK.Location = new System.Drawing.Point(151, 13);
+            this.label_AttaATK.Location = new System.Drawing.Point(139, 13);
             this.label_AttaATK.Name = "label_AttaATK";
             this.label_AttaATK.Size = new System.Drawing.Size(23, 12);
             this.label_AttaATK.TabIndex = 2;
@@ -427,7 +427,7 @@
             // 
             this.label10.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(89, 13);
+            this.label10.Location = new System.Drawing.Point(87, 13);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 12);
             this.label10.TabIndex = 18;
@@ -457,7 +457,7 @@
             // 
             this.groupBox_Supporter.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Supporter.Controls.Add(this.tableLayoutPanel_Supporter);
-            this.groupBox_Supporter.Location = new System.Drawing.Point(706, 6);
+            this.groupBox_Supporter.Location = new System.Drawing.Point(689, 6);
             this.groupBox_Supporter.Name = "groupBox_Supporter";
             this.groupBox_Supporter.Size = new System.Drawing.Size(340, 188);
             this.groupBox_Supporter.TabIndex = 1;
@@ -720,7 +720,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1075, 652);
+            this.ClientSize = new System.Drawing.Size(1075, 786);
             this.Controls.Add(this.tabControl_Main);
             this.Name = "Form_Main";
             this.Text = "BrownDust Calculator";

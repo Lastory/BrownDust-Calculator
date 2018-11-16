@@ -52,8 +52,7 @@ namespace BrownDust_Calculator
                                 for (int j = 0; j < 5; j++) textBox_AttackerStats[i, j].Text = load[j + 2];
                             }
                         }
-
-
+                        
                         //读取防御角色面板
                         line = file.ReadLine();  //"D#"
                         line = file.ReadLine();  //AttackerChartHight
@@ -468,7 +467,7 @@ namespace BrownDust_Calculator
                 Name = names;
                 for (int i = 1; i <= 10; i++) SkillList[i] = new TypeSkill();
             }
-            public AttackCharacter ShallowCopy() { return (AttackCharacter)this.MemberwiseClone(); }
+            public AttackCharacter ShallowCopy() { return (AttackCharacter) this.MemberwiseClone(); }
 
             public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)  //计算攻击角色入场属性
             {
