@@ -62,6 +62,7 @@
             this.label_SuppName = new System.Windows.Forms.Label();
             this.label_SuppChoose = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label_Author = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defender.SuspendLayout();
@@ -79,12 +80,13 @@
             this.tabControl_Main.Location = new System.Drawing.Point(12, 12);
             this.tabControl_Main.Name = "tabControl_Main";
             this.tabControl_Main.SelectedIndex = 0;
-            this.tabControl_Main.Size = new System.Drawing.Size(1050, 636);
+            this.tabControl_Main.Size = new System.Drawing.Size(1060, 636);
             this.tabControl_Main.TabIndex = 3;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage1.Controls.Add(this.label_Author);
             this.tabPage1.Controls.Add(this.groupBox_Defender);
             this.tabPage1.Controls.Add(this.groupBox_Attacker);
             this.tabPage1.Controls.Add(this.button_Save);
@@ -93,7 +95,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1042, 610);
+            this.tabPage1.Size = new System.Drawing.Size(1052, 610);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
@@ -103,10 +105,10 @@
             this.groupBox_Defender.Controls.Add(this.tableLayoutPanel_Defender);
             this.groupBox_Defender.Location = new System.Drawing.Point(6, 6);
             this.groupBox_Defender.Name = "groupBox_Defender";
-            this.groupBox_Defender.Size = new System.Drawing.Size(685, 223);
+            this.groupBox_Defender.Size = new System.Drawing.Size(694, 223);
             this.groupBox_Defender.TabIndex = 5;
             this.groupBox_Defender.TabStop = false;
-            this.groupBox_Defender.Text = "防御角色";
+            this.groupBox_Defender.Text = "Defenders";
             // 
             // tableLayoutPanel_Defender
             // 
@@ -136,105 +138,105 @@
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(674, 195);
+            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(682, 195);
             this.tableLayoutPanel_Defender.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 14);
+            this.label1.Location = new System.Drawing.Point(7, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 2;
-            this.label1.Text = "角色";
+            this.label1.Text = "Character";
             // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(89, 14);
+            this.label3.Location = new System.Drawing.Point(95, 14);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.Size = new System.Drawing.Size(17, 12);
             this.label3.TabIndex = 4;
-            this.label3.Text = "血量";
+            this.label3.Text = "HP";
             // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(140, 14);
+            this.label2.Location = new System.Drawing.Point(143, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 12);
+            this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 3;
-            this.label2.Text = "防御(%)";
+            this.label2.Text = "DEF(%)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label6
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(549, 14);
+            this.label6.Location = new System.Drawing.Point(520, 14);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(89, 12);
+            this.label6.Size = new System.Drawing.Size(155, 12);
             this.label6.TabIndex = 7;
-            this.label6.Text = "追伤后剩余血量";
+            this.label6.Text = "HP After Additonal Attack";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label5
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(394, 14);
+            this.label5.Location = new System.Drawing.Point(370, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(89, 12);
+            this.label5.Size = new System.Drawing.Size(137, 12);
             this.label5.TabIndex = 6;
-            this.label5.Text = "普伤后剩余血量";
+            this.label5.Text = "HP After Normal Attack";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label7
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(311, 14);
+            this.label7.Location = new System.Drawing.Point(311, 8);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(47, 12);
+            this.label7.Size = new System.Drawing.Size(47, 24);
             this.label7.TabIndex = 8;
-            this.label7.Text = "诅咒(%)";
+            this.label7.Text = "Weaking(%)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label8
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(197, 14);
+            this.label8.Location = new System.Drawing.Point(200, 14);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 12);
+            this.label8.Size = new System.Drawing.Size(41, 12);
             this.label8.TabIndex = 9;
-            this.label8.Text = "敏捷(%)";
+            this.label8.Text = "AGI(%)";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label4
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(254, 14);
+            this.label4.Location = new System.Drawing.Point(254, 8);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 12);
+            this.label4.Size = new System.Drawing.Size(47, 24);
             this.label4.TabIndex = 5;
-            this.label4.Text = "护盾(%)";
+            this.label4.Text = "Barrier(%)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // groupBox_Attacker
             // 
             this.groupBox_Attacker.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Attacker.Controls.Add(this.tableLayoutPanel_Attacker);
-            this.groupBox_Attacker.Location = new System.Drawing.Point(12, 235);
+            this.groupBox_Attacker.Location = new System.Drawing.Point(6, 235);
             this.groupBox_Attacker.Name = "groupBox_Attacker";
             this.groupBox_Attacker.Size = new System.Drawing.Size(874, 367);
             this.groupBox_Attacker.TabIndex = 2;
             this.groupBox_Attacker.TabStop = false;
-            this.groupBox_Attacker.Text = "攻击角色";
+            this.groupBox_Attacker.Text = "Attackers";
             // 
             // tableLayoutPanel_Attacker
             // 
@@ -283,7 +285,7 @@
             this.label_AttaCRD.Name = "label_AttaCRD";
             this.label_AttaCRD.Size = new System.Drawing.Size(47, 12);
             this.label_AttaCRD.TabIndex = 4;
-            this.label_AttaCRD.Text = "暴伤(%)";
+            this.label_AttaCRD.Text = "CRID(%)";
             this.label_AttaCRD.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_AttaCRR
@@ -294,94 +296,94 @@
             this.label_AttaCRR.Name = "label_AttaCRR";
             this.label_AttaCRR.Size = new System.Drawing.Size(47, 12);
             this.label_AttaCRR.TabIndex = 3;
-            this.label_AttaCRR.Text = "暴率(%)";
+            this.label_AttaCRR.Text = "CRIR(%)";
             this.label_AttaCRR.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_AttaATK
             // 
             this.label_AttaATK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaATK.AutoSize = true;
-            this.label_AttaATK.Location = new System.Drawing.Point(87, 13);
+            this.label_AttaATK.Location = new System.Drawing.Point(90, 13);
             this.label_AttaATK.Name = "label_AttaATK";
-            this.label_AttaATK.Size = new System.Drawing.Size(29, 12);
+            this.label_AttaATK.Size = new System.Drawing.Size(23, 12);
             this.label_AttaATK.TabIndex = 2;
-            this.label_AttaATK.Text = "攻击";
+            this.label_AttaATK.Text = "ATK";
             // 
             // label_AttaName
             // 
             this.label_AttaName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaName.AutoSize = true;
-            this.label_AttaName.Location = new System.Drawing.Point(21, 13);
+            this.label_AttaName.Location = new System.Drawing.Point(6, 13);
             this.label_AttaName.Name = "label_AttaName";
-            this.label_AttaName.Size = new System.Drawing.Size(29, 12);
+            this.label_AttaName.Size = new System.Drawing.Size(59, 12);
             this.label_AttaName.TabIndex = 1;
-            this.label_AttaName.Text = "角色";
+            this.label_AttaName.Text = "Character";
             // 
             // label_AttaAGI
             // 
             this.label_AttaAGI.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaAGI.AutoSize = true;
-            this.label_AttaAGI.Location = new System.Drawing.Point(249, 13);
+            this.label_AttaAGI.Location = new System.Drawing.Point(252, 13);
             this.label_AttaAGI.Name = "label_AttaAGI";
-            this.label_AttaAGI.Size = new System.Drawing.Size(47, 12);
+            this.label_AttaAGI.Size = new System.Drawing.Size(41, 12);
             this.label_AttaAGI.TabIndex = 8;
-            this.label_AttaAGI.Text = "敏捷(%)";
+            this.label_AttaAGI.Text = "AGI(%)";
             this.label_AttaAGI.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label__AttaSumDmg
             // 
             this.label__AttaSumDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label__AttaSumDmg.AutoSize = true;
-            this.label__AttaSumDmg.Location = new System.Drawing.Point(719, 13);
+            this.label__AttaSumDmg.Location = new System.Drawing.Point(695, 13);
             this.label__AttaSumDmg.Name = "label__AttaSumDmg";
-            this.label__AttaSumDmg.Size = new System.Drawing.Size(29, 12);
+            this.label__AttaSumDmg.Size = new System.Drawing.Size(77, 12);
             this.label__AttaSumDmg.TabIndex = 15;
-            this.label__AttaSumDmg.Text = "合计";
+            this.label__AttaSumDmg.Text = "Total Damage";
             // 
             // label_AttaAddDmg
             // 
             this.label_AttaAddDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaAddDmg.AutoSize = true;
-            this.label_AttaAddDmg.Location = new System.Drawing.Point(568, 13);
+            this.label_AttaAddDmg.Location = new System.Drawing.Point(529, 13);
             this.label_AttaAddDmg.Name = "label_AttaAddDmg";
-            this.label_AttaAddDmg.Size = new System.Drawing.Size(29, 12);
+            this.label_AttaAddDmg.Size = new System.Drawing.Size(107, 12);
             this.label_AttaAddDmg.TabIndex = 14;
-            this.label_AttaAddDmg.Text = "追伤";
+            this.label_AttaAddDmg.Text = "Additional Damage";
             // 
             // label_AttaNormalDmg
             // 
             this.label_AttaNormalDmg.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaNormalDmg.AutoSize = true;
-            this.label_AttaNormalDmg.Location = new System.Drawing.Point(417, 13);
+            this.label_AttaNormalDmg.Location = new System.Drawing.Point(390, 13);
             this.label_AttaNormalDmg.Name = "label_AttaNormalDmg";
-            this.label_AttaNormalDmg.Size = new System.Drawing.Size(29, 12);
+            this.label_AttaNormalDmg.Size = new System.Drawing.Size(83, 12);
             this.label_AttaNormalDmg.TabIndex = 13;
-            this.label_AttaNormalDmg.Text = "普伤";
+            this.label_AttaNormalDmg.Text = "Normal Damage";
             // 
             // label_AttaDEF
             // 
             this.label_AttaDEF.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_AttaDEF.AutoSize = true;
-            this.label_AttaDEF.Location = new System.Drawing.Point(305, 13);
+            this.label_AttaDEF.Location = new System.Drawing.Point(308, 13);
             this.label_AttaDEF.Name = "label_AttaDEF";
-            this.label_AttaDEF.Size = new System.Drawing.Size(47, 12);
+            this.label_AttaDEF.Size = new System.Drawing.Size(41, 12);
             this.label_AttaDEF.TabIndex = 16;
-            this.label_AttaDEF.Text = "防御(%)";
+            this.label_AttaDEF.Text = "DEF(%)";
             this.label_AttaDEF.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label9
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(821, 13);
+            this.label9.Location = new System.Drawing.Point(815, 13);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.Size = new System.Drawing.Size(41, 12);
             this.label9.TabIndex = 17;
-            this.label9.Text = "选中";
+            this.label9.Text = "Select";
             // 
             // button_Save
             // 
-            this.button_Save.Location = new System.Drawing.Point(909, 532);
+            this.button_Save.Location = new System.Drawing.Point(909, 360);
             this.button_Save.Name = "button_Save";
             this.button_Save.Size = new System.Drawing.Size(122, 40);
             this.button_Save.TabIndex = 4;
@@ -403,18 +405,18 @@
             // 
             this.groupBox_Supporter.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Supporter.Controls.Add(this.tableLayoutPanel_Supporter);
-            this.groupBox_Supporter.Location = new System.Drawing.Point(697, 6);
+            this.groupBox_Supporter.Location = new System.Drawing.Point(706, 6);
             this.groupBox_Supporter.Name = "groupBox_Supporter";
             this.groupBox_Supporter.Size = new System.Drawing.Size(340, 188);
             this.groupBox_Supporter.TabIndex = 1;
             this.groupBox_Supporter.TabStop = false;
-            this.groupBox_Supporter.Text = "支援角色";
+            this.groupBox_Supporter.Text = "Supporters";
             // 
             // tableLayoutPanel_Supporter
             // 
             this.tableLayoutPanel_Supporter.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel_Supporter.ColumnCount = 5;
-            this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
@@ -439,73 +441,83 @@
             // 
             this.label_SuppCRD.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SuppCRD.AutoSize = true;
-            this.label_SuppCRD.Location = new System.Drawing.Point(221, 11);
+            this.label_SuppCRD.Location = new System.Drawing.Point(211, 11);
             this.label_SuppCRD.Name = "label_SuppCRD";
             this.label_SuppCRD.Size = new System.Drawing.Size(53, 12);
             this.label_SuppCRD.TabIndex = 3;
-            this.label_SuppCRD.Text = "暴伤buff";
+            this.label_SuppCRD.Text = "CRIDbuff";
             // 
             // label_SuppCRR
             // 
             this.label_SuppCRR.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SuppCRR.AutoSize = true;
-            this.label_SuppCRR.Location = new System.Drawing.Point(159, 11);
+            this.label_SuppCRR.Location = new System.Drawing.Point(149, 11);
             this.label_SuppCRR.Name = "label_SuppCRR";
             this.label_SuppCRR.Size = new System.Drawing.Size(53, 12);
             this.label_SuppCRR.TabIndex = 2;
-            this.label_SuppCRR.Text = "暴率buff";
+            this.label_SuppCRR.Text = "CRIRbuff";
             // 
             // label_SuppATK
             // 
             this.label_SuppATK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SuppATK.AutoSize = true;
-            this.label_SuppATK.Location = new System.Drawing.Point(97, 11);
+            this.label_SuppATK.Location = new System.Drawing.Point(90, 11);
             this.label_SuppATK.Name = "label_SuppATK";
-            this.label_SuppATK.Size = new System.Drawing.Size(53, 12);
+            this.label_SuppATK.Size = new System.Drawing.Size(47, 12);
             this.label_SuppATK.TabIndex = 1;
-            this.label_SuppATK.Text = "攻击buff";
+            this.label_SuppATK.Text = "ATKbuff";
             // 
             // label_SuppName
             // 
             this.label_SuppName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SuppName.AutoSize = true;
-            this.label_SuppName.Location = new System.Drawing.Point(32, 11);
+            this.label_SuppName.Location = new System.Drawing.Point(12, 11);
             this.label_SuppName.Name = "label_SuppName";
-            this.label_SuppName.Size = new System.Drawing.Size(29, 12);
+            this.label_SuppName.Size = new System.Drawing.Size(59, 12);
             this.label_SuppName.TabIndex = 0;
-            this.label_SuppName.Text = "角色";
+            this.label_SuppName.Text = "Character";
             // 
             // label_SuppChoose
             // 
             this.label_SuppChoose.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SuppChoose.AutoSize = true;
-            this.label_SuppChoose.Location = new System.Drawing.Point(288, 11);
+            this.label_SuppChoose.Location = new System.Drawing.Point(277, 11);
             this.label_SuppChoose.Name = "label_SuppChoose";
-            this.label_SuppChoose.Size = new System.Drawing.Size(29, 12);
+            this.label_SuppChoose.Size = new System.Drawing.Size(41, 12);
             this.label_SuppChoose.TabIndex = 4;
-            this.label_SuppChoose.Text = "选中";
+            this.label_SuppChoose.Text = "Select";
             // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1243, 781);
+            this.tabPage2.Size = new System.Drawing.Size(1052, 610);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Supporter Setting";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label_Author
+            // 
+            this.label_Author.AutoSize = true;
+            this.label_Author.Location = new System.Drawing.Point(981, 590);
+            this.label_Author.Name = "label_Author";
+            this.label_Author.Size = new System.Drawing.Size(65, 12);
+            this.label_Author.TabIndex = 6;
+            this.label_Author.Text = "by Lastory";
             // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1066, 652);
+            this.ClientSize = new System.Drawing.Size(1075, 652);
             this.Controls.Add(this.tabControl_Main);
             this.Name = "Form_Main";
             this.Text = "BrownDust Calculator";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl_Main.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.groupBox_Defender.ResumeLayout(false);
             this.tableLayoutPanel_Defender.ResumeLayout(false);
             this.tableLayoutPanel_Defender.PerformLayout();
@@ -554,5 +566,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label_Author;
     }
 }
