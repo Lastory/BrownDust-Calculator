@@ -330,12 +330,12 @@ namespace BrownDust_Calculator
 
                     if (arr.Length > 0)
                     {
-                        for (int i = 0; i < arr.Length; i++)
-                        {
-                            if (arr[i] == "Immunnity") isImmunnity = true;
-                        }
+                        for (int i = 0; i < arr.Length; i++) Set(arr[i]);
                     }
                 }
+                
+                public TypeSkill ShallowCopy() { return (TypeSkill)this.MemberwiseClone(); }
+
                 public void Set(string to)
                 {
                     switch (to)
@@ -356,15 +356,53 @@ namespace BrownDust_Calculator
                 }
             }
 
-            private string Name;
-            public double Support;
+            private string[] Name = new string[LanguageCount];
+            private double Support;
+            public bool[] isSLvExist = new bool[11];
+            private TypeSkill[] SkillList = new TypeSkill[11];
+            public TypeSkill NowSkill = new TypeSkill();
             public double ATKup, CRRup, CRDup, AGIup, CUTup;
 
-            public SupportCharacter(string name, double sup, double atk, double crr, double crd, double agi, double cut, params string[] arr)
+            public SupportCharacter(double support, params string[] names)
             {
-                Name = name; Support = sup;
-                ATKup = atk * sup; CRRup = crr * sup; CRDup = crd * sup; AGIup = agi * sup; CUTup = cut * sup;
+                Name = names;
+                Support = support;
             }
+            public SupportCharacter(char star, params string[] names)  //star = {'3', '4', '5', 'L'}
+            {
+                Name = names;
+                switch (star)
+                {
+                    case '3': Support = 1.6496; break;
+                    case '4': Support = 1.6986; break;
+                    case '5': Support = 1.7481; break;
+                    case 'L': Support = 1.7983; break;
+                }
+            }
+
+            public string GetName() { return Name[Language]; }
+
+            public void SetSkill(int level, double atk, double crr, double crd, double agi, double cut, params string[] arr)
+            {
+                isSLvExist[level] = true;
+                SkillList[level] = new TypeSkill(atk, crr, crd, agi, cut, arr);
+            }
+            public void SetSkill(int level, string to)
+            {
+                isSLvExist[level] = true;
+                SkillList[level].Set(to);
+            }
+            public void SetSkill(int level, string to, double rate)
+            {
+                isSLvExist[level] = true;
+                SkillList[level].Set(to, rate);
+            }
+            public void SkillCopy(int from, int to)
+            {
+                isSLvExist[to] = true;
+                SkillList[to] = SkillList[from].ShallowCopy();
+            }
+            public void SkillExtend(int to) { SkillCopy(to - 1, to); }
         }
         private class AttackCharacter
         {
@@ -406,6 +444,13 @@ namespace BrownDust_Calculator
                     nAddAttackReal = 1;
                     AddAttackReal = detail;
                     if (detail.from == "EHP") isAddRatio = true;
+                }
+                public void Set(string to)
+                {
+                    switch (to)
+                    {
+                        case "Immunnity": isImmunnity = true; break;
+                    }
                 }
             }
             private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI; }
@@ -645,75 +690,94 @@ namespace BrownDust_Calculator
         private static AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
         private static void SetCharacters()  //设定角色基本数据
         {
-            //支援角色数据
-            Supporter[0] = new SupportCharacter("眼镜", 1.6496, 0.40, 0.05, 0.00, 0, 0);
-            Supporter[1] = new SupportCharacter("弦月", 1.5118, 0.15, 0.15, 0.36, 0, 0);
-            Supporter[2] = new SupportCharacter("屁股", 1.7481, 0.30, 0.00, 0.30, 0, 0);
-            Supporter[3] = new SupportCharacter("琴女", 1.7481, 0.00, 0.20, 0.30, 0, 0);
-
-            //攻击角色数据
-            AttackCharacter Now;
-            Now = Attacker[0] = new AttackCharacter("女忍", "Eunrang");
+            void SetSupporters()
             {
-                Now.SetStatsBuff(9,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
-                Now.SetAfterBuff(9,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate = 1.50 },
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.35 });
-                Now.SetAddAttackNormal(9,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
+                SupportCharacter Now;
+                Now = Supporter[0] = new SupportCharacter('3', "眼镜", "Arines");
+                {
+                    Now.SetSkill(9, 0.40, 0.05, 0.00, 0, 0);
+                }
+                Now = Supporter[1] = new SupportCharacter('3', "弦月", "Hyeon Wol");
+                {
+                    Now.SetSkill(9, 0.15, 0.15, 0.36, 0, 0);
+                }
+                Now = Supporter[2] = new SupportCharacter('5', "屁股", "Veronia");
+                {
+                    Now.SetSkill(0, 0.30, 0.00, 0.30, 0, 0);
+                }
+                Now = Supporter[3] = new SupportCharacter('5', "琴女", "Mary");
+                {
+                    Now.SetSkill(0, 0.00, 0.20, 0.30, 0, 0);
+                }
             }
-            Now = Attacker[1] = new AttackCharacter("修女", "Angelica");
+            void SetAttackers()
             {
-                Now.SetAddAttackNormal(3,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
-                Now.SkillList[3].isImmunnity = true;
+                AttackCharacter Now;
+                Now = Attacker[0] = new AttackCharacter("女忍", "Eunrang");
+                {
+                    Now.SetStatsBuff(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
+                    Now.SetAfterBuff(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate = 1.50 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.35 });
+                    Now.SetAddAttackNormal(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
+                }
+                Now = Attacker[1] = new AttackCharacter("修女", "Angelica");
+                {
+                    Now.SetAddAttackNormal(3,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
+                    Now.SkillList[3].Set("Immunnity");
 
-                Now.SkillExtend(4);
-                Now.SetAddAttackNormal(4,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.25 });
+                    Now.SkillExtend(4);
+                    Now.SetAddAttackNormal(4,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.25 });
 
-                Now.SkillExtend(5);
-                Now.SetAddAttackNormal(5,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.30 });
+                    Now.SkillExtend(5);
+                    Now.SetAddAttackNormal(5,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.30 });
+                }
+                Now = Attacker[2] = new AttackCharacter("海盗", "Alec");
+                {
+                    Now.SetStatsBuff(3,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
+                    Now.SetAddAttackReal(3,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.30 });
+                }
+                Now = Attacker[3] = new AttackCharacter("白剑", "Siegmund");
+                {
+                    Now.SetAddAttackNormal(3,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 });
+
+                    Now.SkillExtend(4);
+                    Now.SetAddAttackNormal(4,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.00 });
+
+                    Now.SkillExtend(5);
+                    Now.SetAddAttackNormal(5,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.50 });
+
+                    Now.SkillExtend(6);
+                    Now.SetStatsBuff(6,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.00 });
+
+                    Now.SkillExtend(7);
+                    Now.SetStatsBuff(7,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.25 });
+
+                    Now.SkillExtend(8);
+                    Now.SetStatsBuff(8,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.50 });
+
+                    Now.SkillExtend(9);
+                    Now.SetStatsBuff(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "CRR", rate = 0.50 });
+                }
             }
-            Now = Attacker[2] = new AttackCharacter("海盗", "Alec");
-            {
-                Now.SetStatsBuff(3,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
-                Now.SetAddAttackReal(3,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.30 });
-            }
-            Now = Attacker[3] = new AttackCharacter("白剑", "Siegmund");
-            {
-                Now.SetAddAttackNormal(3,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 });
 
-                Now.SkillExtend(4);
-                Now.SetAddAttackNormal(4,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.00 });
-
-                Now.SkillExtend(5);
-                Now.SetAddAttackNormal(5,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.50 });
-
-                Now.SkillExtend(6);
-                Now.SetStatsBuff(6,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.00 });
-
-                Now.SkillExtend(7);
-                Now.SetStatsBuff(7,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.25 });
-
-                Now.SkillExtend(8);
-                Now.SetStatsBuff(8,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.50 });
-
-                Now.SkillExtend(9);
-                Now.SetStatsBuff(9,
-                    new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "CRR", rate = 0.50 });
-            }
+            SetSupporters();
+            SetAttackers();
         }
 
         private static class RefreshUI
@@ -766,7 +830,7 @@ namespace BrownDust_Calculator
                     label_SupporterData[i, j].AutoSize = true;
                 }
 
-                label_SupporterData[i, 0].Text = Supporter[i].Name;
+                label_SupporterData[i, 0].Text = Supporter[i].GetName(); ;
                 label_SupporterData[i, 1].Text = SupportAmount(Supporter[i].ATKup);
                 label_SupporterData[i, 2].Text = SupportAmount(Supporter[i].CRRup);
                 label_SupporterData[i, 3].Text = SupportAmount(Supporter[i].CRDup);
