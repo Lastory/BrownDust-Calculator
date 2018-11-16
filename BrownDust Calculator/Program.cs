@@ -22,6 +22,8 @@ namespace BrownDust_Calculator
 
     partial class Form_Main
     {
+        private static int Language = 1;  //0 - 中文，1 - 英文
+
         private static class Savefile  //存档相关
         {
             public static void LoadSavefile()  //读取（不存在则创建一个空的）存档
@@ -567,7 +569,7 @@ namespace BrownDust_Calculator
                 else
                 {
                     AddIncomingNormal = rate * attacker.AddDamageNormal;
-                    AddIncomingReal = rate * attacker.AddDamageReal;
+                    AddIncomingReal = BaseStats.HP * attacker.AddDamageReal;
                 }
                 AddIncomingNormal.CountAGI(BaseStats.AGI);
                 AddIncomingReal.CountAGI(BaseStats.AGI);
