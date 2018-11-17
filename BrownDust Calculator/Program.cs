@@ -25,7 +25,7 @@ namespace BrownDust_Calculator
         private const int LanguageCount = 3;
         private static int Language = 0;  //0 - 中文，1 - 英文，2 - 日语
         private static bool FlagInLanguageChang = false;
-        private const int SupporterNumber = 4, AttackerNumber = 6;
+        private const int SupporterNumber = 6, AttackerNumber = 6;
         private const int AtkSupporterChartHight = 4, AttackerChartHight = 8, DefenderChartHight = 4;
 
         private static class Tools
@@ -356,12 +356,12 @@ namespace BrownDust_Calculator
         {
             public struct TypeSkill
             {
-                public double ATKup, CRRup, CRDup, AGIup, CUTup;
+                public double ATKup, CRRup, CRDup, AGIup, DEFup, CUTup;
                 public bool isImmunnity;
 
-                public TypeSkill(double atk, double crr, double crd, double agi, double cut, params string[] arr)
+                public TypeSkill(double atk, double crr, double crd, double agi, double def, double cut, params string[] arr)
                 {
-                    ATKup = atk; CRRup = crr; CRDup = crd; AGIup = agi; CUTup = cut;
+                    ATKup = atk; CRRup = crr; CRDup = crd; AGIup = agi; DEFup = def; CUTup = cut;
 
                     isImmunnity = false;
 
@@ -413,6 +413,7 @@ namespace BrownDust_Calculator
                         case "CRR": result = (CRRup * 100).ToString("f2") + "%"; break;
                         case "CRD": result = (CRDup * 100).ToString("f2") + "%"; break;
                         case "AGI": result = (AGIup * 100).ToString("f2") + "%"; break;
+                        case "DEF": result = (DEFup * 100).ToString("f2") + "%"; break;
                         case "CUT": result = (CUTup * 100).ToString("f2") + "%"; break;
                         case "Immunnity": result = isImmunnity ? "Yes" : ""; break;
                         default: return "Error";
@@ -451,10 +452,10 @@ namespace BrownDust_Calculator
 
             public string GetName() { return Name[Language]; }
 
-            public void SetSkill(int level, double atk, double crr, double crd, double agi, double cut, params string[] arr)
+            public void SetSkill(int level, double atk, double crr, double crd, double agi, double def, double cut, params string[] arr)
             {
                 isSLvExist[level] = true;
-                SkillList[level] = new TypeSkill(atk, crr, crd, agi, cut, arr);
+                SkillList[level] = new TypeSkill(atk, crr, crd, agi, def, cut, arr);
             }
             public void SetSkill(int level, string to)
             {
@@ -544,11 +545,11 @@ namespace BrownDust_Calculator
             }
             public AttackCharacter ShallowCopy() { return (AttackCharacter)this.MemberwiseClone(); }
 
-            public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)  //计算攻击角色入场属性
+            public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff, double defbuff)  //计算攻击角色入场属性
             {
                 BaseStats = new TypeStats { ATK = atk, CRR = crr, CRD = crd, AGI = agi, DEF = def };
                 DoStatsUp();
-                StatsUp.ATK += atkbuff; StatsUp.CRR += crrbuff; StatsUp.CRD += crdbuff;
+                StatsUp.ATK += atkbuff; StatsUp.CRR += crrbuff; StatsUp.CRD += crdbuff; StatsUp.DEF += defbuff;
                 CheckStats();
             }
             public void SetStatsBuff(int level, params TypeSkill.TypeSkillDetail[] detail)
@@ -766,7 +767,7 @@ namespace BrownDust_Calculator
             public string WriteFinalHP() { return FinalHP.WriteNumericalDamage(); }
         }
         
-        private static SupportCharacter[] Supporter = new SupportCharacter[AtkSupporterChartHight];
+        private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
         private static AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
         private static void SetCharacters()  //设定角色基本数据
         {
@@ -775,39 +776,68 @@ namespace BrownDust_Calculator
                 SupportCharacter Now;
                 Now = Supporter[0] = new SupportCharacter('3', "眼镜", "Arines", "アリネス");
                 {
-                    Now.SetSkill(9, 0.40, 0.05, 0, 0, 0);
+                    Now.SetSkill(9, 0.40, 0.05, 0, 0, 0, 0.15);
+                    Now.SetSkill(10, 0.40, 0.05, 0, 0, 0, 0.20);
                 }
                 Now = Supporter[1] = new SupportCharacter('3', "弦月", "Hyeon Wol", "弦月");
                 {
-                    Now.SetSkill(9, 0.15, 0.15, 0.36, 0, 0);
+                    Now.SetSkill(9, 0.15, 0.15, 0.36, 0, 0, 0);
                 }
                 Now = Supporter[2] = new SupportCharacter('5', "屁股", "Veronia", "ベロニア");
                 {
-                    Now.SetSkill(0, 0.30, 0, 0.30, 0, 0);
-                    Now.SetSkill(1, 0.35, 0, 0.30, 0, 0);
-                    Now.SetSkill(2, 0.40, 0, 0.30, 0, 0);
-                    Now.SetSkill(3, 0.40, 0, 0.30, 0, 0, "Immunnity");
-                    Now.SetSkill(4, 0.40, 0, 0.45, 0, 0, "Immunnity");
-                    Now.SetSkill(5, 0.40, 0, 0.60, 0, 0, "Immunnity");
-                    Now.SetSkill(6, 0.40, 0, 0.60, 0, 0, "Immunnity");
-                    Now.SetSkill(7, 0.50, 0, 0.60, 0, 0, "Immunnity");
-                    Now.SetSkill(8, 0.60, 0, 0.60, 0, 0, "Immunnity");
-                    Now.SetSkill(9, 0.60, 0.15, 0.60, 0, 0, "Immunnity");
-                    Now.SetSkill(10, 0.60, 0.20, 0.60, 0, 0, "Immunnity");
+                    Now.SetSkill(0, 0.30, 0, 0.30, 0, 0, 0);
+                    Now.SetSkill(1, 0.35, 0, 0.30, 0, 0, 0);
+                    Now.SetSkill(2, 0.40, 0, 0.30, 0, 0, 0);
+                    Now.SetSkill(3, 0.40, 0, 0.30, 0, 0, 0, "Immunnity");
+                    Now.SetSkill(4, 0.40, 0, 0.45, 0, 0, 0, "Immunnity");
+                    Now.SetSkill(5, 0.40, 0, 0.60, 0, 0, 0, "Immunnity");
+                    Now.SetSkill(6, 0.40, 0, 0.60, 0, 0, 0, "Immunnity");
+                    Now.SetSkill(7, 0.50, 0, 0.60, 0, 0, 0, "Immunnity");
+                    Now.SetSkill(8, 0.60, 0, 0.60, 0, 0, 0, "Immunnity");
+                    Now.SetSkill(9, 0.60, 0.15, 0.60, 0, 0, 0, "Immunnity");
+                    Now.SetSkill(10, 0.60, 0.20, 0.60, 0, 0, 0, "Immunnity");
                 }
                 Now = Supporter[3] = new SupportCharacter('5', "琴女", "Mary", "メリー");
                 {
-                    Now.SetSkill(0, 0, 0.20, 0.30, 0, 0);
-                    Now.SetSkill(1, 0, 0.22, 0.30, 0, 0);
-                    Now.SetSkill(2, 0, 0.25, 0.30, 0, 0);
-                    Now.SetSkill(3, 0, 0.25, 0.30, 0, 0.10);
-                    Now.SetSkill(4, 0, 0.25, 0.30, 0, 0.12);
-                    Now.SetSkill(5, 0, 0.25, 0.30, 0, 0.15);
-                    Now.SetSkill(6, 0.10, 0.25, 0.30, 0, 0.15);
-                    Now.SetSkill(7, 0.10, 0.25, 0.35, 0, 0.15);
-                    Now.SetSkill(8, 0.10, 0.25, 0.40, 0, 0.15);
-                    Now.SetSkill(9, 0.10, 0.25, 0.30, 0, 0.15);
-                    Now.SetSkill(10, 0.30, 0.25, 0.30, 0, 0.15);
+                    Now.SetSkill(0, 0, 0.20, 0.30, 0, 0, 0);
+                    Now.SetSkill(1, 0, 0.22, 0.30, 0, 0, 0);
+                    Now.SetSkill(2, 0, 0.25, 0.30, 0, 0, 0);
+                    Now.SetSkill(3, 0, 0.25, 0.30, 0, 0, 0.10);
+                    Now.SetSkill(4, 0, 0.25, 0.30, 0, 0, 0.12);
+                    Now.SetSkill(5, 0, 0.25, 0.30, 0, 0, 0.15);
+                    Now.SetSkill(6, 0.10, 0.25, 0.30, 0, 0, 0.15);
+                    Now.SetSkill(7, 0.10, 0.25, 0.35, 0, 0, 0.15);
+                    Now.SetSkill(8, 0.10, 0.25, 0.40, 0, 0, 0.15);
+                    Now.SetSkill(9, 0.10, 0.25, 0.30, 0, 0, 0.15);
+                    Now.SetSkill(10, 0.30, 0.25, 0.30, 0, 0, 0.15);
+                }
+                Now = Supporter[4] = new SupportCharacter('5', "圣杯", "Michaela", "ミカエラ");
+                {
+                    Now.SetSkill(0, 0.30, 0, 0, 0, 0, 0);
+                    Now.SetSkill(1, 0.30, 0, 0, 0, 0, 0);
+                    Now.SetSkill(2, 0.30, 0, 0, 0, 0, 0);
+                    Now.SetSkill(3, 0.35, 0.05, 0.05, 0.05, 0.05, 0);
+                    Now.SetSkill(4, 0.35, 0.05, 0.05, 0.05, 0.05, 0);
+                    Now.SetSkill(5, 0.35, 0.05, 0.05, 0.05, 0.05, 0);
+                    Now.SetSkill(6, 0.40, 0.10, 0.10, 0.10, 0.10, 0);
+                    Now.SetSkill(7, 0.50, 0.10, 0.10, 0.10, 0.10, 0);
+                    Now.SetSkill(8, 0.60, 0.10, 0.10, 0.10, 0.10, 0);
+                    Now.SetSkill(9, 0.60, 0.10, 0.10, 0.10, 0.10, 0);
+                    Now.SetSkill(10, 0.60, 0.10, 0.10, 0.10, 0.10, 0);
+                }
+                Now = Supporter[5] = new SupportCharacter('L', "萝莉", "Refithea", "レピテア");
+                {
+                    Now.SetSkill(0, 0.25, 0, 0, 0, 0, 0.15);
+                    Now.SetSkill(1, 0.30, 0, 0, 0, 0, 0.15);
+                    Now.SetSkill(2, 0.35, 0, 0, 0, 0, 0.15);
+                    Now.SetSkill(3, 0.35, 0.10, 0, 0, 0, 0.15);
+                    Now.SetSkill(4, 0.35, 0.15, 0, 0, 0, 0.15);
+                    Now.SetSkill(5, 0.35, 0.20, 0, 0, 0, 0.15);
+                    Now.SetSkill(6, 0.35, 0.20, 0, 0, 0, 0.15);
+                    Now.SetSkill(7, 0.35, 0.20, 0, 0, 0, 0.15);
+                    Now.SetSkill(8, 0.35, 0.20, 0, 0, 0, 0.15);
+                    Now.SetSkill(9, 0.35, 0.20, 0, 0, 0, 0.15);
+                    Now.SetSkill(10, 0.45, 0.25, 0, 0, 0, 0.25);
                 }
             }
             void SetAttackers()
@@ -1194,7 +1224,7 @@ namespace BrownDust_Calculator
         {
             //计算选中的支援角色提供的buff量
             
-            double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
+            double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0, DEFbuff = 0;
             bool Immunnity = false;
                 
             for (int i = 0; i < AtkSupporterChartHight; i++)
@@ -1204,6 +1234,7 @@ namespace BrownDust_Calculator
                     ATKbuff += ComparedAtkSupporter[i].NowSkill.ATKup;
                     CRRbuff += ComparedAtkSupporter[i].NowSkill.CRRup;
                     CRDbuff += ComparedAtkSupporter[i].NowSkill.CRDup;
+                    DEFbuff += ComparedAtkSupporter[i].NowSkill.DEFup;
                     Immunnity |= ComparedAtkSupporter[i].NowSkill.isImmunnity;
                 }
             }
@@ -1220,7 +1251,7 @@ namespace BrownDust_Calculator
 
                     double[] stats = new double[5];
                     for (int j = 0; j < 5; j++) stats[j] = textBox_AttackerStats[i, j].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, j].Text);
-                    ComparedAttacker[i].SetStats(stats[0], stats[1] / 100, stats[2] / 100, stats[3] / 100, stats[4] / 100, ATKbuff, CRRbuff, CRDbuff);
+                    ComparedAttacker[i].SetStats(stats[0], stats[1] / 100, stats[2] / 100, stats[3] / 100, stats[4] / 100, ATKbuff, CRRbuff, CRDbuff, DEFbuff);
                     ComparedAttacker[i].CheckImmunnity(Immunnity);
 
                     //输出普攻伤害
