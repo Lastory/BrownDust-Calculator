@@ -31,3 +31,4 @@ This a damage calculator for Brown Dust.
 * This project is still in its early stage, which means it will be updated frequently and not very stable. You can check the updates at  the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).
 * Updates may cause the archive to be incompatible.
 * If there is a problem, you can create an issue [here](https://github.com/Lastory/BrownDust-Calculator/issues).
+* For bug report, it will be better if you can attach the "save.save" file for the configuration triggering the bug.
