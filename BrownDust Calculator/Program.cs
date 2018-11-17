@@ -737,7 +737,7 @@ namespace BrownDust_Calculator
                 else
                 {
                     AddIncomingNormal = rate * attacker.AddDamageNormal;
-                    AddIncomingReal = BaseStats.HP * attacker.AddDamageReal;
+                    AddIncomingReal = 1 * attacker.AddDamageReal;
                 }
                 AddIncomingNormal.CountAGI(BaseStats.AGI);
                 AddIncomingReal.CountAGI(BaseStats.AGI);
