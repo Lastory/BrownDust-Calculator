@@ -29,7 +29,7 @@ This a damage calculator for Brown Dust.
 ## Notice and Warning
 * More characters and features are in plan.
 * This project is still in its early stage, which means it will be updated frequently and not very stable. You can check the updates at  the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).
-* Updates may cause the archive to be incompatible.
+* Updates may make the old archive incompatible.
 * At this stage, some of the special skills are NOT effective (e.g. "additional ATK boost every turn"). Some of them are considered as a simple skill (e.g. Siegmund is always calculated as 100% HP.)
 * If there is a problem, you can create an issue [here](https://github.com/Lastory/BrownDust-Calculator/issues).
 * For bug report, it will be better if you can attach the "save.save" file for the configuration triggering the bug.
