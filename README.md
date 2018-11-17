@@ -17,7 +17,7 @@ This a damage calculator for Brown Dust.
 5. If clicking the ***"Calculate!"*** button now, you will get the ***Pure Damage*** every attackers can cause in Normal Attack,  Additional Attack and in total.
 6. The calculator the to most extreme cases and their probabilities at the first line (e.g. ***"500 40% | 1500 30%"*** means the lowest Pure Damage is 500 at 40% chances while the highest is 1500 at 30% chances), and the expectation at the second. If there is only one possibility it will be directly shown. (There may be some discrepancies because the data in the game is of limited precision. You may see 0% which means a very low probability because of rounding.)
 
-### Defend side
+### Defending side
 1. Input your Defenders' stats. Name them whatever you like. (At this stage, you may need to input the supporters' effect at the defending side.)
 2. Select an attacker.
 3. If clicking the ***"Calculate!"*** button now, you can get the ***Remaining HP*** after Normal Attack and Additional Attack.
