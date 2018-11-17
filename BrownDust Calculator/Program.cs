@@ -47,6 +47,21 @@ namespace BrownDust_Calculator
 
                     using (StreamReader file = new StreamReader("save.save"))
                     {
+                        //读取攻击支援角色面板
+                        line = file.ReadLine();  //"AS#"
+                        line = file.ReadLine();  //AtkSupporterChartHight
+                        for (int i = 0; i < AtkSupporterChartHight; i++)
+                        {
+                            line = file.ReadLine();
+                            if (line != "-")
+                            {
+                                string[] load = line.Split('|');
+                                comboBox_AtkSupporterName[i].SelectedIndex = int.Parse(load[0]);
+                                comboBox_AtkSupporterSlv[i].SelectedIndex = int.Parse(load[1]);
+                                if (load[2] == "Y") checkBox_AtkSupporterChoose[i].Checked = true;
+                            }
+                        }
+
                         //读取攻击角色面板
                         line = file.ReadLine();  //"A#"
                         line = file.ReadLine();  //DefenderChartHight
@@ -82,6 +97,20 @@ namespace BrownDust_Calculator
             {
                 using (StreamWriter file = new StreamWriter("save.save"))
                 {
+                    //存储攻击支援角色面板
+                    file.Write("#AS\n{0:d}\n", AtkSupporterChartHight);
+                    for (int i = 0; i < AtkSupporterChartHight; i++)
+                    {
+                        if (comboBox_AtkSupporterName[i].SelectedIndex != -1)
+                        {
+                            string line = comboBox_AtkSupporterName[i].SelectedIndex.ToString("d") + "|";
+                            line += comboBox_AtkSupporterSlv[i].SelectedIndex.ToString("d") + "|";
+                            line += (checkBox_AtkSupporterChoose[i].Checked ? "Y" : "N") + "|";
+                            file.Write(line + "\n");
+                        }
+                        else { file.Write("-\n"); }
+                    }
+
                     //存储攻击角色面板
                     file.Write("#A\n{0:d}\n", AttackerChartHight);
                     for (int i = 0; i < AttackerChartHight; i++)
