@@ -31,7 +31,6 @@
             this.tabControl_Main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.comboBox_Language = new System.Windows.Forms.ComboBox();
-            this.label_Author = new System.Windows.Forms.Label();
             this.groupBox_Defender = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Defender = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -57,13 +56,14 @@
             this.label10 = new System.Windows.Forms.Label();
             this.button_Save = new System.Windows.Forms.Button();
             this.button_Calculate = new System.Windows.Forms.Button();
-            this.groupBox_Supporter = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel_Supporter = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox_AtkSupporters = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel_AtkSupporters = new System.Windows.Forms.TableLayoutPanel();
+            this.label_SuppName = new System.Windows.Forms.Label();
+            this.label_SuppChoose = new System.Windows.Forms.Label();
             this.label_SuppCRD = new System.Windows.Forms.Label();
             this.label_SuppCRR = new System.Windows.Forms.Label();
             this.label_SuppATK = new System.Windows.Forms.Label();
-            this.label_SuppName = new System.Windows.Forms.Label();
-            this.label_SuppChoose = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox_SupporterCharacter = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -78,14 +78,15 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defender.SuspendLayout();
             this.tableLayoutPanel_Defender.SuspendLayout();
             this.groupBox_Attacker.SuspendLayout();
             this.tableLayoutPanel_Attacker.SuspendLayout();
-            this.groupBox_Supporter.SuspendLayout();
-            this.tableLayoutPanel_Supporter.SuspendLayout();
+            this.groupBox_AtkSupporters.SuspendLayout();
+            this.tableLayoutPanel_AtkSupporters.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox_SupporterCharacter.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -98,23 +99,22 @@
             this.tabControl_Main.Location = new System.Drawing.Point(12, 12);
             this.tabControl_Main.Name = "tabControl_Main";
             this.tabControl_Main.SelectedIndex = 0;
-            this.tabControl_Main.Size = new System.Drawing.Size(1060, 762);
+            this.tabControl_Main.Size = new System.Drawing.Size(898, 826);
             this.tabControl_Main.TabIndex = 3;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPage1.Controls.Add(this.comboBox_Language);
-            this.tabPage1.Controls.Add(this.label_Author);
             this.tabPage1.Controls.Add(this.groupBox_Defender);
             this.tabPage1.Controls.Add(this.groupBox_Attacker);
             this.tabPage1.Controls.Add(this.button_Save);
             this.tabPage1.Controls.Add(this.button_Calculate);
-            this.tabPage1.Controls.Add(this.groupBox_Supporter);
+            this.tabPage1.Controls.Add(this.groupBox_AtkSupporters);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1052, 736);
+            this.tabPage1.Size = new System.Drawing.Size(890, 800);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
@@ -124,26 +124,17 @@
             this.comboBox_Language.Items.AddRange(new object[] {
             "Chinese 中文",
             "English English"});
-            this.comboBox_Language.Location = new System.Drawing.Point(886, 209);
+            this.comboBox_Language.Location = new System.Drawing.Point(578, 55);
             this.comboBox_Language.Name = "comboBox_Language";
-            this.comboBox_Language.Size = new System.Drawing.Size(143, 20);
+            this.comboBox_Language.Size = new System.Drawing.Size(173, 20);
             this.comboBox_Language.TabIndex = 7;
             this.comboBox_Language.SelectedIndexChanged += new System.EventHandler(this.comboBox_Language_SelectedIndexChanged);
-            // 
-            // label_Author
-            // 
-            this.label_Author.AutoSize = true;
-            this.label_Author.Location = new System.Drawing.Point(984, 566);
-            this.label_Author.Name = "label_Author";
-            this.label_Author.Size = new System.Drawing.Size(65, 12);
-            this.label_Author.TabIndex = 6;
-            this.label_Author.Text = "by Lastory";
             // 
             // groupBox_Defender
             // 
             this.groupBox_Defender.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Defender.Controls.Add(this.tableLayoutPanel_Defender);
-            this.groupBox_Defender.Location = new System.Drawing.Point(6, 6);
+            this.groupBox_Defender.Location = new System.Drawing.Point(7, 570);
             this.groupBox_Defender.Name = "groupBox_Defender";
             this.groupBox_Defender.Size = new System.Drawing.Size(677, 223);
             this.groupBox_Defender.TabIndex = 5;
@@ -271,7 +262,7 @@
             // 
             this.groupBox_Attacker.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox_Attacker.Controls.Add(this.tableLayoutPanel_Attacker);
-            this.groupBox_Attacker.Location = new System.Drawing.Point(6, 235);
+            this.groupBox_Attacker.Location = new System.Drawing.Point(6, 201);
             this.groupBox_Attacker.Name = "groupBox_Attacker";
             this.groupBox_Attacker.Size = new System.Drawing.Size(874, 363);
             this.groupBox_Attacker.TabIndex = 2;
@@ -435,7 +426,7 @@
             // 
             // button_Save
             // 
-            this.button_Save.Location = new System.Drawing.Point(796, 200);
+            this.button_Save.Location = new System.Drawing.Point(667, 14);
             this.button_Save.Name = "button_Save";
             this.button_Save.Size = new System.Drawing.Size(84, 35);
             this.button_Save.TabIndex = 4;
@@ -445,7 +436,7 @@
             // 
             // button_Calculate
             // 
-            this.button_Calculate.Location = new System.Drawing.Point(706, 200);
+            this.button_Calculate.Location = new System.Drawing.Point(578, 14);
             this.button_Calculate.Name = "button_Calculate";
             this.button_Calculate.Size = new System.Drawing.Size(84, 35);
             this.button_Calculate.TabIndex = 3;
@@ -453,71 +444,46 @@
             this.button_Calculate.UseVisualStyleBackColor = true;
             this.button_Calculate.Click += new System.EventHandler(this.button_DO_Click);
             // 
-            // groupBox_Supporter
+            // groupBox_AtkSupporters
             // 
-            this.groupBox_Supporter.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.groupBox_Supporter.Controls.Add(this.tableLayoutPanel_Supporter);
-            this.groupBox_Supporter.Location = new System.Drawing.Point(689, 6);
-            this.groupBox_Supporter.Name = "groupBox_Supporter";
-            this.groupBox_Supporter.Size = new System.Drawing.Size(340, 188);
-            this.groupBox_Supporter.TabIndex = 1;
-            this.groupBox_Supporter.TabStop = false;
-            this.groupBox_Supporter.Text = "Supporters";
+            this.groupBox_AtkSupporters.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox_AtkSupporters.Controls.Add(this.tableLayoutPanel_AtkSupporters);
+            this.groupBox_AtkSupporters.Location = new System.Drawing.Point(6, 6);
+            this.groupBox_AtkSupporters.Name = "groupBox_AtkSupporters";
+            this.groupBox_AtkSupporters.Size = new System.Drawing.Size(432, 189);
+            this.groupBox_AtkSupporters.TabIndex = 1;
+            this.groupBox_AtkSupporters.TabStop = false;
+            this.groupBox_AtkSupporters.Text = "Attack Supporters";
             // 
-            // tableLayoutPanel_Supporter
+            // tableLayoutPanel_AtkSupporters
             // 
-            this.tableLayoutPanel_Supporter.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel_Supporter.ColumnCount = 5;
-            this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel_Supporter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppCRD, 3, 0);
-            this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppCRR, 2, 0);
-            this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppATK, 1, 0);
-            this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppName, 0, 0);
-            this.tableLayoutPanel_Supporter.Controls.Add(this.label_SuppChoose, 4, 0);
-            this.tableLayoutPanel_Supporter.Location = new System.Drawing.Point(7, 20);
-            this.tableLayoutPanel_Supporter.Name = "tableLayoutPanel_Supporter";
-            this.tableLayoutPanel_Supporter.RowCount = 5;
-            this.tableLayoutPanel_Supporter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Supporter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Supporter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Supporter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Supporter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_Supporter.Size = new System.Drawing.Size(327, 162);
-            this.tableLayoutPanel_Supporter.TabIndex = 1;
-            // 
-            // label_SuppCRD
-            // 
-            this.label_SuppCRD.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_SuppCRD.AutoSize = true;
-            this.label_SuppCRD.Location = new System.Drawing.Point(211, 11);
-            this.label_SuppCRD.Name = "label_SuppCRD";
-            this.label_SuppCRD.Size = new System.Drawing.Size(53, 12);
-            this.label_SuppCRD.TabIndex = 3;
-            this.label_SuppCRD.Text = "CRIDbuff";
-            // 
-            // label_SuppCRR
-            // 
-            this.label_SuppCRR.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_SuppCRR.AutoSize = true;
-            this.label_SuppCRR.Location = new System.Drawing.Point(149, 11);
-            this.label_SuppCRR.Name = "label_SuppCRR";
-            this.label_SuppCRR.Size = new System.Drawing.Size(53, 12);
-            this.label_SuppCRR.TabIndex = 2;
-            this.label_SuppCRR.Text = "CRIRbuff";
-            // 
-            // label_SuppATK
-            // 
-            this.label_SuppATK.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_SuppATK.AutoSize = true;
-            this.label_SuppATK.Location = new System.Drawing.Point(90, 11);
-            this.label_SuppATK.Name = "label_SuppATK";
-            this.label_SuppATK.Size = new System.Drawing.Size(47, 12);
-            this.label_SuppATK.TabIndex = 1;
-            this.label_SuppATK.Text = "ATKbuff";
+            this.tableLayoutPanel_AtkSupporters.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel_AtkSupporters.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.tableLayoutPanel_AtkSupporters.ColumnCount = 7;
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SuppName, 0, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SuppCRD, 4, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SuppCRR, 3, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SuppATK, 2, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label22, 1, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SuppChoose, 6, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label23, 5, 0);
+            this.tableLayoutPanel_AtkSupporters.Location = new System.Drawing.Point(7, 20);
+            this.tableLayoutPanel_AtkSupporters.Name = "tableLayoutPanel_AtkSupporters";
+            this.tableLayoutPanel_AtkSupporters.RowCount = 5;
+            this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel_AtkSupporters.Size = new System.Drawing.Size(389, 162);
+            this.tableLayoutPanel_AtkSupporters.TabIndex = 1;
             // 
             // label_SuppName
             // 
@@ -533,11 +499,51 @@
             // 
             this.label_SuppChoose.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SuppChoose.AutoSize = true;
-            this.label_SuppChoose.Location = new System.Drawing.Point(277, 11);
+            this.label_SuppChoose.Location = new System.Drawing.Point(342, 11);
             this.label_SuppChoose.Name = "label_SuppChoose";
             this.label_SuppChoose.Size = new System.Drawing.Size(41, 12);
             this.label_SuppChoose.TabIndex = 4;
             this.label_SuppChoose.Text = "Select";
+            // 
+            // label_SuppCRD
+            // 
+            this.label_SuppCRD.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_SuppCRD.AutoSize = true;
+            this.label_SuppCRD.Location = new System.Drawing.Point(239, 11);
+            this.label_SuppCRD.Name = "label_SuppCRD";
+            this.label_SuppCRD.Size = new System.Drawing.Size(41, 12);
+            this.label_SuppCRD.TabIndex = 3;
+            this.label_SuppCRD.Text = "CRIDup";
+            // 
+            // label_SuppCRR
+            // 
+            this.label_SuppCRR.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_SuppCRR.AutoSize = true;
+            this.label_SuppCRR.Location = new System.Drawing.Point(187, 11);
+            this.label_SuppCRR.Name = "label_SuppCRR";
+            this.label_SuppCRR.Size = new System.Drawing.Size(41, 12);
+            this.label_SuppCRR.TabIndex = 2;
+            this.label_SuppCRR.Text = "CRIRup";
+            // 
+            // label_SuppATK
+            // 
+            this.label_SuppATK.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_SuppATK.AutoSize = true;
+            this.label_SuppATK.Location = new System.Drawing.Point(138, 11);
+            this.label_SuppATK.Name = "label_SuppATK";
+            this.label_SuppATK.Size = new System.Drawing.Size(35, 12);
+            this.label_SuppATK.TabIndex = 1;
+            this.label_SuppATK.Text = "ATKup";
+            // 
+            // label22
+            // 
+            this.label22.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(89, 11);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(35, 12);
+            this.label22.TabIndex = 5;
+            this.label22.Text = "Skill";
             // 
             // tabPage2
             // 
@@ -546,7 +552,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1052, 610);
+            this.tabPage2.Size = new System.Drawing.Size(1052, 903);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Supporter Setting";
             // 
@@ -716,27 +722,38 @@
             this.label21.TabIndex = 18;
             this.label21.Text = "Skill";
             // 
+            // label23
+            // 
+            this.label23.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(291, 11);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 12);
+            this.label23.TabIndex = 6;
+            this.label23.Text = "Immune";
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1075, 786);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(914, 843);
             this.Controls.Add(this.tabControl_Main);
+            this.MaximizeBox = false;
             this.Name = "Form_Main";
             this.Text = "BrownDust Calculator";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl_Main.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.groupBox_Defender.ResumeLayout(false);
             this.tableLayoutPanel_Defender.ResumeLayout(false);
             this.tableLayoutPanel_Defender.PerformLayout();
             this.groupBox_Attacker.ResumeLayout(false);
             this.tableLayoutPanel_Attacker.ResumeLayout(false);
             this.tableLayoutPanel_Attacker.PerformLayout();
-            this.groupBox_Supporter.ResumeLayout(false);
-            this.tableLayoutPanel_Supporter.ResumeLayout(false);
-            this.tableLayoutPanel_Supporter.PerformLayout();
+            this.groupBox_AtkSupporters.ResumeLayout(false);
+            this.tableLayoutPanel_AtkSupporters.ResumeLayout(false);
+            this.tableLayoutPanel_AtkSupporters.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox_SupporterCharacter.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -760,8 +777,8 @@
         private System.Windows.Forms.Label label_AttaATK;
         private System.Windows.Forms.Label label_AttaName;
         private System.Windows.Forms.Label label_AttaAGI;
-        private System.Windows.Forms.GroupBox groupBox_Supporter;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Supporter;
+        private System.Windows.Forms.GroupBox groupBox_AtkSupporters;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_AtkSupporters;
         private System.Windows.Forms.Label label_SuppCRD;
         private System.Windows.Forms.Label label_SuppCRR;
         private System.Windows.Forms.Label label_SuppATK;
@@ -780,7 +797,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label_Author;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox comboBox_Language;
         private System.Windows.Forms.GroupBox groupBox_SupporterCharacter;
@@ -796,5 +812,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
     }
 }

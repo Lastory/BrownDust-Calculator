@@ -32,7 +32,7 @@ namespace BrownDust_Calculator
             if (Language != comboBox_Language.SelectedIndex)
             {
                 Language = comboBox_Language.SelectedIndex;
-                ReDrawUI();
+                UILanguageChange();
             }
         }
     }

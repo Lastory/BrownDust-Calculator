@@ -22,11 +22,20 @@ namespace BrownDust_Calculator
 
     partial class Form_Main
     {
-        private static int LanguageCount = 2;
+        private const int LanguageCount = 2;
         private static int Language = 0;  //0 - 中文，1 - 英文
-        private static int AttackerNumber = 4;
-        private static int SupporterChartHight = 4, AttackerChartHight = 8, DefenderChartHight = 4;
+        private static bool FlagInLanguageChang = false;
+        private const int SupporterNumber = 4, AttackerNumber = 4;
+        private const int AtkSupporterChartHight = 4, AttackerChartHight = 8, DefenderChartHight = 4;
 
+        private static class Tools
+        {
+            public static int ToSlv(string str)
+            {
+                str = str.Remove(0, 1);
+                return int.Parse(str);
+            }
+        }
 
         private static class Savefile  //存档相关
         {
@@ -52,7 +61,7 @@ namespace BrownDust_Calculator
                                 for (int j = 0; j < 5; j++) textBox_AttackerStats[i, j].Text = load[j + 2];
                             }
                         }
-                        
+
                         //读取防御角色面板
                         line = file.ReadLine();  //"D#"
                         line = file.ReadLine();  //AttackerChartHight
@@ -77,7 +86,7 @@ namespace BrownDust_Calculator
                     file.Write("#A\n{0:d}\n", AttackerChartHight);
                     for (int i = 0; i < AttackerChartHight; i++)
                     {
-                        if (comboBox_AttackerName[i].SelectedIndex >= 0)
+                        if (comboBox_AttackerName[i].SelectedIndex != -1)
                         {
                             string line = comboBox_AttackerName[i].SelectedIndex.ToString("d") + "|";
                             line += comboBox_AttackerSlv[i].SelectedIndex.ToString("d") + "|";
@@ -321,7 +330,7 @@ namespace BrownDust_Calculator
                 public double ATKup, CRRup, CRDup, AGIup, CUTup;
                 public bool isImmunnity;
 
-                public TypeSkill(double atk, double crr, double crd ,double agi, double cut, params string[] arr)
+                public TypeSkill(double atk, double crr, double crd, double agi, double cut, params string[] arr)
                 {
                     ATKup = atk; CRRup = crr; CRDup = crd; AGIup = agi; CUTup = cut;
 
@@ -332,14 +341,25 @@ namespace BrownDust_Calculator
                         for (int i = 0; i < arr.Length; i++) Set(arr[i]);
                     }
                 }
-                
+
                 public TypeSkill ShallowCopy() { return (TypeSkill)this.MemberwiseClone(); }
+
+                public static TypeSkill operator *(double support, TypeSkill a)
+                {
+                    TypeSkill result = a.ShallowCopy();
+                    result.ATKup *= support;
+                    result.CRRup *= support;
+                    result.CRDup *= support;
+                    result.AGIup *= support;
+                    result.CUTup *= support;
+                    return result;
+                }
 
                 public void Set(string to)
                 {
                     switch (to)
                     {
-                        case "Immunnity": isImmunnity = true;break;
+                        case "Immunnity": isImmunnity = true; break;
                     }
                 }
                 public void Set(string to, double rate)
@@ -353,14 +373,34 @@ namespace BrownDust_Calculator
                         case "CUT": CUTup = rate; break;
                     }
                 }
+
+                public string Write(string option)  //option = {"ATK", "CRR", "CRD", "AGI", "CUT", "Immunnity"}，否则返回"Error"
+                {
+                    string result = "";
+
+                    switch (option)
+                    {
+                        case "ATK": result = (ATKup * 100).ToString("f2") + "%"; break;
+                        case "CRR": result = (CRRup * 100).ToString("f2") + "%"; break;
+                        case "CRD": result = (CRDup * 100).ToString("f2") + "%"; break;
+                        case "AGI": result = (AGIup * 100).ToString("f2") + "%"; break;
+                        case "CUT": result = (CUTup * 100).ToString("f2") + "%"; break;
+                        case "Immunnity": result = isImmunnity ? "Yes" : ""; break;
+                        default: return "Error";
+                    }
+
+                    if (result == "0.00%") result = "";
+
+                    return result;
+                }
             }
 
             private string[] Name = new string[LanguageCount];
+            private int SkillLevel;
             private double Support;
             public bool[] isSLvExist = new bool[11];
             private TypeSkill[] SkillList = new TypeSkill[11];
             public TypeSkill NowSkill = new TypeSkill();
-            public double ATKup, CRRup, CRDup, AGIup, CUTup;
 
             public SupportCharacter(double support, params string[] names)
             {
@@ -378,6 +418,7 @@ namespace BrownDust_Calculator
                     case 'L': Support = 1.7983; break;
                 }
             }
+            public SupportCharacter ShallowCopy() { return (SupportCharacter)this.MemberwiseClone(); }
 
             public string GetName() { return Name[Language]; }
 
@@ -402,6 +443,11 @@ namespace BrownDust_Calculator
                 SkillList[to] = SkillList[from].ShallowCopy();
             }
             public void SkillExtend(int to) { SkillCopy(to - 1, to); }
+            public void SetSkillLevel(int level)
+            {
+                SkillLevel = level;
+                NowSkill = Support * SkillList[level];
+            }
         }
         private class AttackCharacter
         {
@@ -420,7 +466,7 @@ namespace BrownDust_Calculator
                 public bool isAddRatio = false;  //追伤是否为血量比例伤害
                 public bool isImmunnity = false;  //是否有免疫技能
 
-                public TypeSkill ShallowCopy() { return (TypeSkill) this.MemberwiseClone(); }
+                public TypeSkill ShallowCopy() { return (TypeSkill)this.MemberwiseClone(); }
 
                 public void SetStatsBuff(params TypeSkillDetail[] detail)
                 {
@@ -467,7 +513,7 @@ namespace BrownDust_Calculator
                 Name = names;
                 for (int i = 1; i <= 10; i++) SkillList[i] = new TypeSkill();
             }
-            public AttackCharacter ShallowCopy() { return (AttackCharacter) this.MemberwiseClone(); }
+            public AttackCharacter ShallowCopy() { return (AttackCharacter)this.MemberwiseClone(); }
 
             public void SetStats(double atk, double crr, double crd, double agi, double def, double atkbuff, double crrbuff, double crdbuff)  //计算攻击角色入场属性
             {
@@ -507,6 +553,7 @@ namespace BrownDust_Calculator
                 SkillLevel = level;
                 NowSkill = SkillList[level];
             }
+            public void Set(string to) { NowSkill.Set(to); }
 
             public string GetName() { return Name[Language]; }
 
@@ -683,9 +730,8 @@ namespace BrownDust_Calculator
             public string WriteMidHP() { return MidHP.WriteNumericalDamage(); }
             public string WriteFinalHP() { return FinalHP.WriteNumericalDamage(); }
         }
-
-
-        private static SupportCharacter[] Supporter = new SupportCharacter[SupporterChartHight];
+        
+        private static SupportCharacter[] Supporter = new SupportCharacter[AtkSupporterChartHight];
         private static AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
         private static void SetCharacters()  //设定角色基本数据
         {
@@ -779,69 +825,147 @@ namespace BrownDust_Calculator
             SetAttackers();
         }
 
-        private static class RefreshUI
-        {
-            public class TpyeComboBox_AttackerSlv
-            {
-                int order;
-
-                public TpyeComboBox_AttackerSlv(int order) { this.order = order; }
-
-                public void Refresh(object sender, EventArgs e)
-                {
-                    comboBox_AttackerSlv[order].Items.Clear();
-                    comboBox_AttackerSlv[order].Text = "";
-
-                    int AttackerOrder = comboBox_AttackerName[order].SelectedIndex;
-                    if (AttackerOrder >= 0)
-                    {
-                        for (int j = 0; j <= 10; j++)
-                        {
-                            if (Attacker[AttackerOrder].isSLvExist[j])
-                                comboBox_AttackerSlv[order].Items.Add("+" + j.ToString("d"));
-                        }
-                    }
-                }
-            }
-            public static TpyeComboBox_AttackerSlv[] Refresher_AttackerSlv = new TpyeComboBox_AttackerSlv[AttackerChartHight];
-        }
-
-        private static Label[,] label_SupporterData = new Label[SupporterChartHight, 4];
-        private static CheckBox[] checkBox_SupporterChoose = new CheckBox[SupporterChartHight];
-        private void DrawSupporterData()  //绘制支援角色数据板块
-        {
-            string SupportAmount(double buff)
-            {
-                return buff > 0.01 ? (buff * 100).ToString("f2") + "%" : "/";
-            }
-
-            for (int i = 0; i < SupporterChartHight; i++)
-            {
-                checkBox_SupporterChoose[i] = new CheckBox();
-                tableLayoutPanel_Supporter.Controls.Add(checkBox_SupporterChoose[i], 5, i + 1);
-                checkBox_SupporterChoose[i].Anchor = System.Windows.Forms.AnchorStyles.None;
-                checkBox_SupporterChoose[i].AutoSize = true;
-                for (int j = 0; j < 4; j++)
-                {
-                    label_SupporterData[i, j] = new Label();
-                    tableLayoutPanel_Supporter.Controls.Add(label_SupporterData[i, j], j, i + 1);
-                    label_SupporterData[i, j].Anchor = System.Windows.Forms.AnchorStyles.None;
-                    label_SupporterData[i, j].AutoSize = true;
-                }
-
-                label_SupporterData[i, 0].Text = Supporter[i].GetName(); ;
-                label_SupporterData[i, 1].Text = SupportAmount(Supporter[i].ATKup);
-                label_SupporterData[i, 2].Text = SupportAmount(Supporter[i].CRRup);
-                label_SupporterData[i, 3].Text = SupportAmount(Supporter[i].CRDup);
-            }
-        }
+        //定义UI控件
+        private static ComboBox[] comboBox_AtkSupporterName = new ComboBox[AtkSupporterChartHight];
+        private static ComboBox[] comboBox_AtkSupporterSlv = new ComboBox[AtkSupporterChartHight];
+        private static Label[,] label_AtkSupporterBuff = new Label[AtkSupporterChartHight, 4];  //ATKup, CRRip, CRDup
+        private static CheckBox[] checkBox_AtkSupporterChoose = new CheckBox[AtkSupporterChartHight];
 
         private static ComboBox[] comboBox_AttackerName = new ComboBox[AttackerChartHight];
         private static ComboBox[] comboBox_AttackerSlv = new ComboBox[AttackerChartHight];
         private static TextBox[,] textBox_AttackerStats = new TextBox[AttackerChartHight, 5];  //ATK, CRR, CRD, AGI, DEF
         private static Label[,] label_AttackerDamage = new Label[AttackerChartHight, 3];  //Normal, Add, Sum
         private static RadioButton[] radioButton_AttackerChoose = new RadioButton[AttackerChartHight];
-        private void DrawAttackerPanel()  //绘制攻击角色数据板块
+
+        private static TextBox[,] textBox_DefenderStats = new TextBox[DefenderChartHight, 6];  //Name, HP, DEF, AGI, DEF, Weaking
+        private static Label[,] label_DefenderHP = new Label[DefenderChartHight, 2];  //Normal, Add, Sum
+
+        private static class RefreshData
+        {
+            public class TpyeRefresher_AttackerSlv
+            {
+                int order;
+
+                public TpyeRefresher_AttackerSlv(int order) { this.order = order; }
+
+                public void Refresh(object sender, EventArgs e)
+                {
+                    if (!FlagInLanguageChang)
+                    {
+                        comboBox_AttackerSlv[order].Items.Clear();
+                        comboBox_AttackerSlv[order].Text = "";
+
+                        int AttackerID = comboBox_AttackerName[order].SelectedIndex;
+                        if (AttackerID != -1)
+                        {
+                            for (int j = 0; j <= 10; j++)
+                            {
+                                if (Attacker[AttackerID].isSLvExist[j])
+                                    comboBox_AttackerSlv[order].Items.Add("+" + j.ToString("d"));
+                            }
+                        }
+                    }
+                }
+            }
+            public static TpyeRefresher_AttackerSlv[] Refresher_AttackerSlv = new TpyeRefresher_AttackerSlv[AttackerChartHight];
+
+            public class TpyeRefresher_AtkSupporterSlv
+            {
+                int order;
+
+                public TpyeRefresher_AtkSupporterSlv(int order) { this.order = order; }
+
+                public void Refresh(object sender, EventArgs e)
+                {
+                    if (!FlagInLanguageChang)
+                    {
+                        comboBox_AtkSupporterSlv[order].Items.Clear();
+                        comboBox_AtkSupporterSlv[order].Text = "";
+
+                        int AtkSupporterID = comboBox_AtkSupporterName[order].SelectedIndex;
+                        if (AtkSupporterID != -1)
+                        {
+                            for (int j = 0; j <= 10; j++)
+                            {
+                                if (Supporter[AtkSupporterID].isSLvExist[j])
+                                    comboBox_AtkSupporterSlv[order].Items.Add("+" + j.ToString("d"));
+                            }
+                        }
+                        
+                        label_AtkSupporterBuff[order, 0].Text = label_AtkSupporterBuff[order, 1].Text = label_AtkSupporterBuff[order, 2].Text = label_AtkSupporterBuff[order, 3].Text = "";
+                    }
+                }
+            }
+            public static TpyeRefresher_AtkSupporterSlv[] Refresher_AtkSupporterSlv = new TpyeRefresher_AtkSupporterSlv[AtkSupporterChartHight];
+
+            public class TypeRefrsher_AtkSupportBuff
+            {
+                int order;
+
+                public TypeRefrsher_AtkSupportBuff(int order) { this.order = order; }
+
+                public void Refresh(object sender, EventArgs e)  //同时计算了ComparedAtkSupporter
+                {
+                    if (!FlagInLanguageChang)
+                    {
+                        int AtkSupporterID = comboBox_AtkSupporterName[order].SelectedIndex;
+
+                        if (AtkSupporterID != -1 && comboBox_AtkSupporterSlv[order].SelectedIndex != -1)
+                        {
+                            int Slv = Tools.ToSlv((string)comboBox_AtkSupporterSlv[order].SelectedItem);
+                            ComparedAtkSupporter[order] = Supporter[AtkSupporterID].ShallowCopy();
+                            ComparedAtkSupporter[order].SetSkillLevel(Slv);
+
+                            label_AtkSupporterBuff[order, 0].Text = ComparedAtkSupporter[order].NowSkill.Write("ATK");
+                            label_AtkSupporterBuff[order, 1].Text = ComparedAtkSupporter[order].NowSkill.Write("CRR");
+                            label_AtkSupporterBuff[order, 2].Text = ComparedAtkSupporter[order].NowSkill.Write("CRD");
+                            label_AtkSupporterBuff[order, 3].Text = ComparedAtkSupporter[order].NowSkill.Write("Immunnity");
+                        }
+                    }
+                }
+            }
+            public static TypeRefrsher_AtkSupportBuff[] Refrsher_AtkSupportBuff = new TypeRefrsher_AtkSupportBuff[AtkSupporterChartHight];
+        }
+
+        public void DrawAtkSupporterData()  //绘制攻击支援角色数据板块
+        {
+            object[] NameList = new object[SupporterNumber];
+            for (int i = 0; i < SupporterNumber; i++) NameList[i] = Supporter[i].GetName();
+
+            for (int i = 0; i < AtkSupporterChartHight; i++)
+            {
+                comboBox_AtkSupporterName[i] = new ComboBox();
+                tableLayoutPanel_AtkSupporters.Controls.Add(comboBox_AtkSupporterName[i], 0, i + 1);
+                comboBox_AtkSupporterName[i].Anchor = AnchorStyles.None;
+                comboBox_AtkSupporterName[i].Items.AddRange(NameList);
+
+                //角色下拉选框更改事件 - 刷新技能等级下拉选框
+                RefreshData.Refresher_AtkSupporterSlv[i] = new RefreshData.TpyeRefresher_AtkSupporterSlv(i);
+                comboBox_AtkSupporterName[i].SelectedIndexChanged += new EventHandler(RefreshData.Refresher_AtkSupporterSlv[i].Refresh);
+
+                comboBox_AtkSupporterSlv[i] = new ComboBox();
+                tableLayoutPanel_AtkSupporters.Controls.Add(comboBox_AtkSupporterSlv[i], 1, i + 1);
+                comboBox_AtkSupporterSlv[i].Anchor = AnchorStyles.None;
+
+                //技能等级下拉选框更改事件 - 刷新技能显示
+                RefreshData.Refrsher_AtkSupportBuff[i] = new RefreshData.TypeRefrsher_AtkSupportBuff(i);
+                comboBox_AtkSupporterSlv[i].SelectedIndexChanged += new EventHandler(RefreshData.Refrsher_AtkSupportBuff[i].Refresh);
+
+                for (int j = 0; j < 4; j++)
+                {
+                    label_AtkSupporterBuff[i, j] = new Label();
+                    tableLayoutPanel_AtkSupporters.Controls.Add(label_AtkSupporterBuff[i, j], j + 2, i + 1);
+                    label_AtkSupporterBuff[i, j].Anchor = AnchorStyles.None;
+                    label_AtkSupporterBuff[i, j].AutoSize = true;
+                }
+
+                checkBox_AtkSupporterChoose[i] = new CheckBox();
+                tableLayoutPanel_AtkSupporters.Controls.Add(checkBox_AtkSupporterChoose[i], 6, i + 1);
+                checkBox_AtkSupporterChoose[i].Anchor = AnchorStyles.None;
+                checkBox_AtkSupporterChoose[i].AutoSize = true;
+            }
+        }
+        public void DrawAttackerPanel()  //绘制攻击角色数据板块
         {
             object[] NameList = new object[AttackerNumber];
             for (int i = 0; i < AttackerNumber; i++) NameList[i] = Attacker[i].GetName();
@@ -853,8 +977,9 @@ namespace BrownDust_Calculator
                 comboBox_AttackerName[i].Anchor = AnchorStyles.None;
                 comboBox_AttackerName[i].Items.AddRange(NameList);
 
-                RefreshUI.Refresher_AttackerSlv[i] = new RefreshUI.TpyeComboBox_AttackerSlv(i);
-                comboBox_AttackerName[i].SelectedIndexChanged += new EventHandler(RefreshUI.Refresher_AttackerSlv[i].Refresh);
+                //角色下拉选框更改事件 - 刷新技能等级下拉选框
+                RefreshData.Refresher_AttackerSlv[i] = new RefreshData.TpyeRefresher_AttackerSlv(i);
+                comboBox_AttackerName[i].SelectedIndexChanged += new EventHandler(RefreshData.Refresher_AttackerSlv[i].Refresh);
 
                 comboBox_AttackerSlv[i] = new ComboBox();
                 tableLayoutPanel_Attacker.Controls.Add(comboBox_AttackerSlv[i], 1, i + 1);
@@ -881,10 +1006,7 @@ namespace BrownDust_Calculator
                 radioButton_AttackerChoose[i].AutoSize = true;
             }
         }
-
-        private static TextBox[,] textBox_DefenderStats = new TextBox[DefenderChartHight, 6];  //Name, HP, DEF, AGI, DEF, Weaking
-        private static Label[,] label_DefenderHP = new Label[DefenderChartHight, 2];  //Normal, Add, Sum
-        private void DrawDeffenderPanel()  //绘制防御角色数据板块
+        public void DrawDeffenderPanel()  //绘制防御角色数据板块
         {
             for (int i = 0; i < DefenderChartHight; i++)
             {
@@ -906,24 +1028,36 @@ namespace BrownDust_Calculator
             }
         }
 
-        private void ReDrawUI()
+        private void UILanguageChange()
         {
-            //重绘攻击角色面板
-            object[] NameList = new object[AttackerNumber];
-            for (int i = 0; i < AttackerNumber; i++) NameList[i] = Attacker[i].GetName();
+            FlagInLanguageChang = true;
 
-            for (int i = 0; i < AttackerChartHight; i++)
+            object[] NameList;
+
+            //重绘攻击支援角色面板
+            NameList = new object[SupporterNumber];
+            for (int i = 0; i < SupporterNumber; i++) NameList[i] = Supporter[i].GetName();
+
+            for (int i = 0; i < AtkSupporterChartHight; i++)
             {
-                int Order = comboBox_AttackerName[i].SelectedIndex, SlvOrder = comboBox_AttackerSlv[i].SelectedIndex;
-                comboBox_AttackerName[i].Items.Clear();
-                comboBox_AttackerName[i].Items.AddRange(NameList);
-                if (Order >= 0)
-                {
-                    comboBox_AttackerName[i].Text = Attacker[Order].GetName();
-                    comboBox_AttackerSlv[i].SelectedIndex = SlvOrder;
-                }
+                int ID = comboBox_AtkSupporterName[i].SelectedIndex;
+                comboBox_AtkSupporterName[i].Items.Clear();
+                comboBox_AtkSupporterName[i].Items.AddRange(NameList);
+                if (ID != -1) comboBox_AtkSupporterName[i].Text = Supporter[ID].GetName();
             }
 
+            //重绘攻击角色面板
+            NameList = new object[AttackerNumber];
+            for (int i = 0; i < AttackerNumber; i++) NameList[i] = Attacker[i].GetName();
+            for (int i = 0; i < AttackerChartHight; i++)
+            {
+                int ID = comboBox_AttackerName[i].SelectedIndex;
+                comboBox_AttackerName[i].Items.Clear();
+                comboBox_AttackerName[i].Items.AddRange(NameList);
+                if (ID != -1) comboBox_AttackerName[i].Text = Attacker[ID].GetName();
+            }
+
+            FlagInLanguageChang = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -931,40 +1065,46 @@ namespace BrownDust_Calculator
             comboBox_Language.SelectedIndex = 0;
 
             SetCharacters();
-            DrawSupporterData();
+            DrawAtkSupporterData();
             DrawAttackerPanel();
             DrawDeffenderPanel();
             Savefile.LoadSavefile();
         }
 
+        private static SupportCharacter[] ComparedAtkSupporter = new SupportCharacter[AtkSupporterChartHight];
         private static AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
         private static void CalcutateDamage()  //计算支援&攻击角色出手前数据 + 计算普攻
         {
             //计算选中的支援角色提供的buff量
+            
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0;
-            for (int i = 0; i < SupporterChartHight; i++)
+            bool Immunnity = false;
+                
+            for (int i = 0; i < AtkSupporterChartHight; i++)
             {
-                if (checkBox_SupporterChoose[i].Checked)
+                if (checkBox_AtkSupporterChoose[i].Checked && comboBox_AtkSupporterName[i].SelectedIndex != -1)
                 {
-                    ATKbuff += Supporter[i].ATKup;
-                    CRRbuff += Supporter[i].CRRup;
-                    CRDbuff += Supporter[i].CRDup;
+                    ATKbuff += ComparedAtkSupporter[i].NowSkill.ATKup;
+                    CRRbuff += ComparedAtkSupporter[i].NowSkill.CRRup;
+                    CRDbuff += ComparedAtkSupporter[i].NowSkill.CRDup;
+                    Immunnity |= ComparedAtkSupporter[i].NowSkill.isImmunnity;
                 }
             }
-
+            
             for (int i = 0; i < AttackerChartHight; i++)
             {
-                int order = comboBox_AttackerName[i].SelectedIndex, Slv = comboBox_AttackerSlv[i].SelectedIndex;
-                if (order >= 0 && Slv >= 0)
+                int ID = comboBox_AttackerName[i].SelectedIndex;
+                if (ID != -1 && comboBox_AttackerSlv[i].SelectedIndex != -1)
                 {
                     //计算攻击角色入场状态 + 为攻击角色套用支援buff
-                    Slv = ((string)comboBox_AttackerSlv[i].SelectedItem)[1] - '0';
-                    ComparedAttacker[i] = Attacker[order].ShallowCopy();
+                    int Slv = Tools.ToSlv((string)comboBox_AttackerSlv[i].SelectedItem);
+                    ComparedAttacker[i] = Attacker[ID].ShallowCopy();
                     ComparedAttacker[i].SetSkillLevel(Slv);
 
                     double[] stats = new double[5];
                     for (int j = 0; j < 5; j++) stats[j] = textBox_AttackerStats[i, j].Text == "" ? 0 : double.Parse(textBox_AttackerStats[i, j].Text);
                     ComparedAttacker[i].SetStats(stats[0], stats[1] / 100, stats[2] / 100, stats[3] / 100, stats[4] / 100, ATKbuff, CRRbuff, CRDbuff);
+                    if (Immunnity) ComparedAttacker[i].Set("Immunnity");
 
                     //输出普攻伤害
                     ComparedAttacker[i].CheckBaseDamage();
@@ -985,7 +1125,6 @@ namespace BrownDust_Calculator
                     label_AttackerDamage[i, 0].Text = label_AttackerDamage[i, 1].Text = label_AttackerDamage[i, 2].Text = "";
                 }
             }
-
         }
 
         private static DefendCharacter[] ComparedDefender = new DefendCharacter[DefenderChartHight];
