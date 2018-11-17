@@ -25,7 +25,7 @@ namespace BrownDust_Calculator
         private const int LanguageCount = 3;
         private static int Language = 0;  //0 - 中文，1 - 英文，2 - 日语
         private static bool FlagInLanguageChang = false;
-        private const int SupporterNumber = 4, AttackerNumber = 4;
+        private const int SupporterNumber = 4, AttackerNumber = 6;
         private const int AtkSupporterChartHight = 4, AttackerChartHight = 8, DefenderChartHight = 4;
 
         private static class Tools
@@ -548,7 +548,7 @@ namespace BrownDust_Calculator
             {
                 BaseStats = new TypeStats { ATK = atk, CRR = crr, CRD = crd, AGI = agi, DEF = def };
                 DoStatsUp();
-                StatsUp.ATK = atkbuff; StatsUp.CRR = crrbuff; StatsUp.CRD = crdbuff;
+                StatsUp.ATK += atkbuff; StatsUp.CRR += crrbuff; StatsUp.CRD += crdbuff;
                 CheckStats();
             }
             public void SetStatsBuff(int level, params TypeSkill.TypeSkillDetail[] detail)
@@ -591,6 +591,8 @@ namespace BrownDust_Calculator
 
             private void DoStatsUp()
             {
+                StatsUp.ATK = StatsUp.CRR = StatsUp.CRD = StatsUp.AGI = 0;
+
                 for (int i = 0; i < NowSkill.nStatsBuff; i++)
                 {
                     double buff = NowSkill.StatsBuff[i].rate;
@@ -602,9 +604,10 @@ namespace BrownDust_Calculator
                     }
                     switch (NowSkill.StatsBuff[i].to)
                     {
-                        case "ATK": BaseStats.ATK *= 1 + buff; break;
-                        case "CRR": BaseStats.CRR += buff; break;
-                        case "CRD": BaseStats.CRD += buff; break;
+                        case "ATK": StatsUp.ATK += buff; break;
+                        case "CRR": StatsUp.CRR += buff; break;
+                        case "CRD": StatsUp.CRD += buff; break;
+                        case "AGI": StatsUp.AGI += buff; break;
                     }
                 }
             }
@@ -810,18 +813,8 @@ namespace BrownDust_Calculator
             void SetAttackers()
             {
                 AttackCharacter Now;
-                Now = Attacker[0] = new AttackCharacter("女忍", "Eunrang", "ウンラン");
-                {
-                    Now.SetStatsBuff(9,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
-                    Now.SetAfterBuff(9,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate = 1.50 },
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.35 });
-                    Now.SetAddAttackNormal(9,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
-                }
-                Now = Attacker[1] = new AttackCharacter("修女", "Angelica", "アンジェリカ");
+
+                Now = Attacker[0] = new AttackCharacter("修女", "Angelica", "アンジェリカ");
                 {
                     Now.SetAddAttackNormal(3, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
                     Now.SkillList[3].Set("Immunnity");
@@ -836,7 +829,7 @@ namespace BrownDust_Calculator
                     Now.SetAddAttackNormal(8, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.40 });
                     Now.SkillExtend(9);
                 }
-                Now = Attacker[2] = new AttackCharacter("海盗", "Alec", "アレック");
+                Now = Attacker[1] = new AttackCharacter("海盗", "Alec", "アレック");
                 {
                     Now.SetStatsBuff(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
                     Now.SetAddAttackReal(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.00 });
@@ -858,6 +851,17 @@ namespace BrownDust_Calculator
                     Now.SkillExtend(9);
                     Now.SkillExtend(10);
                     Now.SetAddAttackNormal(10, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 });
+                }
+                Now = Attacker[2] = new AttackCharacter("女忍", "Eunrang", "ウンラン");
+                {
+                    Now.SetStatsBuff(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
+                    Now.SetAfterBuff(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate = 1.50 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.35 });
+                    Now.SetAddAttackNormal(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
                 }
                 Now = Attacker[3] = new AttackCharacter("白剑", "Siegmund", "シグムンド");
                 {
@@ -887,6 +891,29 @@ namespace BrownDust_Calculator
                     Now.SkillExtend(9);
                     Now.SetStatsBuff(9,
                         new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "CRR", rate = 0.50 });
+                }
+                Now = Attacker[4] = new AttackCharacter("狐狸", "Dalvi", "キュウビ");
+                {
+                    Now.SetAddAttackNormal(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.00 });
+                    Now.SetAddAttackNormal(1, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.25 });
+                    Now.SetAddAttackNormal(2, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.50 });
+                    Now.SkillExtend(3);
+                    Now.SkillExtend(4);
+                    Now.SkillExtend(5);
+                    Now.SkillExtend(6);
+                    Now.SetAddAttackNormal(7, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.75 });
+                    Now.SetAddAttackNormal(8, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.00 });
+                    Now.SkillExtend(9);
+                    Now.SkillExtend(10);
+                }
+                Now = Attacker[5] = new AttackCharacter("黑剑", "Edin", "エディン");
+                {
+                    Now.SetAddAttackNormal(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 * 0.35 });
+                    Now.SkillExtend(1);
+                    Now.SkillExtend(2);
+                    Now.SkillExtend(3);
+                    Now.SetAddAttackNormal(4, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.00 * 0.35 });
+                    Now.SetAddAttackNormal(5, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.50 * 0.35 });
                 }
             }
 
