@@ -816,104 +816,125 @@ namespace BrownDust_Calculator
 
                 Now = Attacker[0] = new AttackCharacter("修女", "Angelica", "アンジェリカ");
                 {
-                    Now.SetAddAttackNormal(3, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.20 });
+                    Now.SetAddAttackNormal(3, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "EHP", rate = 0.20 });
                     Now.SkillList[3].Set("Immunnity");
                     Now.SkillExtend(4);
-                    Now.SetAddAttackNormal(4, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.25 });
+                    Now.SetAddAttackNormal(4, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "EHP", rate = 0.25 });
                     Now.SkillExtend(5);
-                    Now.SetAddAttackNormal(5, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.30 });
+                    Now.SetAddAttackNormal(5, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "EHP", rate = 0.30 });
                     Now.SkillExtend(6);
                     Now.SkillExtend(7);
-                    Now.SetAddAttackNormal(7, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.35 });
+                    Now.SetAddAttackNormal(7, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "EHP", rate = 0.35 });
                     Now.SkillExtend(8);
-                    Now.SetAddAttackNormal(8, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "EHP", rate = 0.40 });
+                    Now.SetAddAttackNormal(8, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "EHP", rate = 0.40 });
                     Now.SkillExtend(9);
                 }
                 Now = Attacker[1] = new AttackCharacter("海盗", "Alec", "アレック");
                 {
-                    Now.SetStatsBuff(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.50 });
-                    Now.SetAddAttackReal(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.00 });
+                    Now.SetStatsBuff(0, new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.50 });
+                    Now.SetAddAttackReal(0, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.00 });
                     Now.SkillExtend(1);
-                    Now.SetAddAttackReal(1, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.15 });
+                    Now.SetAddAttackReal(1, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.15 });
                     Now.SkillExtend(2);
-                    Now.SetAddAttackReal(2, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.30 });
+                    Now.SetAddAttackReal(2, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.30 });
                     Now.SkillExtend(3);
-                    Now.SetAddAttackNormal(3, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.00 });
+                    Now.SetAddAttackNormal(3, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 2.00 });
                     Now.SkillExtend(4);
-                    Now.SetAddAttackReal(4, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.45 });
+                    Now.SetAddAttackReal(4, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.45 });
                     Now.SkillExtend(5);
-                    Now.SetAddAttackReal(5, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.60 });
+                    Now.SetAddAttackReal(5, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.60 });
                     Now.SkillExtend(6);
                     Now.SkillExtend(7);
-                    Now.SetStatsBuff(7, new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.60 });
+                    Now.SetStatsBuff(7, new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.60 });
                     Now.SkillExtend(8);
-                    Now.SetStatsBuff(8, new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.70 });
+                    Now.SetStatsBuff(8, new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.70 });
                     Now.SkillExtend(9);
                     Now.SkillExtend(10);
-                    Now.SetAddAttackNormal(10, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 });
+                    Now.SetAddAttackNormal(10, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 2.50 });
                 }
                 Now = Attacker[2] = new AttackCharacter("女忍", "Eunrang", "ウンラン");
                 {
                     Now.SetStatsBuff(9,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "AGI", to = "CRR", rate = 1.00 },
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", to = "CRD", rate = 0.50 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "AGI", to = "CRR", rate = 1.00 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", to = "CRD", rate = 0.50 });
                     Now.SetAfterBuff(9,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "CRD", rate = 1.50 },
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { to = "ATK", rate = 0.35 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "CRD", rate = 1.50 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.35 });
                     Now.SetAddAttackNormal(9,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "CRR", rate = 1.25 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "CRR", rate = 1.25 });
                 }
                 Now = Attacker[3] = new AttackCharacter("白剑", "Siegmund", "シグムンド");
                 {
                     Now.SetAddAttackNormal(3,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 2.50 });
 
                     Now.SkillExtend(4);
                     Now.SetAddAttackNormal(4,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.00 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 3.00 });
 
                     Now.SkillExtend(5);
                     Now.SetAddAttackNormal(5,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.50 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 3.50 });
 
                     Now.SkillExtend(6);
                     Now.SetStatsBuff(6,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.00 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "DEF", to = "ATK", rate = 1.00 });
 
                     Now.SkillExtend(7);
                     Now.SetStatsBuff(7,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.25 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "DEF", to = "ATK", rate = 1.25 });
 
                     Now.SkillExtend(8);
                     Now.SetStatsBuff(8,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "ATK", rate = 1.50 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "DEF", to = "ATK", rate = 1.50 });
 
                     Now.SkillExtend(9);
                     Now.SetStatsBuff(9,
-                        new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "DEF", to = "CRR", rate = 0.50 });
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "DEF", to = "ATK", rate = 1.50 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { from = "DEF", to = "CRR", rate = 0.50 });
                 }
                 Now = Attacker[4] = new AttackCharacter("狐狸", "Dalvi", "キュウビ");
                 {
-                    Now.SetAddAttackNormal(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.00 });
-                    Now.SetAddAttackNormal(1, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.25 });
-                    Now.SetAddAttackNormal(2, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.50 });
+                    Now.SetAddAttackNormal(0, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.00 });
+                    Now.SetAddAttackNormal(1, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.25 });
+                    Now.SetAddAttackNormal(2, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.50 });
                     Now.SkillExtend(3);
                     Now.SkillExtend(4);
                     Now.SkillExtend(5);
                     Now.SkillExtend(6);
-                    Now.SetAddAttackNormal(7, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 1.75 });
-                    Now.SetAddAttackNormal(8, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.00 });
+                    Now.SetAddAttackNormal(7, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 1.75 });
+                    Now.SetAddAttackNormal(8, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 2.00 });
                     Now.SkillExtend(9);
                     Now.SkillExtend(10);
                 }
                 Now = Attacker[5] = new AttackCharacter("黑剑", "Edin", "エディン");
                 {
-                    Now.SetAddAttackNormal(0, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 2.50 * 0.35 });
+                    Now.SetAddAttackNormal(0, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 2.50 * 0.35 });
                     Now.SkillExtend(1);
                     Now.SkillExtend(2);
                     Now.SkillExtend(3);
-                    Now.SetAddAttackNormal(4, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.00 * 0.35 });
-                    Now.SetAddAttackNormal(5, new AttackCharacter.TypeSkill.TypeSkillDetail() { from = "   ", rate = 3.50 * 0.35 });
+                    Now.SetStatsBuff(3, new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.50 });
+                    Now.SkillExtend(4);
+                    Now.SetAddAttackNormal(4, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 3.00 * 0.35 });
+                    Now.SkillExtend(5);
+                    Now.SetAddAttackNormal(5, new AttackCharacter.TypeSkill.TypeSkillDetail { from = "   ", rate = 3.50 * 0.35 });
+                    Now.SkillExtend(6);
+                    Now.SetStatsBuff(6,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.50 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "CRR", rate = 0.15 });
+                    Now.SkillExtend(7);
+                    Now.SetStatsBuff(7,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.65 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "CRR", rate = 0.20 });
+                    Now.SkillExtend(8);
+                    Now.SetStatsBuff(8,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 0.80 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "CRR", rate = 0.25 });
+                    Now.SkillExtend(9);
+                    Now.SetStatsBuff(9,
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "ATK", rate = 1.00 },
+                        new AttackCharacter.TypeSkill.TypeSkillDetail { to = "CRR", rate = 0.35 });
+                    Now.SkillExtend(10);
                 }
             }
 
