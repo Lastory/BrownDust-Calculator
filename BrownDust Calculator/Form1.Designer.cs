@@ -30,6 +30,8 @@
         {
             this.tabControl_Main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label11 = new System.Windows.Forms.Label();
             this.comboBox_Language = new System.Windows.Forms.ComboBox();
             this.groupBox_Defender = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Defender = new System.Windows.Forms.TableLayoutPanel();
@@ -59,15 +61,13 @@
             this.groupBox_AtkSupporters = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_AtkSupporters = new System.Windows.Forms.TableLayoutPanel();
             this.label_SuppName = new System.Windows.Forms.Label();
-            this.label_SuppChoose = new System.Windows.Forms.Label();
             this.label_SuppCRD = new System.Windows.Forms.Label();
             this.label_SuppCRR = new System.Windows.Forms.Label();
             this.label_SuppATK = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label_SuppChoose = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defender.SuspendLayout();
@@ -106,16 +106,37 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(780, 773);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(107, 12);
+            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Project Home Page";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(819, 785);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "by Lastory";
+            // 
             // comboBox_Language
             // 
             this.comboBox_Language.FormattingEnabled = true;
             this.comboBox_Language.Items.AddRange(new object[] {
-            "Chinese 中文",
+            "Chinese 中文简称(简体)",
+            "Chinese 中文全稱(繁體)",
             "English English",
             "Japanese 日本語"});
-            this.comboBox_Language.Location = new System.Drawing.Point(766, 6);
+            this.comboBox_Language.Location = new System.Drawing.Point(720, 6);
             this.comboBox_Language.Name = "comboBox_Language";
-            this.comboBox_Language.Size = new System.Drawing.Size(121, 20);
+            this.comboBox_Language.Size = new System.Drawing.Size(167, 20);
             this.comboBox_Language.TabIndex = 7;
             this.comboBox_Language.SelectedIndexChanged += new System.EventHandler(this.comboBox_Language_SelectedIndexChanged);
             // 
@@ -484,16 +505,6 @@
             this.label_SuppName.TabIndex = 0;
             this.label_SuppName.Text = "Character";
             // 
-            // label_SuppChoose
-            // 
-            this.label_SuppChoose.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label_SuppChoose.AutoSize = true;
-            this.label_SuppChoose.Location = new System.Drawing.Point(357, 11);
-            this.label_SuppChoose.Name = "label_SuppChoose";
-            this.label_SuppChoose.Size = new System.Drawing.Size(41, 12);
-            this.label_SuppChoose.TabIndex = 4;
-            this.label_SuppChoose.Text = "Select";
-            // 
             // label_SuppCRD
             // 
             this.label_SuppCRD.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -534,15 +545,15 @@
             this.label22.TabIndex = 5;
             this.label22.Text = "Skill";
             // 
-            // tabPage2
+            // label_SuppChoose
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(890, 800);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Setting (Work in Progress)";
+            this.label_SuppChoose.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_SuppChoose.AutoSize = true;
+            this.label_SuppChoose.Location = new System.Drawing.Point(357, 11);
+            this.label_SuppChoose.Name = "label_SuppChoose";
+            this.label_SuppChoose.Size = new System.Drawing.Size(41, 12);
+            this.label_SuppChoose.TabIndex = 4;
+            this.label_SuppChoose.Text = "Select";
             // 
             // label23
             // 
@@ -554,25 +565,15 @@
             this.label23.TabIndex = 6;
             this.label23.Text = "Immune";
             // 
-            // label11
+            // tabPage2
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(819, 785);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 12);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "by Lastory";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(780, 773);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(107, 12);
-            this.linkLabel1.TabIndex = 9;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Project Home Page";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(890, 800);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Setting (Work in Progress)";
             // 
             // Form_Main
             // 
