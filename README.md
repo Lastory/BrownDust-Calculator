@@ -34,9 +34,26 @@ This a damage calculator for Brown Dust.
 * More characters and features are in plan.
 * This project is still in its early stage, which means it will be updated frequently and not very stable. You can check the updates at the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).
 * Updates may make the old archive incompatible.
-* At this stage, some of the special skills are NOT effective (e.g. "additional ATK boost every turn"). Some of them are considered as a simple skill (e.g. Siegmund is always calculated as 100% HP.)
+* At this stage, the application may crash if the input format is incorrect. A better error-notification is in project.
+* At this stage, some of the special skills are NOT effective. Some of them are considered as a simple skill. Check [Skill exception](#skill-exception) for detail.
 * If there is a problem, you can create an issue [here](https://github.com/Lastory/BrownDust-Calculator/issues).
 * For bug report, it will be better if you can attach the "save.save" file for the configuration triggering the bug.
+
+## Appendix
+
+### Skill exception
+* Ignored: Additional XXX boost *every turn*  
+Affected: Edin
+* Ignored: Additional DMG based on *Taunt/Concentrated Fire* skill  
+Affected: Ventana
+* Ignored: Remove Barrier  
+Affected: Rafina, Alche
+* Simplified: Additional DMG based on *Remaining HP Rate*  
+Affected: Siegmund(always calculated as 100% HP)
+* Simplified: Additional DMG based on *HP Loss Rate*  
+Affected: Edin(always calculated as 65% HP, or 35% Lost)
+
+
 
 ## 介绍
 这是一个用于Brown Dust的伤害计算器
@@ -70,7 +87,22 @@ This a damage calculator for Brown Dust.
 * 更多角色和功能在更新计划上。
 * 这个项目仍然处于开发早期，可能会更新十分频繁并且不太稳定。您可以在[发布页](https://github.com/Lastory/BrownDust-Calculator/releases)检查更新。
 * 更新后可能不兼容旧版本的存档。
-* 现阶段，有些特殊技能效果被忽略了(例："每回合属性增加")，有些被条件简化了(例：白剑的血量永远被算做100%)。
+* 现阶段，如果输入了错误的格式，应用可能会直接报错退出，更好的报错机制在开发计划上。
+* 现阶段，有些特殊技能效果被忽略了，有些被条件简化了，您可以在 [技能例外](#技能例外) 查看详情。
 * 如果遇到问题，您可以在[这里](https://github.com/Lastory/BrownDust-Calculator/issues)提交。
 * 如果想要报告bug，引发bug的配置的存档可能会很有帮助。
+
+## 附录
+
+### 技能例外
+* 忽略： **每回合** XXX上升  
+将会影响：黑剑
+* 忽略：基于 **挑衅/锁定** 的追伤  
+将会影响：妖刀
+* 忽略：清除护盾  
+将会影响：锤妹，机械盾
+* 简化： **剩余血量比例** 依存追伤  
+将会影响：白剑（总是以100%血量计算）
+* 简化： **损失血量比例** 依存追伤  
+将会影响：黑剑（总是以失去35%血量计算）
 
