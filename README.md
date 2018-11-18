@@ -47,7 +47,7 @@ This a damage calculator for Brown Dust.
 
 1. 在[发布页](https://github.com/Lastory/BrownDust-Calculator/releases)下载最新的 ***BrownDust-Calculator.exe*** 。
 2. 您最好将下载的exe文件放入一个单独的文件夹，因为它会创建一个 ***save.save*** 存档文件。  
-3. 打开exe文件后，您可以在右上角的下拉菜单选择您的语言。
+3. 打开exe文件后，您可以在右上角的下拉菜单选择您的语言。（现阶段只有角色名有多语言翻译）
 
 ### 攻击侧
 1. 在靠上的两张表格的 ***Character*** 列选择您要计算的攻击角色和支援角色。（现阶段，支援角色全部以满破计算——六星、最高等级、已觉醒）
