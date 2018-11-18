@@ -23,7 +23,7 @@ namespace BrownDust_Calculator
     partial class Form_Main
     {
         private const int LanguageCount = 3;
-        private static int Language = 0;  //0 - 中文，1 - 英文，2 - 日语
+        private static int Language = 0;  //0 - 简体中文简称，1 - 繁体中文全称，2 - 英语，3 - 日语
         private static bool FlagInLanguageChang = false;
         private const int SupporterNumber = 8, AttackerNumber = 9;
         private const int AtkSupporterChartHight = 4, AttackerChartHight = 8, DefenderChartHight = 4;
