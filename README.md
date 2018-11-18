@@ -35,7 +35,7 @@ This a damage calculator for Brown Dust.
 * This project is still in its early stage, which means it will be updated frequently and not very stable. You can check the updates at the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).
 * Updates may make the old archive incompatible.
 * At this stage, the application may crash if the input format is incorrect. A better error-notification is in project.
-* At this stage, some of the special skills are NOT effective. Some of them are considered as a simple skill. Check [Skill exception](#skill-exception) for detail.
+* At this stage, some of the special skills are NOT effective while some of them are considered as a simple skill. Check [Skill exception](#skill-exception) for detail.
 * If there is a problem, you can create an issue [here](https://github.com/Lastory/BrownDust-Calculator/issues).
 * For bug report, it will be better if you can attach the "save.save" file for the configuration triggering the bug.
 
@@ -105,4 +105,3 @@ Affected: Edin(always calculated as 65% HP, or 35% Lost)
 将会影响：白剑（总是以100%血量计算）
 * 简化： **损失血量比例** 依存追伤  
 将会影响：黑剑（总是以失去35%血量计算）
-
