@@ -1,9 +1,13 @@
 # BrownDust-Calculator
 
+* [English](#intro)
+* [中文](#介绍)
+
 ## Intro
 This a damage calculator for Brown Dust.
 
 ## How to Use
+
 ### Prepare  
 1. Download the latest version of ***"BrownDust-Calculator.exe"*** at the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).  
 2. It is recommended to put the EXE file into a separate folder because it will create a ***"save.save"*** file.  
@@ -20,7 +24,7 @@ This a damage calculator for Brown Dust.
 ### Defending side
 1. Input your Defenders' stats. Name them whatever you like. (At this stage, you may need to input the supporters' effect at the defending side.)
 2. Select an attacker.
-3. If clicking the ***"Calculate!"*** button now, you can get the ***Remaining HP*** after Normal Attack and Additional Attack.
+3. If clicking the ***"Calculate!"*** button now, you can also get the ***Remaining HP*** after Normal Attack and Additional Attack.
 
 ### Other
 * To save your data, click the ***"Save"*** button.
@@ -28,8 +32,45 @@ This a damage calculator for Brown Dust.
 
 ## Notice and Warning
 * More characters and features are in plan.
-* This project is still in its early stage, which means it will be updated frequently and not very stable. You can check the updates at  the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).
+* This project is still in its early stage, which means it will be updated frequently and not very stable. You can check the updates at the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).
 * Updates may make the old archive incompatible.
 * At this stage, some of the special skills are NOT effective (e.g. "additional ATK boost every turn"). Some of them are considered as a simple skill (e.g. Siegmund is always calculated as 100% HP.)
 * If there is a problem, you can create an issue [here](https://github.com/Lastory/BrownDust-Calculator/issues).
 * For bug report, it will be better if you can attach the "save.save" file for the configuration triggering the bug.
+
+## 介绍
+这是一个用于Brown Dust的伤害计算器
+
+## 使用方式
+
+### 准备工作  
+
+1. 在[发布页](https://github.com/Lastory/BrownDust-Calculator/releases)下载最新的 ***BrownDust-Calculator.exe*** 。
+2. 您最好将下载的exe文件放入一个单独的文件夹，因为它会创建一个 ***save.save*** 存档文件。  
+3. 打开exe文件后，您可以在右上角的下拉菜单选择您的语言。
+
+### 攻击侧
+1. 在靠上的两张表格的 ***Character*** 列选择您要计算的攻击角色和支援角色。（现阶段，支援角色全部以满破计算——六星、最高等级、已觉醒）
+2. 在 ***Skill*** 列选择他们的技能等级。（有的角色可能没有+0到+10的全部选项，可能是因为他是低星或者缺失的等级不造成效果影响）
+3. 输入攻击角色的数据。
+4. 选择生效的支援角色。
+5. 如果现在点击 ***Calculate!*** 按钮，您可以得到攻击角色在基础攻击和追伤中造成的 **纯粹伤害** ，以及总和。
+6. 伤害显示的第一行列出了两种最极端的情况及其可能性 (例： ***"500 40% | 1500 30%"*** 代表有40%概率出现最低伤500，30%最高伤1500)，第二行列出的伤害的期望。如果只有一种可能性则会被直接显示。（可能会存在误差，因为游戏内能获取的数据精度有限。可能性可能会显示0%，因为存在四舍五入）
+
+### 防御侧
+1. 输入防御角色的数据。给他们随便起个名字就行。（现阶段，您可能需要在输入时手动加上防御侧的支援效果）。
+2. 选择一个攻击角色。
+3. 如果现在点击 ***"Calculate!"*** 按钮，您还可以得到基础攻击和追伤后防御角色的 **剩余血量** 。
+
+### 其他
+* 点击 ***Save*** 按钮以存储配置。
+* 应用启动时会自动读取存档。
+
+## 注意事项
+* 更多角色和功能在更新计划上。
+* 这个项目仍然处于开发早期，可能会更新十分频繁并且不太稳定。您可以在[发布页](https://github.com/Lastory/BrownDust-Calculator/releases)检查更新。
+* 更新后可能不兼容旧版本的存档。
+* 现阶段，有些特殊技能效果被忽略了(例："每回合属性增加")，有些被条件简化了(例：白剑的血量永远被算做100%)。
+* 如果遇到问题，您可以在[这里](https://github.com/Lastory/BrownDust-Calculator/issues)提交。
+* 如果想要报告bug，引发bug的配置的存档可能会很有帮助。
+
