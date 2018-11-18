@@ -357,11 +357,13 @@ namespace BrownDust_Calculator
             public struct TypeSkill
             {
                 public double ATKup, CRRup, CRDup, AGIup, DEFup, CUTup;
+                public double All;
                 public bool isImmunnity;
 
                 public TypeSkill(double atk, double crr, double crd, double agi, double def, double cut, params string[] arr)
                 {
                     ATKup = atk; CRRup = crr; CRDup = crd; AGIup = agi; DEFup = def; CUTup = cut;
+                    All = 0;
 
                     isImmunnity = false;
 
@@ -376,11 +378,13 @@ namespace BrownDust_Calculator
                 public static TypeSkill operator *(double support, TypeSkill a)
                 {
                     TypeSkill result = a.ShallowCopy();
-                    result.ATKup *= support;
-                    result.CRRup *= support;
-                    result.CRDup *= support;
-                    result.AGIup *= support;
-                    result.CUTup *= support;
+                    result.ATKup = result.ATKup * support + result.All;
+                    result.CRRup = result.CRRup * support + result.All;
+                    result.CRDup = result.CRDup * support + result.All;
+                    result.AGIup = result.AGIup * support + result.All;
+                    result.DEFup = result.DEFup * support + result.All;
+                    result.CUTup = result.CUTup * support;
+                    result.All = 0;
                     return result;
                 }
 
@@ -400,6 +404,7 @@ namespace BrownDust_Calculator
                         case "CRD": CRDup = rate; break;
                         case "AGI": AGIup = rate; break;
                         case "CUT": CUTup = rate; break;
+                        case "ALL": All = rate; break;
                     }
                 }
 
@@ -813,17 +818,21 @@ namespace BrownDust_Calculator
                 }
                 Now = Supporter[4] = new SupportCharacter('5', "圣杯", "Michaela", "ミカエラ");
                 {
-                    Now.SetSkill(0, 0.30, 0, 0, 0, 0, 0);
-                    Now.SetSkill(1, 0.30, 0, 0, 0, 0, 0);
-                    Now.SetSkill(2, 0.30, 0, 0, 0, 0, 0);
-                    Now.SetSkill(3, 0.35, 0.05, 0.05, 0.05, 0.05, 0);
-                    Now.SetSkill(4, 0.35, 0.05, 0.05, 0.05, 0.05, 0);
-                    Now.SetSkill(5, 0.35, 0.05, 0.05, 0.05, 0.05, 0);
-                    Now.SetSkill(6, 0.40, 0.10, 0.10, 0.10, 0.10, 0);
-                    Now.SetSkill(7, 0.50, 0.10, 0.10, 0.10, 0.10, 0);
-                    Now.SetSkill(8, 0.60, 0.10, 0.10, 0.10, 0.10, 0);
-                    Now.SetSkill(9, 0.60, 0.10, 0.10, 0.10, 0.10, 0);
-                    Now.SetSkill(10, 0.60, 0.10, 0.10, 0.10, 0.10, 0);
+                    Now.SetSkill(0, 0.30, 0, 0, 0, 0, 0.30);
+                    Now.SetSkill(1, 0.30, 0, 0, 0, 0, 0.30);
+                    Now.SetSkill(2, 0.30, 0, 0, 0, 0, 0.30);
+                    Now.SkillExtend(3);
+                    Now.SetSkill(3, "ALL", 0.05);
+                    Now.SkillExtend(4);
+                    Now.SkillExtend(5);
+                    Now.SkillExtend(6);
+                    Now.SetSkill(6, "ALL", 0.10);
+                    Now.SkillExtend(7);
+                    Now.SetSkill(7, "ATK", 0.40);
+                    Now.SkillExtend(8);
+                    Now.SetSkill(8, "ATK", 0.50);
+                    Now.SkillExtend(9);
+                    Now.SkillExtend(10);
                 }
                 Now = Supporter[5] = new SupportCharacter('L', "萝莉", "Refithea", "レピテア");
                 {
