@@ -1253,7 +1253,7 @@ namespace BrownDust_Calculator
             }
         }
 
-        private void UILanguageChange()
+        private void UILanguageChange()  //切换语言
         {
             FlagInLanguageChang = true;
 
@@ -1288,6 +1288,7 @@ namespace BrownDust_Calculator
             label_DefAddReamaining.Text = GetText("追伤后剩余HP", "追傷后剩餘HP", "HP After Additonal Attack", "追加攻撃の後のHP");
             button_Calculate.Text = GetText("计算", "計算", "Calculate!", "計算する");
             button_Save.Text = GetText("保存", "保存", "Save", "保存する");
+            linkLabel_Homepage.Text = GetText("项目主页", "項目主頁", "Project Homepage", "ホームページ");
 
             //重绘攻击支援角色面板
             NameList = new object[SupporterNumber];

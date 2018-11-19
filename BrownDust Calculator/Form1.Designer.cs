@@ -30,7 +30,7 @@
         {
             this.tabControl_Main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_Homepage = new System.Windows.Forms.LinkLabel();
             this.label11 = new System.Windows.Forms.Label();
             this.comboBox_Language = new System.Windows.Forms.ComboBox();
             this.groupBox_Defenders = new System.Windows.Forms.GroupBox();
@@ -68,6 +68,7 @@
             this.label_SupSelect = new System.Windows.Forms.Label();
             this.label_SupImmune = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defenders.SuspendLayout();
@@ -91,7 +92,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage1.Controls.Add(this.linkLabel1);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.linkLabel_Homepage);
             this.tabPage1.Controls.Add(this.label11);
             this.tabPage1.Controls.Add(this.comboBox_Language);
             this.tabPage1.Controls.Add(this.groupBox_Defenders);
@@ -106,16 +108,17 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
-            // linkLabel1
+            // linkLabel_Homepage
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(780, 773);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(107, 12);
-            this.linkLabel1.TabIndex = 9;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Project Home Page";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel_Homepage.AutoSize = true;
+            this.linkLabel_Homepage.Location = new System.Drawing.Point(786, 764);
+            this.linkLabel_Homepage.Name = "linkLabel_Homepage";
+            this.linkLabel_Homepage.Size = new System.Drawing.Size(101, 12);
+            this.linkLabel_Homepage.TabIndex = 9;
+            this.linkLabel_Homepage.TabStop = true;
+            this.linkLabel_Homepage.Text = "Project Homepage";
+            this.linkLabel_Homepage.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.linkLabel_Homepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label11
             // 
@@ -125,6 +128,7 @@
             this.label11.Size = new System.Drawing.Size(65, 12);
             this.label11.TabIndex = 8;
             this.label11.Text = "by Lastory";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // comboBox_Language
             // 
@@ -576,6 +580,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Settings (Work in Progress)";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(772, 785);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "v0.2.0";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -643,6 +657,7 @@
         private System.Windows.Forms.Label label_SupSkill;
         private System.Windows.Forms.Label label_SupImmune;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabel_Homepage;
+        private System.Windows.Forms.Label label1;
     }
 }
