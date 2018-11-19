@@ -13,7 +13,7 @@ Relies on .NET framework  4.7.1 or later version. You can [download it here](htt
 ### Prepare  
 1. Download the latest version of ***"BrownDust-Calculator.exe"*** at the [release page](https://github.com/Lastory/BrownDust-Calculator/releases).  
 2. It is recommended to put the EXE file into a separate folder because it will create a ***"save.save"*** file.  
-3. After opening the EXE file, you can change the language by choosing your language at the upper right corner. (At this stage, only the characters' names are translated.)
+3. After opening the EXE file, you can change the language by choosing your language at the upper right corner.
 
 ### Attacking side
 1. Choose your Supporters and Attackers at the ***"Character"*** column in two upper tables. (At this stage, Supporters are all calculated as **full-class** - Star.6 Lv.Max Awakened.)
@@ -44,15 +44,16 @@ Relies on .NET framework  4.7.1 or later version. You can [download it here](htt
 ## Appendix
 
 ### Skill exception
-* Ignored: Additional XXX boost *every turn*  
+* Not shown: Supporter Buff on stats other than attacks and crit. While they are indeed **effective**.
+* Ignored: Additional XXX boost **every turn**  
 Affected: Edin
-* Ignored: Additional DMG based on *Taunt/Concentrated Fire* skill  
+* Ignored: Additional DMG based on **Taunt/Concentrated Fire** skill  
 Affected: Ventana
 * Ignored: Remove Barrier  
 Affected: Rafina, Alche
-* Simplified: Additional DMG based on *Remaining HP Rate*  
+* Simplified: Additional DMG based on **Remaining HP Rate**  
 Affected: Siegmund(always calculated as 100% HP)
-* Simplified: Additional DMG based on *HP Loss Rate*  
+* Simplified: Additional DMG based on **HP Loss Rate**  
 Affected: Edin(always calculated as 65% HP, or 35% Lost)
 
 
@@ -67,7 +68,7 @@ Affected: Edin(always calculated as 65% HP, or 35% Lost)
 
 1. 在[发布页](https://github.com/Lastory/BrownDust-Calculator/releases)下载最新的 ***BrownDust-Calculator.exe*** 。
 2. 您最好将下载的exe文件放入一个单独的文件夹，因为它会创建一个 ***save.save*** 存档文件。  
-3. 打开exe文件后，您可以在右上角的下拉菜单选择您的语言。（现阶段只有角色名有多语言翻译）
+3. 打开exe文件后，您可以在右上角的下拉菜单选择您的语言。
 
 ### 攻击侧
 1. 在靠上的两张表格的 ***Character*** 列选择您要计算的攻击角色和支援角色。（现阶段，支援角色全部以满破计算——六星、最高等级、已觉醒）
@@ -120,7 +121,7 @@ NET Framework 4.7.1 (以降のバージョン)に依存します。[ここでダ
 
 1. [リリースページ](https://github.com/Lastory/BrownDust-Calculator/releases)で最新の ***BrownDust-Calculator.exe*** をダウンロード。
 2. ダウンロードしたexeファイルを1つのフォルダに入れたほうがいいです。アーカイブ ***save.save*** を作成しますから。  
-3. exeファイルを開けたら、右上に言語を選択できます。（現段階では、キャラ名だけが多言語）
+3. exeファイルを開けたら、右上に言語を選択できます。
 
 ### 攻撃側
 1. 上の2枚の表 ***Character*** 列で、攻撃キャラと支援キャラを選択します。（現段階では、支援キャラはすべてfull-classとされている——星6+Lv.Max+覚醒）
