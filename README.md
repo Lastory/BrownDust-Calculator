@@ -44,7 +44,7 @@ Relies on .NET framework  4.7.1 or later version. You can [download it here](htt
 ## Appendix
 
 ### Skill exception
-* Not shown: Supporter Buff on stats other than attacks and crit. While they are indeed **effective**.
+* Not shown: Supporter Buffs on stats other than ATK/CRIR/CRID. While they are indeed **effective**.
 * Ignored: Additional XXX boost **every turn**  
 Affected: Edin
 * Ignored: Additional DMG based on **Taunt/Concentrated Fire** skill  
