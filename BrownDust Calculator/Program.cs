@@ -23,7 +23,7 @@ namespace BrownDust_Calculator
     partial class Form_Main
     {
         private const int LanguageCount = 3;
-        private static int Language = 0;  //0 - 简体中文简称，1 - 繁体中文全称，2 - 英语，3 - 日语
+        private static int Language = 2;  //0 - 简体中文简称，1 - 繁体中文全称，2 - 英语，3 - 日语
         private static bool FlagInLanguageChang = false;
         private const int SupporterNumber = 8, AttackerNumber = 9;
         private const int AtkSupporterChartHight = 4, AttackerChartHight = 8, DefenderChartHight = 4;
@@ -1257,7 +1257,37 @@ namespace BrownDust_Calculator
         {
             FlagInLanguageChang = true;
 
+            string GetText(params string[] list) { return list[Language]; }
+
             object[] NameList;
+
+            //重绘固定UI文本
+            tabPage1.Text = GetText("主界面", "主界面", "Main", "メイン");
+            tabPage2.Text = GetText("设定(开发中)", "設定(開發中)", "Setting (Work in Progress)", "設定(開発中)");
+            groupBox_AtkSupporters.Text = GetText("攻击侧支援角色", "攻擊側支援角色", "Attack Supporters", "攻撃側支援役");
+            groupBox_Attackers.Text = GetText("攻击角色", "攻擊角色", "Attackers", "攻撃役");
+            groupBox_Defenders.Text = GetText("被击角色", "被擊角色", "Defenders", "防御役");
+            label_SupName.Text = label_AtkName.Text = label_DefName.Text = GetText("角色", "角色", "Character", "キャラ");
+            label_SupSkill.Text = label_AtkSkill.Text = GetText("技能", "技能", "Skill", "ｽｷﾙ");
+            label_SupATK.Text = GetText("攻击up", "攻擊up", "ATKup", "攻撃up");
+            label_SupCRR.Text = GetText("暴率up", "爆率up", "CRRup", "ｸﾘ率up");
+            label_SupCRD.Text = GetText("暴伤up", "暴傷up", "CRDup", "ｸﾘﾀﾞﾒup");
+            label_SupImmune.Text = GetText("免疫", "免疫", "Immune", "免疫");
+            label_AtkATK.Text = GetText("攻击", "攻擊", "ATK", "攻撃");
+            label_AtkCRR.Text = GetText("暴率 (%)", "爆率 (%)", "CRIR (%)", "ｸﾘ率 (%)");
+            label_AtkCRD.Text = GetText("暴伤 (%)", "暴傷 (%)", "CRID (%)", "ｸﾘﾀﾞﾒ (%)");
+            label_AtkAGI.Text = label_DefAGI.Text = GetText("敏捷 (%)", "敏捷 (%)", "AGI (%)", "敏捷 (%)");
+            label_AtkDEF.Text = label_DefDEF.Text = GetText("防御 (%)", "防禦 (%)", "DED (%)", "防御 (%)");
+            label_DefBarrier.Text = GetText("防護罩 (%)", "防護罩 (%)", "Barrier (%)", "バリア (%)");
+            label_DefWeaking.Text = GetText("诅咒 (%)", "詛咒 (%)", "Weakening (%)", "呪い (%)");
+            label_SupSelect.Text = label_AtkSelect.Text = GetText("选中", "选中", "Select", "選択");
+            label_AtkNormalDmg.Text = GetText("普攻伤害", "普攻傷害", "Normal Damage", "基本ダメージ");
+            label_AtkAddDmg.Text = GetText("追伤伤害", "追傷傷害", "Additional Damage", "追加ダメージ");
+            label_AtkSumDmg.Text = GetText("总计伤害", "總計傷害", "Damage in Total", "合計ダメージ");
+            label_DefNormalRemaining.Text = GetText("普攻后剩余HP", "普攻后剩餘HP", "HP After Normal Attack", "基本攻撃の後のHP");
+            label_DefAddReamaining.Text = GetText("追伤后剩余HP", "追傷后剩餘HP", "HP After Additonal Attack", "追加攻撃の後のHP");
+            button_Calculate.Text = GetText("计算", "計算", "Calculate!", "計算する");
+            button_Save.Text = GetText("保存", "保存", "Save", "保存する");
 
             //重绘攻击支援角色面板
             NameList = new object[SupporterNumber];
@@ -1287,7 +1317,7 @@ namespace BrownDust_Calculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            comboBox_Language.SelectedIndex = 0;
+            comboBox_Language.SelectedIndex = Language;
 
             SetCharacters();
             DrawAtkSupporterData();
