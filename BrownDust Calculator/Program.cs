@@ -22,6 +22,7 @@ namespace BrownDust_Calculator
 
     partial class Form_Main
     {
+        private const string SaveVersion = "0.2.0";
         private const int LanguageCount = 3;
         private static int Language = 2;  //0 - 简体中文简称，1 - 繁体中文全称，2 - 英语，3 - 日语
         private static bool FlagInLanguageChang = false;
@@ -39,6 +40,19 @@ namespace BrownDust_Calculator
 
         private static class Savefile  //存档相关
         {
+            private const int SaveLanguage = 2;
+
+            public static int SearchSupporter(string name)
+            {
+                for (int i = 0; i < SupporterNumber; i++) if (name == Supporter[i].GetName(SaveLanguage)) return i;
+                return -1;
+            }
+            public static int SearchAttcker(string name)
+            {
+                for (int i = 0; i < AttackerNumber; i++) if (name == Attacker[i].GetName(SaveLanguage)) return i;
+                return -1;
+            }
+
             public static void LoadSavefile()  //读取（不存在则创建一个空的）存档
             {
                 if (File.Exists("Save.save"))
@@ -47,47 +61,66 @@ namespace BrownDust_Calculator
 
                     using (StreamReader file = new StreamReader("save.save"))
                     {
-                        //读取攻击支援角色面板
-                        line = file.ReadLine();  //"AS#"
-                        line = file.ReadLine();  //AtkSupporterChartHight
-                        for (int i = 0; i < AtkSupporterChartHight; i++)
-                        {
-                            line = file.ReadLine();
-                            if (line != "-")
-                            {
-                                string[] load = line.Split('|');
-                                comboBox_AtkSupporterName[i].SelectedIndex = int.Parse(load[0]);
-                                comboBox_AtkSupporterSlv[i].SelectedIndex = int.Parse(load[1]);
-                                if (load[2] == "Y") checkBox_AtkSupporterChoose[i].Checked = true;
-                            }
-                        }
+                        line = file.ReadLine();  //Ver=x.x.x
+                        if (line.Remove(0, 4) != SaveVersion) return;  //判断存档兼容性
 
-                        //读取攻击角色面板
-                        line = file.ReadLine();  //"A#"
-                        line = file.ReadLine();  //DefenderChartHight
-                        for (int i = 0; i < AttackerChartHight; i++)
+                        do
                         {
                             line = file.ReadLine();
-                            if (line != "-")
-                            {
-                                string[] load = line.Split('|');
-                                comboBox_AttackerName[i].SelectedIndex = int.Parse(load[0]);
-                                comboBox_AttackerSlv[i].SelectedIndex = int.Parse(load[1]);
-                                for (int j = 0; j < 5; j++) textBox_AttackerStats[i, j].Text = load[j + 2];
-                            }
-                        }
 
-                        //读取防御角色面板
-                        line = file.ReadLine();  //"D#"
-                        line = file.ReadLine();  //AttackerChartHight
-                        for (int i = 0; i < DefenderChartHight; i++)
+                            if (line.Contains("Language=")) Language = int.Parse(line.Remove(0, 9));
+                        }
+                        while (line != "#Next");
+
+                        while (line != "#End")
                         {
-                            line = file.ReadLine();
-                            if (line != "-")
+                            int minH;
+
+                            switch (line)
                             {
-                                string[] load = line.Split('|');
-                                for (int j = 0; j < 6; j++) textBox_DefenderStats[i, j].Text = load[j];
+                                case "#AtkSup":  //读取攻击支援角色面板
+                                    minH = Math.Min(AtkSupporterChartHight, int.Parse(file.ReadLine()));
+                                    for (int i = 0; i < minH; i++)
+                                    {
+                                        line = file.ReadLine();
+                                        if (line != "-")
+                                        {
+                                            string[] load = line.Split('|');
+                                            comboBox_AtkSupporterName[i].SelectedIndex = SearchSupporter(load[0]);
+                                            comboBox_AtkSupporterSlv[i].SelectedIndex = int.Parse(load[1]);
+                                            if (load[2] == "Y") checkBox_AtkSupporterChoose[i].Checked = true;
+                                        }
+                                    }
+                                    break;
+                                case "#Atk":  //读取攻击角色面板
+                                    minH = Math.Min(AttackerChartHight, int.Parse(file.ReadLine()));
+                                    for (int i = 0; i < minH; i++)
+                                    {
+                                        line = file.ReadLine();
+                                        if (line != "-")
+                                        {
+                                            string[] load = line.Split('|');
+                                            comboBox_AttackerName[i].SelectedIndex = SearchAttcker(load[0]);
+                                            comboBox_AttackerSlv[i].SelectedIndex = int.Parse(load[1]);
+                                            for (int j = 0; j < 5; j++) textBox_AttackerStats[i, j].Text = load[j + 2];
+                                        }
+                                    }
+                                    break;
+                                case "#def"://读取防御角色面板
+                                    minH = Math.Min(DefenderChartHight, int.Parse(file.ReadLine()));
+                                    for (int i = 0; i < minH; i++)
+                                    {
+                                        line = file.ReadLine();
+                                        if (line != "-")
+                                        {
+                                            string[] load = line.Split('|');
+                                            for (int j = 0; j < 6; j++) textBox_DefenderStats[i, j].Text = load[j];
+                                        }
+                                    }
+                                    break;
                             }
+
+                            line = file.ReadLine();
                         }
                     }
                 }
@@ -97,13 +130,17 @@ namespace BrownDust_Calculator
             {
                 using (StreamWriter file = new StreamWriter("save.save"))
                 {
+                    file.Write("Ver={0}\n", SaveVersion);
+                    file.Write("Language={0:d}\n", Language);
+                    file.Write("#Next\n");
+
                     //存储攻击支援角色面板
-                    file.Write("#AS\n{0:d}\n", AtkSupporterChartHight);
+                    file.Write("#AtkSup\n{0:d}\n", AtkSupporterChartHight);
                     for (int i = 0; i < AtkSupporterChartHight; i++)
                     {
                         if (comboBox_AtkSupporterName[i].SelectedIndex != -1)
                         {
-                            string line = comboBox_AtkSupporterName[i].SelectedIndex.ToString("d") + "|";
+                            string line = Supporter[comboBox_AtkSupporterName[i].SelectedIndex].GetName(SaveLanguage) + "|";
                             line += comboBox_AtkSupporterSlv[i].SelectedIndex.ToString("d") + "|";
                             line += (checkBox_AtkSupporterChoose[i].Checked ? "Y" : "N") + "|";
                             file.Write(line + "\n");
@@ -112,12 +149,12 @@ namespace BrownDust_Calculator
                     }
 
                     //存储攻击角色面板
-                    file.Write("#A\n{0:d}\n", AttackerChartHight);
+                    file.Write("#Atk\n{0:d}\n", AttackerChartHight);
                     for (int i = 0; i < AttackerChartHight; i++)
                     {
                         if (comboBox_AttackerName[i].SelectedIndex != -1)
                         {
-                            string line = comboBox_AttackerName[i].SelectedIndex.ToString("d") + "|";
+                            string line = Attacker[comboBox_AttackerName[i].SelectedIndex].GetName(SaveLanguage) + "|";
                             line += comboBox_AttackerSlv[i].SelectedIndex.ToString("d") + "|";
                             for (int j = 0; j < 5; j++) line += textBox_AttackerStats[i, j].Text + "|";
                             file.Write(line + "\n");
@@ -126,7 +163,7 @@ namespace BrownDust_Calculator
                     }
 
                     //存储防御角色面板
-                    file.Write("#D\n{0:d}\n", DefenderChartHight);
+                    file.Write("#Def\n{0:d}\n", DefenderChartHight);
                     for (int i = 0; i < DefenderChartHight; i++)
                     {
                         if (textBox_DefenderStats[i, 0].Text != "")
@@ -137,6 +174,8 @@ namespace BrownDust_Calculator
                         }
                         else { file.Write("-\n"); }
                     }
+
+                    file.Write("#End", SaveVersion);
                 }
             }
         }
@@ -456,6 +495,7 @@ namespace BrownDust_Calculator
             public SupportCharacter ShallowCopy() { return (SupportCharacter)this.MemberwiseClone(); }
 
             public string GetName() { return Name[Language]; }
+            public string GetName(int language) { return Name[language]; }
 
             public void SetSkill(int level, double atk, double crr, double crd, double agi, double def, double cut, params string[] arr)
             {
@@ -594,6 +634,7 @@ namespace BrownDust_Calculator
             }
 
             public string GetName() { return Name[Language]; }
+            public string GetName(int language) { return Name[language]; }
 
             private void DoStatsUp()
             {
@@ -1277,7 +1318,7 @@ namespace BrownDust_Calculator
             label_AtkCRR.Text = GetText("暴率 (%)", "爆率 (%)", "CRIR (%)", "ｸﾘ率 (%)");
             label_AtkCRD.Text = GetText("暴伤 (%)", "暴傷 (%)", "CRID (%)", "ｸﾘﾀﾞﾒ (%)");
             label_AtkAGI.Text = label_DefAGI.Text = GetText("敏捷 (%)", "敏捷 (%)", "AGI (%)", "敏捷 (%)");
-            label_AtkDEF.Text = label_DefDEF.Text = GetText("防御 (%)", "防禦 (%)", "DED (%)", "防御 (%)");
+            label_AtkDEF.Text = label_DefDEF.Text = GetText("防御 (%)", "防禦 (%)", "DEF (%)", "防御 (%)");
             label_DefBarrier.Text = GetText("防護罩 (%)", "防護罩 (%)", "Barrier (%)", "バリア (%)");
             label_DefWeaking.Text = GetText("诅咒 (%)", "詛咒 (%)", "Weakening (%)", "呪い (%)");
             label_SupSelect.Text = label_AtkSelect.Text = GetText("选中", "选中", "Select", "選択");
@@ -1318,13 +1359,15 @@ namespace BrownDust_Calculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            comboBox_Language.SelectedIndex = Language;
-
             SetCharacters();
+
             DrawAtkSupporterData();
             DrawAttackerPanel();
             DrawDeffenderPanel();
+
             Savefile.LoadSavefile();
+            comboBox_Language.SelectedIndex = Language;
+            UILanguageChange();
         }
 
         private static SupportCharacter[] ComparedAtkSupporter = new SupportCharacter[AtkSupporterChartHight];
