@@ -30,6 +30,7 @@
         {
             this.tabControl_Main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.linkLabel_Homepage = new System.Windows.Forms.LinkLabel();
             this.label11 = new System.Windows.Forms.Label();
             this.comboBox_Language = new System.Windows.Forms.ComboBox();
@@ -68,7 +69,6 @@
             this.label_SupSelect = new System.Windows.Forms.Label();
             this.label_SupImmune = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defenders.SuspendLayout();
@@ -107,6 +107,16 @@
             this.tabPage1.Size = new System.Drawing.Size(890, 800);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(772, 785);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "v0.2.0";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // linkLabel_Homepage
             // 
@@ -150,7 +160,7 @@
             this.groupBox_Defenders.Controls.Add(this.tableLayoutPanel_Defender);
             this.groupBox_Defenders.Location = new System.Drawing.Point(7, 570);
             this.groupBox_Defenders.Name = "groupBox_Defenders";
-            this.groupBox_Defenders.Size = new System.Drawing.Size(677, 223);
+            this.groupBox_Defenders.Size = new System.Drawing.Size(732, 223);
             this.groupBox_Defenders.TabIndex = 5;
             this.groupBox_Defenders.TabStop = false;
             this.groupBox_Defenders.Text = "Defenders";
@@ -163,7 +173,7 @@
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel_Defender.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -183,7 +193,7 @@
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel_Defender.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(666, 195);
+            this.tableLayoutPanel_Defender.Size = new System.Drawing.Size(720, 195);
             this.tableLayoutPanel_Defender.TabIndex = 2;
             // 
             // label_DefName
@@ -221,7 +231,7 @@
             // 
             this.label_DefAddReamaining.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_DefAddReamaining.AutoSize = true;
-            this.label_DefAddReamaining.Location = new System.Drawing.Point(505, 14);
+            this.label_DefAddReamaining.Location = new System.Drawing.Point(554, 14);
             this.label_DefAddReamaining.Name = "label_DefAddReamaining";
             this.label_DefAddReamaining.Size = new System.Drawing.Size(155, 12);
             this.label_DefAddReamaining.TabIndex = 7;
@@ -232,7 +242,7 @@
             // 
             this.label_DefNormalRemaining.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_DefNormalRemaining.AutoSize = true;
-            this.label_DefNormalRemaining.Location = new System.Drawing.Point(355, 14);
+            this.label_DefNormalRemaining.Location = new System.Drawing.Point(400, 14);
             this.label_DefNormalRemaining.Name = "label_DefNormalRemaining";
             this.label_DefNormalRemaining.Size = new System.Drawing.Size(137, 12);
             this.label_DefNormalRemaining.TabIndex = 6;
@@ -243,7 +253,7 @@
             // 
             this.label_DefWeaking.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_DefWeaking.AutoSize = true;
-            this.label_DefWeaking.Location = new System.Drawing.Point(296, 8);
+            this.label_DefWeaking.Location = new System.Drawing.Point(341, 8);
             this.label_DefWeaking.Name = "label_DefWeaking";
             this.label_DefWeaking.Size = new System.Drawing.Size(47, 24);
             this.label_DefWeaking.TabIndex = 8;
@@ -265,9 +275,9 @@
             // 
             this.label_DefBarrier.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_DefBarrier.AutoSize = true;
-            this.label_DefBarrier.Location = new System.Drawing.Point(239, 8);
+            this.label_DefBarrier.Location = new System.Drawing.Point(249, 14);
             this.label_DefBarrier.Name = "label_DefBarrier";
-            this.label_DefBarrier.Size = new System.Drawing.Size(47, 24);
+            this.label_DefBarrier.Size = new System.Drawing.Size(71, 12);
             this.label_DefBarrier.TabIndex = 5;
             this.label_DefBarrier.Text = "Barrier (%)";
             this.label_DefBarrier.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -579,16 +589,6 @@
             this.tabPage2.Size = new System.Drawing.Size(890, 800);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Settings (Work in Progress)";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(772, 785);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "v0.2.0";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Form_Main
             // 

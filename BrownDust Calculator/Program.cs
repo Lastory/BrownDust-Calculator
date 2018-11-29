@@ -31,10 +31,26 @@ namespace BrownDust_Calculator
 
         private static class Tools
         {
-            public static int ToSlv(string str)
+            public static int ToSlv(string str) { return int.Parse(str.Remove(0, 1)); }
+            public static string ResultOf(string str)
             {
-                str = str.Remove(0, 1);
-                return int.Parse(str);
+                double result = 0;
+
+                string[] part = str.Split('+');
+                for (int i = 0; i < part.Length; i++)
+                {
+                    string[] num = part[i].Split('*');
+
+                    if (num.Length == 1) result += double.Parse(num[0]);
+                    else
+                    {
+                        int last = num[1].IndexOf("%");
+                        if (last != -1) num[1] = num[1].Remove(last);
+                        result += double.Parse(num[0]) * double.Parse(num[1]) / 100;
+                    }
+                }
+
+                return result.ToString("f4");
             }
         }
 
@@ -106,7 +122,7 @@ namespace BrownDust_Calculator
                                         }
                                     }
                                     break;
-                                case "#def"://读取防御角色面板
+                                case "#Def"://读取防御角色面板
                                     minH = Math.Min(DefenderChartHight, int.Parse(file.ReadLine()));
                                     for (int i = 0; i < minH; i++)
                                     {
@@ -1319,7 +1335,7 @@ namespace BrownDust_Calculator
             label_AtkCRD.Text = GetText("暴伤 (%)", "暴傷 (%)", "CRID (%)", "ｸﾘﾀﾞﾒ (%)");
             label_AtkAGI.Text = label_DefAGI.Text = GetText("敏捷 (%)", "敏捷 (%)", "AGI (%)", "敏捷 (%)");
             label_AtkDEF.Text = label_DefDEF.Text = GetText("防御 (%)", "防禦 (%)", "DEF (%)", "防御 (%)");
-            label_DefBarrier.Text = GetText("防護罩 (%)", "防護罩 (%)", "Barrier (%)", "バリア (%)");
+            label_DefBarrier.Text = GetText("防护罩 (%)", "防護罩 (%)", "Barrier (%)", "バリア (%)");
             label_DefWeaking.Text = GetText("诅咒 (%)", "詛咒 (%)", "Weakening (%)", "呪い (%)");
             label_SupSelect.Text = label_AtkSelect.Text = GetText("选中", "选中", "Select", "選択");
             label_AtkNormalDmg.Text = GetText("普攻伤害", "普攻傷害", "Normal Damage", "基本ダメージ");
@@ -1378,7 +1394,7 @@ namespace BrownDust_Calculator
             
             double ATKbuff = 0, CRRbuff = 0, CRDbuff = 0, DEFbuff = 0;
             bool Immunnity = false;
-                
+            
             for (int i = 0; i < AtkSupporterChartHight; i++)
             {
                 if (checkBox_AtkSupporterChoose[i].Checked && comboBox_AtkSupporterName[i].SelectedIndex != -1)
@@ -1441,6 +1457,7 @@ namespace BrownDust_Calculator
                     if (textBox_DefenderStats[i, 0].Text != "")
                     {
                         //设定防御角色属性
+                        textBox_DefenderStats[i, 4].Text = Tools.ResultOf(textBox_DefenderStats[i, 4].Text);
                         ComparedDefender[i] = new DefendCharacter(textBox_DefenderStats[i, 0].Text);
                         double[] stats = new double[5];
                         for (int j = 1; j <= 5; j++) { stats[j - 1] = textBox_DefenderStats[i, j].Text == "" ? 0 : double.Parse(textBox_DefenderStats[i, j].Text); }
