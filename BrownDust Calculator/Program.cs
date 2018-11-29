@@ -22,7 +22,7 @@ namespace BrownDust_Calculator
 
     partial class Form_Main
     {
-        private const string SaveVersion = "0.2.0";
+        private const string SaveVersion = "0.3.0";
         private const int LanguageCount = 3;
         private static int Language = 2;  //0 - 简体中文简称，1 - 繁体中文全称，2 - 英语，3 - 日语
         private static bool FlagInLanguageChang = false;
