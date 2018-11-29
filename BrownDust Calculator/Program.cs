@@ -32,7 +32,7 @@ namespace BrownDust_Calculator
         private static class Tools
         {
             public static int ToSlv(string str) { return int.Parse(str.Remove(0, 1)); }
-            public static string ResultOf(string str)
+            public static double ResultOf(string str)
             {
                 double result = 0;
 
@@ -44,13 +44,17 @@ namespace BrownDust_Calculator
                     if (num.Length == 1) result += double.Parse(num[0]);
                     else
                     {
-                        int last = num[1].IndexOf("%");
-                        if (last != -1) num[1] = num[1].Remove(last);
+                        for (int j = 0; j < 2; j++)
+                        {
+                            int last = num[j].IndexOf("%");
+                            if (last != -1) num[j] = num[j].Remove(last);
+                        }
+
                         result += double.Parse(num[0]) * double.Parse(num[1]) / 100;
                     }
                 }
 
-                return result.ToString("f4");
+                return result;
             }
         }
 
@@ -1457,11 +1461,14 @@ namespace BrownDust_Calculator
                     if (textBox_DefenderStats[i, 0].Text != "")
                     {
                         //设定防御角色属性
-                        textBox_DefenderStats[i, 4].Text = Tools.ResultOf(textBox_DefenderStats[i, 4].Text);
                         ComparedDefender[i] = new DefendCharacter(textBox_DefenderStats[i, 0].Text);
                         double[] stats = new double[5];
-                        for (int j = 1; j <= 5; j++) { stats[j - 1] = textBox_DefenderStats[i, j].Text == "" ? 0 : double.Parse(textBox_DefenderStats[i, j].Text); }
-                        ComparedDefender[i].SetStats(Convert.ToInt32(stats[0]), stats[1] / 100, stats[2] / 100, stats[3] / 100, stats[4] / 100);
+                        for (int j = 1; j <= 5; j++)
+                        {
+                            if (j != 4)  //Barrier
+                                stats[j - 1] = textBox_DefenderStats[i, j].Text == "" ? 0 : double.Parse(textBox_DefenderStats[i, j].Text);
+                        }
+                        ComparedDefender[i].SetStats(Convert.ToInt32(stats[0]), stats[1] / 100, stats[2] / 100, Tools.ResultOf(textBox_DefenderStats[i, 4].Text) / 100, stats[4] / 100);
 
                         //计算防御角色承受伤害
                         ComparedDefender[i].CheckBaseIncoming(ComparedAttacker[AttackerOrder]);
