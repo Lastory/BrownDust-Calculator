@@ -24,7 +24,7 @@ Relies on .NET framework  4.7.1 or later version. You can [download it here](htt
 6. The calculator will show the most extreme cases with probabilities at the first line (e.g. ***"500 40% | 1500 30%"*** means the lowest Pure Damage is 500 at 40% chances while the highest is 1500 at 30% chances), and the expectation at the second. If there is only one possibility it will be directly shown. (There may be some discrepancies because the data in the game is of limited precision. You may see 0% which means a very low probability because of rounding.)
 
 ### Defending side
-1. Input your Defenders' stats. Name them whatever you like. (input like ***"50+43\*171.3%"*** is legitimate for defenders with supporters' barrier .Notice that there should be ***NO Spaces!***)
+1. Input your Defenders' stats. Name them whatever you like. (Formula like ***"50+43\*171.3%"*** is legitimate for defenders with supporters' barrier. Notice that there should be ***NO Spaces!*** )
 2. Select an attacker.
 3. If clicking the ***"Calculate!"*** button now, you can also get the ***Remaining HP*** after Normal Attack and Additional Attack.
 
@@ -79,7 +79,7 @@ Affected: Edin(always calculated as 65% HP, or 35% Lost)
 6. 伤害显示的第一行列出了两种最极端的情况及其可能性 (例： ***"500 40% | 1500 30%"*** 代表有40%概率出现最低伤500，30%最高伤1500)，第二行列出的伤害的期望。如果只有一种可能性则会被直接显示。（可能会存在误差，因为游戏内能获取的数据精度有限。可能性可能会显示0%，因为存在四舍五入）
 
 ### 防御侧
-1. 输入防御角色的数据。给他们随便起个名字就行。（现阶段，您可能需要在输入时手动加上防御侧的支援效果）。
+1. 输入防御角色的数据。给他们随便起个名字就行。（您可以使用 ***"50+43\*171.3%"*** 这样的算式以计算支援提供的防护罩，请注意 **不要加入空格**）。
 2. 选择一个攻击角色。
 3. 如果现在点击 ***"Calculate!"*** 按钮，您还可以得到基础攻击和追伤后防御角色的 **剩余血量** 。
 
@@ -132,7 +132,7 @@ NET Framework 4.7.1 (以降のバージョン)に依存します。[ここでダ
 6. 傷害表示の第1行は、2つの最も極端な状況とその確率を書き出した。 (例： ***"500 40% | 1500 30%"*** 40%の確率で最低500純粋なダメージ出ます、30%で最高1500)、2行目はダメージの期待。可能性が一つだけなら、直接表示される。（誤差が存在する可能性があり、ゲーム内で取得できるデータの精度には限られているから。確率は0%を表示することができてなら、四捨五入が存在するだから）
 
 ### 防御側
-1. 防御役のステータスを入力します。名前はなんでもいいです。（現段階では、入力時に防御側の支援効果を加える必要があります）。
+1. 防御役のステータスを入力します。名前はなんでもいいです。（ ***"50+43\*171.3%"*** のような計算式で支援バリアを表示することができます。 **スペースに入らない** ように気をつけてください。）
 2. 攻撃キャラ一人を選ぶ。
 3. 今で ***Calculate!*** ボタンをクリックしますなら、基本攻撃と追加攻撃後の防御役の **残りのHP** も表示されます。
 
