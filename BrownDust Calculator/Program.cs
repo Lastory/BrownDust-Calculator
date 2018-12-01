@@ -86,7 +86,11 @@ namespace BrownDust_Calculator
                     using (StreamReader file = new StreamReader("save.save"))
                     {
                         line = file.ReadLine();  //Ver=x.x.x
-                        if (line.Remove(0, 4) != SaveVersion) return;  //判断存档兼容性
+                        if (line == null || line.Remove(0, 4) != SaveVersion)  //判断空存档以及存档兼容性
+                        {
+                            Flag_Loading = false;
+                            return;
+                        }
 
                         do
                         {
@@ -147,13 +151,14 @@ namespace BrownDust_Calculator
                             line = file.ReadLine();
                         }
                     }
-
-                    Flag_Loading = false;
                 }
-                else { File.Create("save.save"); }  //创建一个存档文件
+
+                Flag_Loading = false;
             }
             public static void SaveSavefile()  //存储存档
             {
+                if (!File.Exists("Save.save")) { File.Create("save.save"); }
+
                 using (StreamWriter file = new StreamWriter("save.save"))
                 {
                     file.Write("Ver={0}\n", SaveVersion);
@@ -1573,8 +1578,9 @@ namespace BrownDust_Calculator
             DrawAtkSupporterData();
             DrawAttackerPanel();
             DrawDeffenderPanel();
-            
+
             Savefile.LoadSavefile();
+
             comboBox_Language.SelectedIndex = Language;
             UILanguageChange();
 
