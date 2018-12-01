@@ -114,7 +114,7 @@
             this.label_Ver.Name = "label_Ver";
             this.label_Ver.Size = new System.Drawing.Size(41, 12);
             this.label_Ver.TabIndex = 10;
-            this.label_Ver.Text = "v0.3.2";
+            this.label_Ver.Text = "v0.4.0";
             this.label_Ver.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // linkLabel_Homepage

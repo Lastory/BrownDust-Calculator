@@ -495,11 +495,11 @@ namespace BrownDust_Calculator
                 }
             }
 
-            private string[] Name = new string[LanguageCount];
+            private readonly string[] Name = new string[LanguageCount];
             private int SkillLevel;
-            private double Support;
+            private readonly double Support;
             public bool[] isSLvExist = new bool[11];
-            private TypeSkill[] SkillList = new TypeSkill[11];
+            private readonly TypeSkill[] SkillList = new TypeSkill[11];
             public TypeSkill NowSkill = new TypeSkill();
 
             public SupportCharacter(double support, params string[] names)
@@ -601,7 +601,7 @@ namespace BrownDust_Calculator
             }
             private struct TypeStats { public double ATK, DEF, CRR, CRD, AGI; }
 
-            private string[] Name = new string[LanguageCount];
+            private readonly string[] Name = new string[LanguageCount];
             private int SkillLevel;
             private TypeStats BaseStats, NowStats, StatsUp;
             public bool[] isSLvExist = new bool[11];
@@ -1486,42 +1486,6 @@ namespace BrownDust_Calculator
             public static void DefenderLeftHP()  //全部计算
             {
                 for (int i = 0; i < DefenderChartHight; i++) DefenderLeftHP(i);
-            }
-        }
-
-        private static void CalculateLeftHP()  //计算防御角色剩余血量
-        {
-            int AttackerOrder = -1;
-            for (int i = 0; i < AttackerChartHight; i++)
-                if (radioButton_AttackerChoose[i].Checked) { AttackerOrder = i; break; }
-
-            if (AttackerOrder != -1)
-            {
-                for (int i = 0; i < DefenderChartHight; i++)
-                {
-                    if (textBox_DefenderStats[i, 0].Text != "")
-                    {
-                        //设定防御角色属性
-                        ComparedDefender[i] = new DefendCharacter(textBox_DefenderStats[i, 0].Text);
-                        double[] stats = new double[5];
-                        for (int j = 1; j <= 5; j++)
-                        {
-                            if (j != 4)  //Barrier
-                                stats[j - 1] = textBox_DefenderStats[i, j].Text == "" ? 0 : double.Parse(textBox_DefenderStats[i, j].Text);
-                        }
-                        ComparedDefender[i].SetStats(Convert.ToInt32(stats[0]), stats[1] / 100, stats[2] / 100, Tools.ResultOf(textBox_DefenderStats[i, 4].Text) / 100, stats[4] / 100);
-
-                        //计算防御角色承受伤害
-                        ComparedDefender[i].CheckBaseIncoming(ComparedAttacker[AttackerOrder]);
-                        ComparedDefender[i].CheckAddIncoming(ComparedAttacker[AttackerOrder]);
-
-                        //计算剩余血量
-                        ComparedDefender[i].CheckMidHP();
-                        ComparedDefender[i].CheckFinalHP();
-                        label_DefenderHP[i, 0].Text = ComparedDefender[i].WriteMidHP();
-                        label_DefenderHP[i, 1].Text = ComparedDefender[i].WriteFinalHP();
-                    }
-                }
             }
         }
 
