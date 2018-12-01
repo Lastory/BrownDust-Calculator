@@ -30,9 +30,9 @@
         {
             this.tabControl_Main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label_Ver = new System.Windows.Forms.Label();
             this.linkLabel_Homepage = new System.Windows.Forms.LinkLabel();
-            this.label11 = new System.Windows.Forms.Label();
+            this.label_author = new System.Windows.Forms.Label();
             this.comboBox_Language = new System.Windows.Forms.ComboBox();
             this.groupBox_Defenders = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel_Defender = new System.Windows.Forms.TableLayoutPanel();
@@ -68,7 +68,7 @@
             this.label_SupSkill = new System.Windows.Forms.Label();
             this.label_SupSelect = new System.Windows.Forms.Label();
             this.label_SupImmune = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label_SupDEF = new System.Windows.Forms.Label();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defenders.SuspendLayout();
@@ -82,7 +82,6 @@
             // tabControl_Main
             // 
             this.tabControl_Main.Controls.Add(this.tabPage1);
-            this.tabControl_Main.Controls.Add(this.tabPage2);
             this.tabControl_Main.Location = new System.Drawing.Point(12, 12);
             this.tabControl_Main.Name = "tabControl_Main";
             this.tabControl_Main.SelectedIndex = 0;
@@ -92,9 +91,9 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.label_Ver);
             this.tabPage1.Controls.Add(this.linkLabel_Homepage);
-            this.tabPage1.Controls.Add(this.label11);
+            this.tabPage1.Controls.Add(this.label_author);
             this.tabPage1.Controls.Add(this.comboBox_Language);
             this.tabPage1.Controls.Add(this.groupBox_Defenders);
             this.tabPage1.Controls.Add(this.groupBox_Attackers);
@@ -108,37 +107,37 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             // 
-            // label1
+            // label_Ver
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(772, 785);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "v0.2.0";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label_Ver.AutoSize = true;
+            this.label_Ver.Location = new System.Drawing.Point(772, 785);
+            this.label_Ver.Name = "label_Ver";
+            this.label_Ver.Size = new System.Drawing.Size(41, 12);
+            this.label_Ver.TabIndex = 10;
+            this.label_Ver.Text = "v0.3.2";
+            this.label_Ver.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // linkLabel_Homepage
             // 
-            this.linkLabel_Homepage.AutoSize = true;
-            this.linkLabel_Homepage.Location = new System.Drawing.Point(786, 764);
+            this.linkLabel_Homepage.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.linkLabel_Homepage.Location = new System.Drawing.Point(774, 762);
             this.linkLabel_Homepage.Name = "linkLabel_Homepage";
-            this.linkLabel_Homepage.Size = new System.Drawing.Size(101, 12);
+            this.linkLabel_Homepage.Size = new System.Drawing.Size(113, 14);
             this.linkLabel_Homepage.TabIndex = 9;
             this.linkLabel_Homepage.TabStop = true;
             this.linkLabel_Homepage.Text = "Project Homepage";
             this.linkLabel_Homepage.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.linkLabel_Homepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // label11
+            // label_author
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(819, 785);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 12);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "by Lastory";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label_author.AutoSize = true;
+            this.label_author.Location = new System.Drawing.Point(819, 785);
+            this.label_author.Name = "label_author";
+            this.label_author.Size = new System.Drawing.Size(65, 12);
+            this.label_author.TabIndex = 8;
+            this.label_author.Text = "by Lastory";
+            this.label_author.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // comboBox_Language
             // 
@@ -474,7 +473,7 @@
             this.groupBox_AtkSupporters.Controls.Add(this.tableLayoutPanel_AtkSupporters);
             this.groupBox_AtkSupporters.Location = new System.Drawing.Point(6, 6);
             this.groupBox_AtkSupporters.Name = "groupBox_AtkSupporters";
-            this.groupBox_AtkSupporters.Size = new System.Drawing.Size(435, 189);
+            this.groupBox_AtkSupporters.Size = new System.Drawing.Size(480, 189);
             this.groupBox_AtkSupporters.TabIndex = 1;
             this.groupBox_AtkSupporters.TabStop = false;
             this.groupBox_AtkSupporters.Text = "Attack Supporters";
@@ -483,9 +482,10 @@
             // 
             this.tableLayoutPanel_AtkSupporters.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel_AtkSupporters.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel_AtkSupporters.ColumnCount = 7;
+            this.tableLayoutPanel_AtkSupporters.ColumnCount = 8;
             this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel_AtkSupporters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
@@ -496,8 +496,9 @@
             this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupCRR, 3, 0);
             this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupATK, 2, 0);
             this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupSkill, 1, 0);
-            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupSelect, 6, 0);
-            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupImmune, 5, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupSelect, 7, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupImmune, 6, 0);
+            this.tableLayoutPanel_AtkSupporters.Controls.Add(this.label_SupDEF, 5, 0);
             this.tableLayoutPanel_AtkSupporters.Location = new System.Drawing.Point(7, 20);
             this.tableLayoutPanel_AtkSupporters.Name = "tableLayoutPanel_AtkSupporters";
             this.tableLayoutPanel_AtkSupporters.RowCount = 5;
@@ -506,7 +507,7 @@
             this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel_AtkSupporters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_AtkSupporters.Size = new System.Drawing.Size(404, 162);
+            this.tableLayoutPanel_AtkSupporters.Size = new System.Drawing.Size(467, 162);
             this.tableLayoutPanel_AtkSupporters.TabIndex = 1;
             // 
             // label_SupName
@@ -564,7 +565,7 @@
             // 
             this.label_SupSelect.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SupSelect.AutoSize = true;
-            this.label_SupSelect.Location = new System.Drawing.Point(357, 11);
+            this.label_SupSelect.Location = new System.Drawing.Point(417, 11);
             this.label_SupSelect.Name = "label_SupSelect";
             this.label_SupSelect.Size = new System.Drawing.Size(41, 12);
             this.label_SupSelect.TabIndex = 4;
@@ -574,21 +575,21 @@
             // 
             this.label_SupImmune.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label_SupImmune.AutoSize = true;
-            this.label_SupImmune.Location = new System.Drawing.Point(306, 11);
+            this.label_SupImmune.Location = new System.Drawing.Point(363, 11);
             this.label_SupImmune.Name = "label_SupImmune";
             this.label_SupImmune.Size = new System.Drawing.Size(41, 12);
             this.label_SupImmune.TabIndex = 6;
             this.label_SupImmune.Text = "Immune";
             // 
-            // tabPage2
+            // label_SupDEF
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(890, 800);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Settings (Work in Progress)";
+            this.label_SupDEF.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label_SupDEF.AutoSize = true;
+            this.label_SupDEF.Location = new System.Drawing.Point(312, 11);
+            this.label_SupDEF.Name = "label_SupDEF";
+            this.label_SupDEF.Size = new System.Drawing.Size(35, 12);
+            this.label_SupDEF.TabIndex = 7;
+            this.label_SupDEF.Text = "DEFup";
             // 
             // Form_Main
             // 
@@ -620,7 +621,6 @@
         #endregion
         private System.Windows.Forms.TabControl tabControl_Main;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button button_Calculate;
         private System.Windows.Forms.GroupBox groupBox_Attackers;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_Attacker;
@@ -656,8 +656,9 @@
         private System.Windows.Forms.ComboBox comboBox_Language;
         private System.Windows.Forms.Label label_SupSkill;
         private System.Windows.Forms.Label label_SupImmune;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label_author;
         private System.Windows.Forms.LinkLabel linkLabel_Homepage;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label_Ver;
+        private System.Windows.Forms.Label label_SupDEF;
     }
 }

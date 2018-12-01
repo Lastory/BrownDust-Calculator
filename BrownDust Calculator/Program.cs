@@ -172,7 +172,7 @@ namespace BrownDust_Calculator
                     file.Write("#Atk\n{0:d}\n", AttackerChartHight);
                     for (int i = 0; i < AttackerChartHight; i++)
                     {
-                        if (comboBox_AttackerName[i].SelectedIndex != -1)
+                        if (comboBox_AttackerName[i].SelectedIndex != -1 && comboBox_AttackerSlv[i].SelectedIndex != -1)
                         {
                             string line = Attacker[comboBox_AttackerName[i].SelectedIndex].GetName(SaveLanguage) + "|";
                             line += comboBox_AttackerSlv[i].SelectedIndex.ToString("d") + "|";
@@ -1114,7 +1114,7 @@ namespace BrownDust_Calculator
         //定义UI控件
         private static ComboBox[] comboBox_AtkSupporterName = new ComboBox[AtkSupporterChartHight];
         private static ComboBox[] comboBox_AtkSupporterSlv = new ComboBox[AtkSupporterChartHight];
-        private static Label[,] label_AtkSupporterBuff = new Label[AtkSupporterChartHight, 4];  //ATKup, CRRip, CRDup
+        private static Label[,] label_AtkSupporterBuff = new Label[AtkSupporterChartHight, 5];  //ATKup, CRRip, CRDup, DEFup, Immune
         private static CheckBox[] checkBox_AtkSupporterChoose = new CheckBox[AtkSupporterChartHight];
 
         private static ComboBox[] comboBox_AttackerName = new ComboBox[AttackerChartHight];
@@ -1205,7 +1205,8 @@ namespace BrownDust_Calculator
                             label_AtkSupporterBuff[order, 0].Text = ComparedAtkSupporter[order].NowSkill.Write("ATK");
                             label_AtkSupporterBuff[order, 1].Text = ComparedAtkSupporter[order].NowSkill.Write("CRR");
                             label_AtkSupporterBuff[order, 2].Text = ComparedAtkSupporter[order].NowSkill.Write("CRD");
-                            label_AtkSupporterBuff[order, 3].Text = ComparedAtkSupporter[order].NowSkill.Write("Immunnity");
+                            label_AtkSupporterBuff[order, 3].Text = ComparedAtkSupporter[order].NowSkill.Write("DEF");
+                            label_AtkSupporterBuff[order, 4].Text = ComparedAtkSupporter[order].NowSkill.Write("Immunnity");
                         }
                     }
                 }
@@ -1237,7 +1238,7 @@ namespace BrownDust_Calculator
                 RefreshData.Refrsher_AtkSupportBuff[i] = new RefreshData.TypeRefrsher_AtkSupportBuff(i);
                 comboBox_AtkSupporterSlv[i].SelectedIndexChanged += new EventHandler(RefreshData.Refrsher_AtkSupportBuff[i].Refresh);
 
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 5; j++)
                 {
                     label_AtkSupporterBuff[i, j] = new Label();
                     tableLayoutPanel_AtkSupporters.Controls.Add(label_AtkSupporterBuff[i, j], j + 2, i + 1);
@@ -1246,7 +1247,7 @@ namespace BrownDust_Calculator
                 }
 
                 checkBox_AtkSupporterChoose[i] = new CheckBox();
-                tableLayoutPanel_AtkSupporters.Controls.Add(checkBox_AtkSupporterChoose[i], 6, i + 1);
+                tableLayoutPanel_AtkSupporters.Controls.Add(checkBox_AtkSupporterChoose[i], 7, i + 1);
                 checkBox_AtkSupporterChoose[i].Anchor = AnchorStyles.None;
                 checkBox_AtkSupporterChoose[i].AutoSize = true;
             }
@@ -1324,7 +1325,7 @@ namespace BrownDust_Calculator
 
             //重绘固定UI文本
             tabPage1.Text = GetText("主界面", "主界面", "Main", "メイン");
-            tabPage2.Text = GetText("设定(开发中)", "設定(開發中)", "Setting (Work in Progress)", "設定(開発中)");
+            //tabPage2.Text = GetText("设定(开发中)", "設定(開發中)", "Setting (Work in Progress)", "設定(開発中)");
             groupBox_AtkSupporters.Text = GetText("攻击侧支援角色", "攻擊側支援角色", "Attack Supporters", "攻撃側支援役");
             groupBox_Attackers.Text = GetText("攻击角色", "攻擊角色", "Attackers", "攻撃役");
             groupBox_Defenders.Text = GetText("被击角色", "被擊角色", "Defenders", "防御役");
@@ -1333,6 +1334,7 @@ namespace BrownDust_Calculator
             label_SupATK.Text = GetText("攻击up", "攻擊up", "ATKup", "攻撃up");
             label_SupCRR.Text = GetText("暴率up", "爆率up", "CRRup", "ｸﾘ率up");
             label_SupCRD.Text = GetText("暴伤up", "暴傷up", "CRDup", "ｸﾘﾀﾞﾒup");
+            label_SupDEF.Text = GetText("防御up", "防禦up", "DEFup", "防御up");
             label_SupImmune.Text = GetText("免疫", "免疫", "Immune", "免疫");
             label_AtkATK.Text = GetText("攻击", "攻擊", "ATK", "攻撃");
             label_AtkCRR.Text = GetText("暴率 (%)", "爆率 (%)", "CRIR (%)", "ｸﾘ率 (%)");
@@ -1487,7 +1489,6 @@ namespace BrownDust_Calculator
         static void CalculateDamage()
         {
             CalcutateDamage();
-
             CalcutateLeftHP();
         }
     }
