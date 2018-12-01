@@ -40,5 +40,10 @@ namespace BrownDust_Calculator
         {
             System.Diagnostics.Process.Start("https://github.com/Lastory/BrownDust-Calculator");
         }
+
+        private void linkLabel_Update_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Lastory/BrownDust-Calculator/releases");
+        }
     }
 }

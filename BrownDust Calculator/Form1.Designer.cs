@@ -69,6 +69,7 @@
             this.label_SupSelect = new System.Windows.Forms.Label();
             this.label_SupImmune = new System.Windows.Forms.Label();
             this.label_SupDEF = new System.Windows.Forms.Label();
+            this.linkLabel_Update = new System.Windows.Forms.LinkLabel();
             this.tabControl_Main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox_Defenders.SuspendLayout();
@@ -91,6 +92,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage1.Controls.Add(this.linkLabel_Update);
             this.tabPage1.Controls.Add(this.label_Ver);
             this.tabPage1.Controls.Add(this.linkLabel_Homepage);
             this.tabPage1.Controls.Add(this.label_author);
@@ -114,13 +116,13 @@
             this.label_Ver.Name = "label_Ver";
             this.label_Ver.Size = new System.Drawing.Size(41, 12);
             this.label_Ver.TabIndex = 10;
-            this.label_Ver.Text = "v0.4.0";
+            this.label_Ver.Text = "v0.4.1";
             this.label_Ver.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // linkLabel_Homepage
             // 
             this.linkLabel_Homepage.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.linkLabel_Homepage.Location = new System.Drawing.Point(774, 762);
+            this.linkLabel_Homepage.Location = new System.Drawing.Point(774, 737);
             this.linkLabel_Homepage.Name = "linkLabel_Homepage";
             this.linkLabel_Homepage.Size = new System.Drawing.Size(113, 14);
             this.linkLabel_Homepage.TabIndex = 9;
@@ -591,6 +593,18 @@
             this.label_SupDEF.TabIndex = 7;
             this.label_SupDEF.Text = "DEFup";
             // 
+            // linkLabel_Update
+            // 
+            this.linkLabel_Update.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.linkLabel_Update.Location = new System.Drawing.Point(745, 762);
+            this.linkLabel_Update.Name = "linkLabel_Update";
+            this.linkLabel_Update.Size = new System.Drawing.Size(142, 14);
+            this.linkLabel_Update.TabIndex = 11;
+            this.linkLabel_Update.TabStop = true;
+            this.linkLabel_Update.Text = "Check for Update";
+            this.linkLabel_Update.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.linkLabel_Update.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_Update_LinkClicked);
+            // 
             // Form_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -660,5 +674,6 @@
         private System.Windows.Forms.LinkLabel linkLabel_Homepage;
         private System.Windows.Forms.Label label_Ver;
         private System.Windows.Forms.Label label_SupDEF;
+        private System.Windows.Forms.LinkLabel linkLabel_Update;
     }
 }

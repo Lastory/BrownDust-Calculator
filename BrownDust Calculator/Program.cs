@@ -1543,6 +1543,7 @@ namespace BrownDust_Calculator
             button_Calculate.Text = GetText("计算", "計算", "Calculate!", "計算する");
             button_Save.Text = GetText("保存", "保存", "Save", "保存する");
             linkLabel_Homepage.Text = GetText("项目主页", "項目主頁", "Project Homepage", "ホームページ");
+            linkLabel_Update.Text = GetText("检查更新", "檢查更新", "Check for Update", "更新をチェックする");
 
             //重绘攻击支援角色面板
             NameList = new object[SupporterNumber];
