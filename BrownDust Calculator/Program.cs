@@ -157,7 +157,7 @@ namespace BrownDust_Calculator
             }
             public static void SaveSavefile()  //存储存档
             {
-                if (!File.Exists("Save.save")) { File.Create("save.save"); }
+                if (!File.Exists("Save.save")) { File.Create("save.save").Close(); }
 
                 using (StreamWriter file = new StreamWriter("save.save"))
                 {
