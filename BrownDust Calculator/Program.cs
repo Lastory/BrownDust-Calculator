@@ -838,7 +838,7 @@ namespace BrownDust_Calculator
             public string WriteMidHP() { return MidHP.WriteNumericalDamage(); }
             public string WriteFinalHP() { return FinalHP.WriteNumericalDamage(); }
         }
-        
+
         private static SupportCharacter[] Supporter = new SupportCharacter[SupporterNumber];
         private static AttackCharacter[] Attacker = new AttackCharacter[AttackerNumber];
         private static void SetCharacters()  //设定角色基本数据
@@ -1117,7 +1117,7 @@ namespace BrownDust_Calculator
             SetAttackers();
         }
 
-        //定义UI控件
+        #region  定义UI控件
         private static ComboBox[] comboBox_AtkSupporterName = new ComboBox[AtkSupporterChartHight];
         private static ComboBox[] comboBox_AtkSupporterSlv = new ComboBox[AtkSupporterChartHight];
         private static Label[,] label_AtkSupporterBuff = new Label[AtkSupporterChartHight, 5];  //ATKup, CRRip, CRDup, DEFup, Immune
@@ -1131,6 +1131,7 @@ namespace BrownDust_Calculator
 
         private static TextBox[,] textBox_DefenderStats = new TextBox[DefenderChartHight, 6];  //Name, HP, DEF, AGI, DEF, Weaking
         private static Label[,] label_DefenderHP = new Label[DefenderChartHight, 2];  //Normal, Add, Sum
+        #endregion
 
         private static class RefreshData
         {
@@ -1389,7 +1390,6 @@ namespace BrownDust_Calculator
         private static SupportCharacter[] ComparedAtkSupporter = new SupportCharacter[AtkSupporterChartHight];
         private static AttackCharacter[] ComparedAttacker = new AttackCharacter[AttackerChartHight];
         private static DefendCharacter[] ComparedDefender = new DefendCharacter[DefenderChartHight];
-
         private static class Calculate
         {
             static double ATKbuff, CRRbuff, CRDbuff, DEFbuff;
@@ -1400,7 +1400,11 @@ namespace BrownDust_Calculator
             {
                 AttackerOrder = -1;
                 for (int i = 0; i < AttackerChartHight; i++)
-                    if (radioButton_AttackerChoose[i].Checked) { AttackerOrder = i; break; }
+                    if (radioButton_AttackerChoose[i].Checked)
+                    {
+                        if (comboBox_AttackerSlv[i].SelectedIndex != -1) AttackerOrder = i;
+                        break;
+                    }
             }
             public static void SupporterActiveBuff()
             {
