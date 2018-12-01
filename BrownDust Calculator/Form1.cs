@@ -19,7 +19,7 @@ namespace BrownDust_Calculator
 
         private void button_DO_Click(object sender, EventArgs e)
         {
-            CalculateDamage();
+            CalculateAll();
         }
 
         private void button_Save_Click(object sender, EventArgs e)
