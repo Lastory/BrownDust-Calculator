@@ -5,7 +5,7 @@
 * [日本語](#紹介)
 
 ## Intro
-This a damage calculator for Brown Dust.  
+This a damage calculator for Brown Dust (Data based  on Japane / Taiwan / Asia servers).  
 Relies on .NET framework  4.7.1 or later version. You can [download it here](https://www.microsoft.com/net/download/dotnet-framework-runtime).
 
 ## How to Use
@@ -59,7 +59,7 @@ Affected: Edin(always calculated as 65% HP, or 35% Lost)
 
 
 ## 介绍
-这是一个用于Brown Dust的伤害计算器  
+这是一个用于Brown Dust的伤害计算器（数据基于日/台/亚服）。  
 依赖 .NET framework  4.7.1 或更新版本，您可以 [在这里下载](https://www.microsoft.com/net/download/dotnet-framework-runtime)。
 
 ## 使用方式
@@ -113,7 +113,7 @@ Affected: Edin(always calculated as 65% HP, or 35% Lost)
 将会影响：黑剑（总是以失去35%血量计算）
 
 ## 紹介
-Brown Dust用のダメージ計算ツールです。  
+Brown Dust用のダメージ計算ツールです（データは日本/台湾/アジアサーバーに基づいている）。  
 NET Framework 4.7.1 (以降のバージョン)に依存します。[ここでダウンロード](https://www.microsoft.com/net/download/dotnet-framework-runtime)できます。
 
 ## 使用方法
