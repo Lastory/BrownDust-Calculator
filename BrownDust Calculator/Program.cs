@@ -1175,7 +1175,7 @@ namespace BrownDust_Calculator
                     if (!Flag_LanguageChanging && !Flag_Loading)
                     {
                         Calculate.AttackerDamage(order);
-                        if (checkBox_AtkSupporterChoose[order].Checked) Calculate.DefenderLeftHP();
+                        if (radioButton_AttackerChoose[order].Checked) Calculate.DefenderLeftHP();
                     }
                 }
             }
