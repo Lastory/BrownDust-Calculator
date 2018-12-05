@@ -5,7 +5,7 @@
 * [日本語](#紹介)
 
 ## Intro
-This a damage calculator for Brown Dust (Data based  on Japane / Taiwan / Asia servers).  
+This a damage calculator for Brown Dust (Data based  on Japan / Taiwan / Asia servers).  
 Relies on .NET framework  4.7.1 or later version. You can [download it here](https://www.microsoft.com/net/download/dotnet-framework-runtime).
 
 ## How to Use
